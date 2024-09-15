@@ -49,15 +49,16 @@ class KanvasingController extends Controller
         $tipeCakadaId = $request->input('tipe_cakada_id');
 
         $cakada = Cakada::where('provinsi', $provinsiId)
-                        ->where('kabupaten_kota', $kabupatenKotaId)
-                        ->where('tipe_cakada_id', $tipeCakadaId)
-                        ->get();
+            ->where('kabupaten_kota', $kabupatenKotaId)
+            ->where('tipe_cakada_id', $tipeCakadaId)
+            ->get();
 
         return response()->json($cakada);
     }
 
     public function store(Request $request)
     {
+        // Validasi request
         $request->validate([
             'user_id' => 'required|integer',
             'provinsi' => 'required|string|max:255',
@@ -83,22 +84,27 @@ class KanvasingController extends Controller
             'lang' => 'nullable|string',
         ]);
 
-        $kanvasing = new Kanvasing($request->except('foto', 'lat', 'lang'));
+        // Buat instance Kanvasing baru
+        $kanvasing = new Kanvasing();
 
         // Upload foto jika ada
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $fileName;
             $file->move(public_path('uploads'), $fileName);
-            $kanvasing->foto = $fileName;
+
+            // Simpan URL path foto
+            $kanvasing->foto = $filePath;
         }
 
-        // Menyimpan koordinat
-        $kanvasing->lat = $request->input('lat');
-        $kanvasing->lang = $request->input('lang');
+        // Simpan data form lainnya
+        $kanvasing->fill($request->except('foto'));
 
+        // Simpan data ke database
         $kanvasing->save();
 
-        return redirect()->route('kanvasing.index')->with('success', 'Kanvasing entry created successfully.');
+        // Redirect ke dashboard dengan pesan sukses
+        return redirect()->route('dashboard')->with('success', 'Kanvasing entry created successfully.');
     }
 }

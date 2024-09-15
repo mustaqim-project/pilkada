@@ -76,15 +76,15 @@
             <div class="card card-style">
                 <div class="content mb-0 mt-1">
                     <!-- user id -->
+                    <Label>Tim Lapangan</Label>
                     @if (Route::has('login'))
-                        <nav class="-mx-3 flex flex-1 justify-end">
-                            @auth
-                                <select style="display: none;">
+                    <div class="input-style has-icon input-style-1 input-required">
+                        <select name="user_id" id="user_id" class="input" required>
                                     <option id="user_id" name="user_id" value="{{ Auth::user()->id }}">
                                         {{ Auth::user()->name }}</option>
-                                </select>
-                            @endauth
-                        </nav>
+                        </select>
+                        <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
+                    </div>
                     @endif
 
                     <!-- Provinsi -->
@@ -317,7 +317,6 @@
             </div>
 
             <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
-
         </form>
 
         <div id="map" style="display: none;"></div>
