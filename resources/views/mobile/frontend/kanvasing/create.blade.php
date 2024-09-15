@@ -210,20 +210,20 @@
                     <div class="input-style has-icon input-style-1 mt-4">
                         <i class="input-icon fa fa-map-pin color-theme"></i>
                         <span>Lokasi Saya</span>
-                        <x-text-input id="location_name" class="input" type="text" name="location_name" readonly
+                        <x-text-input id="location_name" class="input" type="text" name="location_name" readonly required
                             :value="old('location_name')" placeholder="Lokasi Saya" />
                         <x-input-error :messages="$errors->get('location_name')" class="mt-2" />
                     </div>
                     <!-- Lokasi Saya -->
                     <div class="input-style has-icon input-style-1 mt-4">
                         <span>Longitude</span>
-                        <x-text-input id="long" class="input" type="text" name="long" readonly
+                        <x-text-input id="long" class="input" type="text" name="long" readonly required
                             :value="old('long')" />
                         <x-input-error :messages="$errors->get('long')" class="mt-2" />
                     </div>
                     <div class="input-style has-icon input-style-1 mt-4">
                         <span>Latitude</span>
-                        <x-text-input id="lat" class="input" type="text" name="lat" readonly
+                        <x-text-input id="lat" class="input" type="text" name="lat" readonly required
                             :value="old('lat')" />
                         <x-input-error :messages="$errors->get('lat')" class="mt-2" />
                     </div>
@@ -312,8 +312,11 @@
             }
 
             // Auto-update location when the page loads
-            getLocation();
-            geoLocate();
+            document.querySelector('.get-posisi').addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent the default anchor click behavior
+                getLocation();
+            });
+
 
 
             const profilePictureInput = document.getElementById('foto');
