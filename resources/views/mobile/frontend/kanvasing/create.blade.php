@@ -4,21 +4,45 @@
     <style>
         #image_preview {
             max-width: 100%;
+            /* Atur lebar maksimal gambar */
             height: auto;
+            /* Jaga agar proporsi gambar tetap */
             display: block;
+            /* Tampilkan gambar secara blok */
+            margin-top: 10px;
+            /* Jarak atas */
+        }
+
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            /* Menyesuaikan dengan viewport height */
             margin-top: 10px;
         }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
 
         .btn-full {
             display: inline-block;
             width: 100%;
             padding: 0.75rem 1.5rem;
+            /* Padding atas/bawah dan kiri/kanan */
             border: none;
             border-radius: 0.375rem;
+            /* Radius sudut */
             font-size: 1rem;
             font-weight: bold;
             color: #fff;
+            /* Warna teks putih */
             background-color: #007bff;
+            /* Ganti dengan warna latar belakang sesuai kebutuhan */
             text-align: center;
             cursor: pointer;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -26,51 +50,22 @@
 
         .btn-highlight {
             background-color: #28a745;
+            /* Ganti dengan warna latar belakang highlight */
         }
 
         .btn-full:hover {
             background-color: #0056b3;
+            /* Ganti dengan warna latar belakang saat hover */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Bayangan saat hover */
         }
 
         .btn-full:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-        }
-
-        .file-data {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .file-data input[type="file"] {
-            display: none;
-        }
-
-        .file-data .upload-file {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-            border-radius: 0.375rem;
-            cursor: pointer;
-        }
-
-        .file-data .upload-file:hover {
-            background-color: #0056b3;
-        }
-
-        #map {
-            height: 300px; /* Adjust the height of the map */
-            width: 100%; /* Full width */
-            margin-top: 10px; /* Margin on top */
-        }
-
-        .input-style {
-            margin-top: 10px; /* Space between fields */
+            /* Bayangan fokus */
         }
     </style>
-
     <div class="page-content">
         <div class="page-title page-title-small">
             <h2><a href="/" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
@@ -102,6 +97,7 @@
                         <span>Kabupaten/Kota</span>
                         <select name="kabupaten_kota" id="kabupaten_kota" class="input" required>
                             <option value="">Pilih Kabupaten/Kota</option>
+                            <!-- Options will be populated by JavaScript -->
                         </select>
                         <x-input-error :messages="$errors->get('kabupaten_kota')" class="mt-2" />
                     </div>
@@ -156,10 +152,9 @@
                         <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                     </div>
                     <div class="file-data">
-                        <label for="foto" class="upload-file">
-                            Upload Image
-                        </label>
-                        <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
+                        <input type="file" id="foto" name="foto"
+                            class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
+                        <p class="upload-file-text color-white">Upload Image</p>
                         <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                     </div>
 
@@ -208,18 +203,39 @@
                         <x-input-error :messages="$errors->get('nomor_hp')" class="mt-2" />
                     </div>
 
-                    <!-- Peta Lokasi -->
-                    <div class="mt-4">
-                        <div id="map"></div>
+                    <!-- Jumlah Pemilih -->
+                    <div class="input-style has-icon input-style-1 input-required mt-4">
+                        <i class="input-icon fa fa-users color-theme"></i>
+                        <span>Jumlah Pemilih</span>
+                        <x-text-input id="jum_pemilih" class="input" type="number" name="jum_pemilih"
+                            :value="old('jum_pemilih')" required placeholder="Jumlah Pemilih" />
+                        <x-input-error :messages="$errors->get('jum_pemilih')" class="mt-2" />
                     </div>
-                </div>
+                    <!-- Lokasi Saya -->
+                    <div class="input-style has-icon input-style-1 mt-4">
+                        <i class="input-icon fa fa-map-pin color-theme"></i>
+                        <span>Lokasi Saya</span>
+                        <x-text-input id="location_name" class="input" type="text" name="location_name" readonly
+                            :value="old('location_name')" placeholder="Lokasi Saya" />
+                        <x-input-error :messages="$errors->get('location_name')" class="mt-2" />
+                    </div>
 
-                <!-- Submit Button -->
-                <div class="content mt-4">
-                    <button type="submit" class="btn-full btn-highlight">Simpan</button>
+                    <!-- Latitude and Longitude -->
+                    <input type="hidden" id="lat" name="lat">
+                    <input type="hidden" id="long" name="long">
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
+
                 </div>
             </div>
+
         </form>
+        <!-- Leaflet Map -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
     </div>
 
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
