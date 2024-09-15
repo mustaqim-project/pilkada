@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate.Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CakadaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
