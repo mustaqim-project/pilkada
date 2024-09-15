@@ -16,7 +16,6 @@
     <div class="page-content">
         <div class="page-title page-title-small">
             <h2><a href="#" data-back-button><i class="fa fa-arrow-left"></i></a>Sign Up</h2>
-            </a>
         </div>
         <div class="card header-card shape-rounded" data-card-height="150">
             <div class="card-overlay bg-highlight opacity-95"></div>
@@ -99,21 +98,16 @@
                         <x-input-error :messages="$errors->get('cakada_id')" class="mt-2" />
                     </div>
 
-
-
                     <!-- Profile Picture Upload -->
                     <div class="mt-4">
-                        <img id="image_preview" src="#" alt="Image Preview"
-                            style="display:none; width:200px; height:auto;" />
+                        <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                     </div>
                     <div class="file-data">
                         <input type="file" id="foto" name="foto"
-                            class="upload-file bg-highlight shadow-s rounded-s " accept="image/*">
+                            class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
                         <p class="upload-file-text color-white">Upload Image</p>
                         <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                     </div>
-
-                    <!-- Image Preview -->
 
                     <!-- Elektabilitas -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
@@ -168,7 +162,6 @@
                             :value="old('jum_pemilih')" required placeholder="Jumlah Pemilih" />
                         <x-input-error :messages="$errors->get('jum_pemilih')" class="mt-2" />
                     </div>
-
                     <!-- Lokasi Saya -->
                     <div class="input-style has-icon input-style-1 mt-4">
                         <i class="input-icon fa fa-map-pin color-theme"></i>
@@ -183,10 +176,8 @@
                     <input type="hidden" id="long" name="long">
 
                     <!-- Submit Button -->
-                    <button type="submit"
-                        class="btn btn-m btn-full rounded-sm shadow-l bg-green1-dark text-uppercase font-900">
-                        Create
-                    </button>
+                    <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
+
                 </div>
             </div>
 
@@ -280,6 +271,69 @@
                     imagePreview.style.display = 'none';
                 }
             });
+
+
+
+
+            // Load Kabupaten/Kota based on Provinsi
+            $('#provinsi').change(function() {
+                const provinsiId = $(this).val();
+                $.ajax({
+                    url: `/kabupaten-kota/${provinsiId}`,
+                    method: 'GET',
+                    success: function(data) {
+                        $('#kabupaten_kota').empty().append(
+                            '<option value="">Pilih Kabupaten/Kota</option>');
+                        $.each(data, function(index, item) {
+                            $('#kabupaten_kota').append(
+                                `<option value="${item.id}">${item.name}</option>`);
+                        });
+                        $('#kecamatan').empty().append(
+                            '<option value="">Pilih Kecamatan</option>');
+                        $('#kelurahan').empty().append(
+                            '<option value="">Pilih Kelurahan</option>');
+                    }
+                });
+            });
+
+            // Load Kecamatan based on Kabupaten/Kota
+            $('#kabupaten_kota').change(function() {
+                const kabupatenKotaId = $(this).val();
+                $.ajax({
+                    url: `/kecamatan/${kabupatenKotaId}`,
+                    method: 'GET',
+                    success: function(data) {
+                        $('#kecamatan').empty().append(
+                            '<option value="">Pilih Kecamatan</option>');
+                        $.each(data, function(index, item) {
+                            $('#kecamatan').append(
+                                `<option value="${item.id}">${item.name}</option>`);
+                        });
+                        $('#kelurahan').empty().append(
+                            '<option value="">Pilih Kelurahan</option>');
+                    }
+                });
+            });
+
+            // Load Kelurahan based on Kecamatan
+            $('#kecamatan').change(function() {
+                const kecamatanId = $(this).val();
+                $.ajax({
+                    url: `/kelurahan/${kecamatanId}`,
+                    method: 'GET',
+                    success: function(data) {
+                        $('#kelurahan').empty().append(
+                            '<option value="">Pilih Kelurahan</option>');
+                        $.each(data, function(index, item) {
+                            $('#kelurahan').append(
+                                `<option value="${item.id}">${item.name}</option>`);
+                        });
+                    }
+                });
+            });
+
+
+
         });
     </script>
 @endsection
