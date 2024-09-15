@@ -279,7 +279,7 @@
             $('#provinsi').change(function() {
                 const provinsiId = $(this).val();
                 $.ajax({
-                    url: `/kabupaten-kota/${provinsiId}`,
+                    url: `/get-kabupaten-kota/${provinsiId}`,
                     method: 'GET',
                     success: function(data) {
                         $('#kabupaten_kota').empty().append(
@@ -300,7 +300,7 @@
             $('#kabupaten_kota').change(function() {
                 const kabupatenKotaId = $(this).val();
                 $.ajax({
-                    url: `/kecamatan/${kabupatenKotaId}`,
+                    url: `/get-kecamatan/${kabupatenKotaId}`,
                     method: 'GET',
                     success: function(data) {
                         $('#kecamatan').empty().append(
@@ -319,7 +319,7 @@
             $('#kecamatan').change(function() {
                 const kecamatanId = $(this).val();
                 $.ajax({
-                    url: `/kelurahan/${kecamatanId}`,
+                    url: `/get-kelurahan/${kecamatanId}`,
                     method: 'GET',
                     success: function(data) {
                         $('#kelurahan').empty().append(
