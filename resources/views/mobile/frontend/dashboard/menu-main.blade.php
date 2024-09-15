@@ -131,6 +131,6 @@
     <a href="#" class="icon icon-xs mr-1 rounded-s bg-linkedin"><i class="fab fa-linkedin-in"></i></a>
     <a href="#" class="icon icon-xs rounded-s bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
     <p class="mb-0 pt-3 font-10 opacity-30">
-        {{ 'Hak Cipta' }} <span class="copyright-year"></span> {{ 'Enabled. Semua hak dilindungi' }}
+        Hak Cipta <span class="copyright-year"></span> Enabled. Semua hak dilindungi.
     </p>
 </div>
