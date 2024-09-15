@@ -22,6 +22,7 @@ class CreateKanvasingsTable extends Migration
             $table->string('kelurahan')->nullable();
             $table->string('rw')->nullable();
             $table->string('rt')->nullable();
+            $table->foreignId('tipe_cakada_id')->constrained(); // Foreign key ke tabel cakada
             $table->foreignId('cakada_id')->constrained(); // Foreign key ke tabel cakada
             $table->string('foto')->nullable();
             $table->string('lang')->nullable(); // Koordinat longitude

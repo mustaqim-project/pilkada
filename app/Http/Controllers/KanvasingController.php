@@ -33,49 +33,56 @@ class KanvasingController extends Controller
         $cakada = Cakada::all();
 
         // Pass the data to the view
-        return view('mobile.frontend.kanvasing.create', ['provinsi' => $provinsi]);
+        return view('mobile.frontend.kanvasing.create', [
+            'provinsi' => $provinsi,
+            'cakada' => $cakada
+        ]);
     }
+
 
     public function store(Request $request)
-{
-    $request->validate([
-        'provinsi' => 'required|string|max:255',
-        'kabupaten_kota' => 'required|string|max:255',
-        'kecamatan' => 'required|string|max:255',
-        'kelurahan' => 'required|string|max:255',
-        'rw' => 'required|string|max:10',
-        'rt' => 'required|string|max:10',
-        'cakada_id' => 'required|integer',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'elektabilitas' => 'required|in:1,2,3', // Validasi pilihan 1, 2, 3
-        'popularitas' => 'required|in:1,2,3',  // Validasi pilihan 1, 2, 3
-        'stiker' => 'required|in:1,2,3',       // Validasi pilihan 1, 2, 3
-        'alamat' => 'required|string|max:255',
-        'nama_kk' => 'required|string|max:255',
-        'nomor_hp' => 'required|string|max:20',
-        'jum_pemilih' => 'required|integer',
-        'lat' => 'nullable|numeric',
-        'lang' => 'nullable|numeric', // Mengganti 'long' menjadi 'lang'
-    ]);
+    {
+        $request->validate([
+            'user_id' => 'required|integer',
+            'provinsi' => 'required|string|max:255',
+            'kabupaten_kota' => 'required|string|max:255',
+            'kecamatan' => 'required|string|max:255',
+            'kelurahan' => 'required|string|max:255',
+            'rw' => 'required|string|max:10',
+            'rt' => 'required|string|max:10',
+            'tipe_cakada_id' => 'required|integer',
+            'cakada_id' => 'required|integer',
+            'nama_kk' => 'required|string|max:255',
+            'nomor_hp' => 'required|string|max:20',
+            'jum_pemilih' => 'required|integer',
+            'elektabilitas' => 'required|in:1,2,3',
+            'popularitas' => 'required|in:1,2',
+            'stiker' => 'required|in:1,2',
+            'alasan' => 'nullable|string',
+            'pesan' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'alamat' => 'required|string|max:255',
+            'lat' => 'nullable|string',
+            'lang' => 'nullable|string',
+        ]);
 
-    $kanvasing = new Kanvasing($request->except('foto', 'lat', 'lang'));
+        $kanvasing = new Kanvasing($request->except('foto', 'lat', 'lang'));
 
-    // Upload foto jika ada
-    if ($request->hasFile('foto')) {
-        $file = $request->file('foto');
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('uploads'), $fileName);
-        $kanvasing->foto = $fileName;
+        // Upload foto jika ada
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $fileName);
+            $kanvasing->foto = $fileName;
+        }
+
+        // Menyimpan koordinat
+        $kanvasing->lat = $request->input('lat');
+        $kanvasing->lang = $request->input('lang');
+
+        $kanvasing->save();
+
+        return redirect()->route('kanvasing.index')->with('success', 'Kanvasing entry created successfully.');
     }
-
-    // Menyimpan koordinat
-    $kanvasing->lat = $request->input('lat');
-    $kanvasing->lang = $request->input('lang');
-
-    $kanvasing->save();
-
-    return redirect()->route('kanvasing.index')->with('success', 'Kanvasing entry created successfully.');
-}
-
-
 }

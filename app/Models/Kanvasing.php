@@ -21,10 +21,8 @@ class Kanvasing extends Model
         'kelurahan',
         'rw',
         'rt',
+        'tipe_cakada_id',
         'cakada_id',
-        'foto',
-        'lang',         // Koordinat longitude
-        'lat',          // Koordinat latitude
         'elektabilitas',
         'popularitas',
         'stiker',
@@ -35,6 +33,9 @@ class Kanvasing extends Model
         'nama_kk',
         'nomor_hp',
         'jum_pemilih',
+        'foto',
+        'lang',
+        'lat',
     ];
 
     /**
@@ -45,9 +46,11 @@ class Kanvasing extends Model
         return $this->belongsTo(Cakada::class, 'cakada_id');
     }
 
-    /**
-     * Relasi ke model User (untuk field user_id).
-     */
+    public function tipe_cakada()
+    {
+        return $this->belongsTo(TipeCakada::class, 'tipe_cakada_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
