@@ -144,12 +144,18 @@
                         <x-input-error :messages="$errors->get('rt')" class="mt-2" />
                     </div>
 
-                    <!-- Tipe Cakada ID -->
+                 <!-- Tipe Cakada ID -->
+                 <label class="mt-4">Pilkada</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-id-card color-theme"></i>
-                        <span>Pilkada</span>
-                        <x-text-input id="tipe_cakada_id" class="input" type="number" name="tipe_cakada_id"
-                            :value="old('tipe_cakada_id')" required placeholder="Cakada ID" />
+                        <select id="tipe_cakada_id" name="tipe_cakada_id" class="input" required>
+                            <option value="" disabled selected>Select Tipe Pilkada</option>
+                            @foreach($tipe_cakada as $item)
+                                <option value="{{ $item->id }}" {{ old('tipe_cakada_id') == $item->id ? 'selected' : '' }}>
+                                    {{ $item->name }}
+                                </option>
+                            @endforeach
+                        </select>
                         <x-input-error :messages="$errors->get('tipe_cakada_id')" class="mt-2" />
                     </div>
 
@@ -203,7 +209,6 @@
                     <!-- Popularitas -->
                     <label class="mt-4">Apakah kenal dengan calon ?</label>
                     <div class="input-style has-icon input-style-1 input-required mt-2">
-                        <i class="input-icon fa fa-bar-chart color-theme"></i>
                         <select id="popularitas" name="popularitas" class="input" required>
                             <option value="">Pilih</option>
                             <option value="1" {{ old('popularitas') == '1' ? 'selected' : '' }}>Ya</option>
@@ -215,7 +220,6 @@
                     <!-- Elektabilitas -->
                     <label class="mt-4">Apakah anda akan memilih calon tersebut?</label>
                     <div class="input-style has-icon input-style-1 input-required mt-2">
-                        <i class="input-icon fa fa-star color-theme"></i>
                         <select id="elektabilitas" name="elektabilitas" class="input" required>
                             <option value="">Pilih</option>
                             <option value="1" {{ old('elektabilitas') == '1' ? 'selected' : '' }}>Ya</option>
@@ -244,7 +248,6 @@
                     <!-- Stiker -->
                     <label class="mt-4">Apakah boleh memasang atribut kampanye berupa stiker/pamflet/brosur dll?</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
-                        <i class="input-icon fa fa-star color-theme"></i>
                         <select id="stiker" name="stiker" class="input" required>
                             <option value="">Pilih</option>
                             <option value="1" {{ old('stiker') == '1' ? 'selected' : '' }}>Ya</option>
