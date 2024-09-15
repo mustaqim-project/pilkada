@@ -80,7 +80,8 @@
                         <nav class="-mx-3 flex flex-1 justify-end">
                             @auth
                                 <select style="display: none;">
-                                    <option id="user_id" name="user_id" value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                    <option id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+                                        {{ Auth::user()->name }}</option>
                                 </select>
                             @endauth
                         </nav>
@@ -144,14 +145,14 @@
                         <x-input-error :messages="$errors->get('rt')" class="mt-2" />
                     </div>
 
-                 <!-- Tipe Cakada ID -->
-                 <label class="mt-4">Pilkada</label>
+                    <!-- Tipe Cakada ID -->
+                    <label class="mt-4">Pilkada</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
-                        <i class="input-icon fa fa-id-card color-theme"></i>
                         <select id="tipe_cakada_id" name="tipe_cakada_id" class="input" required>
-                            <option value="" disabled selected>Select Tipe Pilkada</option>
-                            @foreach($tipe_cakada as $item)
-                                <option value="{{ $item->id }}" {{ old('tipe_cakada_id') == $item->id ? 'selected' : '' }}>
+                            <option value="" disabled selected>Pilih Tipe Pilkada</option>
+                            @foreach ($tipe_cakada as $item)
+                                <option value="{{ $item->id }}"
+                                    {{ old('tipe_cakada_id') == $item->id ? 'selected' : '' }}>
                                     {{ $item->name }}
                                 </option>
                             @endforeach
@@ -160,14 +161,15 @@
                     </div>
 
                     <!-- Cakada ID -->
+                    <label class="mt-4">Nama Kandidat</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-id-card color-theme"></i>
-                        <span>Nama Kandidat</span>
-                        <x-text-input id="cakada_id" class="input" type="number" name="cakada_id" :value="old('cakada_id')"
-                            required placeholder="Cakada ID" />
+                        <select id="cakada_id" name="cakada_id" class="input" required>
+                            <option value="">Pilih Nama Kandidat</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
                         <x-input-error :messages="$errors->get('cakada_id')" class="mt-2" />
                     </div>
-
                     <!-- Nama KK -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-user color-theme"></i>
@@ -471,6 +473,30 @@
                             $('#kelurahan').append(
                                 `<option value="${item.id}">${item.name}</option>`);
                         });
+                    }
+                });
+            });
+
+            $('#provinsi, #kabupaten_kota, #tipe_cakada_id').change(function() {
+                let provinsi = $('#provinsi').val();
+                let kabupatenKota = $('#kabupaten_kota').val();
+                let tipeCakada = $('#tipe_cakada_id').val();
+
+                $.ajax({
+                    url: "{{ route('getCakadaByFilters') }}",
+                    method: 'GET',
+                    data: {
+                        provinsi: provinsi,
+                        kabupaten_kota: kabupatenKota,
+                        tipe_cakada_id: tipeCakada
+                    },
+                    success: function(response) {
+                        let options = '<option value="">Pilih Nama Kandidat</option>';
+                        $.each(response, function(index, cakada) {
+                            options +=
+                                `<option value="${cakada.id}">${cakada.nama_calon_kepala}-${cakada.nama_calon_wakil}</option>`;
+                        });
+                        $('#cakada_id').html(options);
                     }
                 });
             });

@@ -42,6 +42,19 @@ class KanvasingController extends Controller
         ]);
     }
 
+    public function getCakadaByFilters(Request $request)
+    {
+        $provinsiId = $request->input('provinsi');
+        $kabupatenKotaId = $request->input('kabupaten_kota');
+        $tipeCakadaId = $request->input('tipe_cakada_id');
+
+        $cakada = Cakada::where('provinsi', $provinsiId)
+                        ->where('kabupaten_kota', $kabupatenKotaId)
+                        ->where('tipe_cakada_id', $tipeCakadaId)
+                        ->get();
+
+        return response()->json($cakada);
+    }
 
     public function store(Request $request)
     {
