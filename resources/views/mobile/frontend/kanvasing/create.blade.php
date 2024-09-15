@@ -13,19 +13,9 @@
             /* Jarak atas */
         }
 
-        .map-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100vh;
-            /* Menyesuaikan dengan viewport height */
-            margin-top: 10px;
-        }
-
         #map {
+            height: 100rem;
             width: 100%;
-            height: 100%;
         }
 
 
@@ -232,9 +222,8 @@
 
         </form>
         <!-- Leaflet Map -->
-        <div class="map-container">
-            <div id="map"></div>
-        </div>
+        <div id="map"></div>
+
 
     </div>
 
