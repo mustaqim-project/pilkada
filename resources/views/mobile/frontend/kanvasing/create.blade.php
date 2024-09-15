@@ -216,8 +216,8 @@
                     </div>
 
                     <!-- Latitude and Longitude -->
-                    <input type="hidden" id="lat" name="lat">
-                    <input type="hidden" id="long" name="long">
+                    <input type="text" id="lat" name="lat">
+                    <input type="text" id="long" name="long">
 
 
 
@@ -237,7 +237,7 @@
 
         </form>
 
-        <div id="map" type="hidden"></div>
+        <div id="map" style="display: none;"></div>
 
     </div>
 
