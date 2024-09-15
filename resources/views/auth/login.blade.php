@@ -14,25 +14,26 @@
         }
 
         body {
-            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            background: linear-gradient(135deg, #1e1e1e 0%, #343a40 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: #f1f1f1;
         }
 
         .login-container {
-            background-color: white;
+            background-color: #2c2c2c;
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 400px;
         }
 
         .login-container h2 {
             text-align: center;
-            color: #333;
+            color: #f1f1f1;
             margin-bottom: 1.5rem;
         }
 
@@ -40,7 +41,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #333;
+            color: #f1f1f1;
         }
 
         .login-container input[type="email"],
@@ -48,10 +49,11 @@
             width: 100%;
             padding: 0.75rem;
             margin-bottom: 1rem;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             border-radius: 5px;
             font-size: 1rem;
-            background-color: #f9f9f9;
+            background-color: #1e1e1e;
+            color: #f1f1f1;
             transition: border-color 0.3s ease;
         }
 
@@ -73,7 +75,7 @@
 
         .login-container .remember-me span {
             font-size: 0.9rem;
-            color: #666;
+            color: #ccc;
         }
 
         .login-container .forgot-password {
@@ -89,14 +91,14 @@
         }
 
         .login-container .forgot-password a:hover {
-            color: #333;
+            color: #f1f1f1;
         }
 
         .login-container button {
             width: 100%;
             padding: 0.75rem;
             background-color: #74ebd5;
-            color: white;
+            color: #1e1e1e;
             border: none;
             border-radius: 5px;
             font-size: 1rem;
