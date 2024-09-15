@@ -163,7 +163,6 @@
                     <!-- Cakada ID -->
                     <label class="mt-4">Nama Kandidat</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
-                        <i class="input-icon fa fa-id-card color-theme"></i>
                         <select id="cakada_id" name="cakada_id" class="input" required>
                             <option value="">Pilih Nama Kandidat</option>
                             <!-- Options will be populated by JavaScript -->
