@@ -227,8 +227,9 @@
 
         </form>
         <div class="responsive-iframe add-iframe">
-            <iframe class="location-map" id="map"></iframe>
+            <iframe class="location-map" src='https://maps.google.com/?ie=UTF8&amp;ll=47.595131,-122.330414&amp;spn=0.006186,0.016512&amp;t=h&amp;z=17&amp;output=embed'></iframe>
         </div>
+        {{-- <div class="custom-map" id="map"></div> --}}
 
     </div>
 
