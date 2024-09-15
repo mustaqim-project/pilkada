@@ -249,7 +249,7 @@
 
         </form>
 
-        {{-- <div class="custom-map" id="map"></div> --}}
+        <div id="map" type="hidden"></div>
 
     </div>
 
