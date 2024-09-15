@@ -12,6 +12,62 @@
             margin-top: 10px;
             /* Jarak atas */
         }
+
+        #map {
+            height: 50vh;
+            /* Set height to 50% of the viewport height */
+            width: 100%;
+            /* Full width of the container */
+            margin-top: 2rem;
+            /* Margin on top */
+        }
+
+        /* Media Query for mobile devices */
+        @media (max-width: 768px) {
+            #map {
+                height: 40vh;
+                /* Adjust height for smaller screens */
+                margin-top: 1rem;
+                /* Adjust margin for smaller screens */
+            }
+        }
+
+        .btn-full {
+            display: inline-block;
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            /* Padding atas/bawah dan kiri/kanan */
+            border: none;
+            border-radius: 0.375rem;
+            /* Radius sudut */
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            /* Warna teks putih */
+            background-color: #007bff;
+            /* Ganti dengan warna latar belakang sesuai kebutuhan */
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-highlight {
+            background-color: #28a745;
+            /* Ganti dengan warna latar belakang highlight */
+        }
+
+        .btn-full:hover {
+            background-color: #0056b3;
+            /* Ganti dengan warna latar belakang saat hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Bayangan saat hover */
+        }
+
+        .btn-full:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+            /* Bayangan fokus */
+        }
     </style>
     <div class="page-content">
         <div class="page-title page-title-small">
@@ -179,7 +235,7 @@
 
         </form>
         <!-- Leaflet Map -->
-        <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+        <div id="map"></div>
 
     </div>
 
