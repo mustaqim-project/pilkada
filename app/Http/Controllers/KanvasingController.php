@@ -15,9 +15,8 @@ class KanvasingController extends Controller
         $provinsi = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')->json();
 
         // Pass the data to the view
-        return view('kanvasing.create', ['provinsi' => $provinsi]);
+        return view('mobile.frontend.kanvasing.create', ['provinsi' => $provinsi]);
     }
-
 
     public function store(Request $request)
     {
