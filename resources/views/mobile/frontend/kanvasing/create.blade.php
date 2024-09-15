@@ -229,7 +229,8 @@
                     </div>
 
 
-                    <a href="#" class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
+                    <a href="#" class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
+                    <a href="#" class="get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
 
 
 
@@ -319,8 +320,7 @@
                 }
             }
 
-            // Auto-update location when the page loads
-            getLocation();
+
 
 
             const profilePictureInput = document.getElementById('foto');
