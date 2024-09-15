@@ -210,8 +210,8 @@
                     <div class="input-style has-icon input-style-1 mt-4">
                         <i class="input-icon fa fa-map-pin color-theme"></i>
                         <span>Lokasi Saya</span>
-                        <x-text-input id="location_name" class="input" type="text" name="location_name" readonly required
-                            :value="old('location_name')" placeholder="Lokasi Saya" />
+                        <x-text-input id="location_name" class="input" type="text" name="location_name" readonly
+                            required :value="old('location_name')" placeholder="Lokasi Saya" />
                         <x-input-error :messages="$errors->get('location_name')" class="mt-2" />
                     </div>
                     <!-- Lokasi Saya -->
@@ -228,12 +228,17 @@
                         <x-input-error :messages="$errors->get('lat')" class="mt-2" />
                     </div>
                     <a href="#"
-                        class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">
-                        Get my Location
-                    </a>
+                        class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900 mt-4">Get
+                        my Location</a>
+                        <a href="#"
+                        class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900 mt-4">Get
+                        my Location</a>
+
                     <div class="responsive-iframe add-iframe">
                         <iframe class="location-map"
                             src='https://maps.google.com/?ie=UTF8&amp;ll=47.595131,-122.330414&amp;spn=0.006186,0.016512&amp;t=h&amp;z=17&amp;output=embed'></iframe>
+                        <div id="map" style="display: none;"></div>
+
                     </div>
                 </div>
             </div>
@@ -242,7 +247,6 @@
 
         </form>
 
-        <div id="map" style="display: none;"></div>
 
     </div>
 
