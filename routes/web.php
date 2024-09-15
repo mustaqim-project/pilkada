@@ -30,13 +30,23 @@ Route::get('/', function () {
     } elseif ($detect->isTablet()) {
         return view('mobile.frontend.dashboard.index');
     } else {
-        return view('desktop.dashboard');
+        return view('desktop.welcome');
     }
 });
 
 
 Route::get('/dashboard', function () {
-    return view('mobile.frontend.dashboard.index');
+
+
+    $detect = new Mobile_Detect;
+
+    if ($detect->isMobile()) {
+        return view('mobile.frontend.dashboard.index');
+    } elseif ($detect->isTablet()) {
+        return view('mobile.frontend.dashboard.index');
+    } else {
+        return view('desktop.dashboard');
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
