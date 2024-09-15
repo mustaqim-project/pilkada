@@ -78,11 +78,7 @@
                 <a href="#" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                     <i class="fa fa-user"></i>
                     <span>
-                        @if (session('lang') === 'id')
-                            {{ 'Profile' }}
-                        @else
-                            {{ $translate->translate('Profile') }}
-                        @endif
+                        Profile
                     </span>
 
                 </a>
@@ -94,11 +90,7 @@
                     <!-- Logout Icon -->
                     <i class="fa fa-sign-out-alt"></i>
                     <span>
-                        @if (session('lang') === 'id')
-                            {{ 'Keluar' }}
-                        @else
-                            {{ __('Log Out') }}
-                        @endif
+                        Log Out
                     </span>
                 </a>
 
