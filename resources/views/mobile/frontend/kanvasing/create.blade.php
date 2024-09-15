@@ -75,6 +75,8 @@
 
             <div class="card card-style">
                 <div class="content mb-0 mt-1">
+
+
                     <!-- Provinsi -->
                     <div class="input-style has-icon input-style-1 input-required">
                         <span>Provinsi</span>
@@ -119,8 +121,7 @@
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-ruler color-theme"></i>
                         <span>RW</span>
-                        <x-text-input id="rw" class="input" type="text" name="rw" :value="old('rw')" required
-                            placeholder="RW" />
+                        <x-text-input id="rw" class="input" type="text" name="rw" :value="old('rw')" required placeholder="RW" />
                         <x-input-error :messages="$errors->get('rw')" class="mt-2" />
                     </div>
 
@@ -128,8 +129,7 @@
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-ruler color-theme"></i>
                         <span>RT</span>
-                        <x-text-input id="rt" class="input" type="text" name="rt" :value="old('rt')" required
-                            placeholder="RT" />
+                        <x-text-input id="rt" class="input" type="text" name="rt" :value="old('rt')" required placeholder="RT" />
                         <x-input-error :messages="$errors->get('rt')" class="mt-2" />
                     </div>
 
@@ -137,8 +137,7 @@
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-id-card color-theme"></i>
                         <span>Cakada ID</span>
-                        <x-text-input id="cakada_id" class="input" type="number" name="cakada_id" :value="old('cakada_id')"
-                            required placeholder="Cakada ID" />
+                        <x-text-input id="cakada_id" class="input" type="number" name="cakada_id" :value="old('cakada_id')" required placeholder="Cakada ID" />
                         <x-input-error :messages="$errors->get('cakada_id')" class="mt-2" />
                     </div>
 
@@ -147,45 +146,85 @@
                         <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                     </div>
                     <div class="file-data">
-                        <input type="file" id="foto" name="foto"
-                            class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
+                        <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
                         <p class="upload-file-text color-white">Upload Image</p>
                         <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+                    </div>
+
+                     <!-- Popularitas -->
+                     <div class="input-style has-icon input-style-1 input-required mt-4">
+                        <i class="input-icon fa fa-bar-chart color-theme"></i>
+                        <span>Apakah kenal dengan calon ?</span>
+                        <select id="popularitas" name="popularitas" class="input" required>
+                            <option value="">Pilih Popularitas</option>
+                            <option value="1" {{ old('popularitas') == '1' ? 'selected' : '' }}>Ya</option>
+                            <option value="2" {{ old('popularitas') == '2' ? 'selected' : '' }}>Tidak</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('popularitas')" class="mt-2" />
                     </div>
 
                     <!-- Elektabilitas -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-bar-chart color-theme"></i>
-                        <span>Elektabilitas</span>
-                        <x-text-input id="elektabilitas" class="input" type="number" step="0.01" name="elektabilitas"
-                            :value="old('elektabilitas')" required placeholder="Elektabilitas" />
+                        <span>Apakah akan memilih calon tersebut ?</span>
+                        <select id="elektabilitas" name="elektabilitas" class="input" required>
+                            <option value="">Pilih Elektabilitas</option>
+                            <option value="1" {{ old('elektabilitas') == '1' ? 'selected' : '' }}>Ya</option>
+                            <option value="2" {{ old('elektabilitas') == '2' ? 'selected' : '' }}>Tidak</option>
+                            <option value="3" {{ old('elektabilitas') == '3' ? 'selected' : '' }}>Ragu-Ragu</option>
+                        </select>
                         <x-input-error :messages="$errors->get('elektabilitas')" class="mt-2" />
                     </div>
 
-                    <!-- Popularitas -->
+                    <!-- Stiker -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
-                        <i class="input-icon fa fa-bar-chart color-theme"></i>
-                        <span>Popularitas</span>
-                        <x-text-input id="popularitas" class="input" type="number" step="0.01" name="popularitas"
-                            :value="old('popularitas')" required placeholder="Popularitas" />
-                        <x-input-error :messages="$errors->get('popularitas')" class="mt-2" />
+                        <i class="input-icon fa fa-star color-theme"></i>
+                        <span>Apakah boleh memasang atribut calon (stiker/brosur/pamflet dll)</span>
+                        <select id="stiker" name="stiker" class="input" required>
+                            <option value="">Pilih Stiker</option>
+                            <option value="1" {{ old('stiker') == '1' ? 'selected' : '' }}>Ya</option>
+                            <option value="2" {{ old('stiker') == '2' ? 'selected' : '' }}>Tidak</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('stiker')" class="mt-2" />
+                    </div>
+
+                    <!-- Alasan -->
+                    <div class="input-style has-icon input-style-1 mt-4">
+                        <i class="input-icon fa fa-comment color-theme"></i>
+                        <span>Alasan memilih calon ?</span>
+                        <x-text-input id="alasan" class="input" type="text" name="alasan" :value="old('alasan')" placeholder="Alasan" />
+                        <x-input-error :messages="$errors->get('alasan')" class="mt-2" />
+                    </div>
+
+                    <!-- Pesan -->
+                    <div class="input-style has-icon input-style-1 mt-4">
+                        <i class="input-icon fa fa-comment color-theme"></i>
+                        <span>Pesan Pemilih Untuk Calon</span>
+                        <x-text-input id="pesan" class="input" type="text" name="pesan" :value="old('pesan')" placeholder="Pesan" />
+                        <x-input-error :messages="$errors->get('pesan')" class="mt-2" />
+                    </div>
+
+                    <!-- Deskripsi -->
+                    <div class="input-style has-icon input-style-1 mt-4">
+                        <i class="input-icon fa fa-info-circle color-theme"></i>
+                        <span>Deskripsi</span>
+                        <x-text-input id="deskripsi" class="input" type="text" name="deskripsi" :value="old('deskripsi')" placeholder="kendala dilapanagan jika ada" />
+                        <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                     </div>
 
                     <!-- Alamat -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-address-card color-theme"></i>
                         <span>Alamat</span>
-                        <x-text-input id="alamat" class="input" type="text" name="alamat" :value="old('alamat')"
-                            required placeholder="Alamat" />
+                        <x-text-input id="alamat" class="input" type="text" name="alamat" :value="old('alamat')" required placeholder="Alamat" />
                         <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
                     </div>
 
                     <!-- Nama KK -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-user color-theme"></i>
-                        <span>Nama KK</span>
-                        <x-text-input id="nama_kk" class="input" type="text" name="nama_kk" :value="old('nama_kk')"
-                            required placeholder="Nama KK" />
+                        <span>Nama Kepala Keluarga</span>
+                        <x-text-input id="nama_kk" class="input" type="text" name="nama_kk" :value="old('nama_kk')" required placeholder="Nama KK" />
                         <x-input-error :messages="$errors->get('nama_kk')" class="mt-2" />
                     </div>
 
@@ -193,8 +232,7 @@
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-phone color-theme"></i>
                         <span>Nomor HP</span>
-                        <x-text-input id="nomor_hp" class="input" type="text" name="nomor_hp" :value="old('nomor_hp')"
-                            required placeholder="Nomor HP" />
+                        <x-text-input id="nomor_hp" class="input" type="text" name="nomor_hp" :value="old('nomor_hp')" required placeholder="Nomor HP" />
                         <x-input-error :messages="$errors->get('nomor_hp')" class="mt-2" />
                     </div>
 
@@ -202,29 +240,29 @@
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-users color-theme"></i>
                         <span>Jumlah Pemilih</span>
-                        <x-text-input id="jum_pemilih" class="input" type="number" name="jum_pemilih"
-                            :value="old('jum_pemilih')" required placeholder="Jumlah Pemilih" />
+                        <x-text-input id="jum_pemilih" class="input" type="number" name="jum_pemilih" :value="old('jum_pemilih')" required placeholder="Jumlah Pemilih" />
                         <x-input-error :messages="$errors->get('jum_pemilih')" class="mt-2" />
                     </div>
+
                     <!-- Lokasi Saya -->
                     <div class="input-style has-icon input-style-1 mt-4">
                         <i class="input-icon fa fa-map-pin color-theme"></i>
                         <span>Lokasi Saya</span>
-                        <x-text-input id="location_name" class="input" type="text" name="location_name" readonly
-                            :value="old('location_name')" placeholder="Lokasi Saya" />
+                        <x-text-input id="location_name" class="input" type="text" name="location_name" readonly :value="old('location_name')" placeholder="Lokasi Saya" />
                         <x-input-error :messages="$errors->get('location_name')" class="mt-2" />
                     </div>
-                    <!-- Lokasi Saya -->
+
+                    <!-- Longitude -->
                     <div class="input-style has-icon input-style-1 mt-4">
                         <span>Longitude</span>
-                        <x-text-input id="long" class="input" type="text"  name="long" readonly
-                            :value="old('long')" />
+                        <x-text-input id="long" class="input" type="text" name="long" readonly :value="old('long')" />
                         <x-input-error :messages="$errors->get('long')" class="mt-2" />
                     </div>
+
+                    <!-- Latitude -->
                     <div class="input-style has-icon input-style-1 mt-4">
                         <span>Latitude</span>
-                        <x-text-input id="lat" class="input" type="text"  name="lat" readonly
-                            :value="old('lat')" />
+                        <x-text-input id="lat" class="input" type="text" name="lat" readonly :value="old('lat')" />
                         <x-input-error :messages="$errors->get('lat')" class="mt-2" />
                     </div>
                 </div>
@@ -235,7 +273,6 @@
                     <h3 class="font-700">Get Coordinates</h3>
                     <a href="#" class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
                     <p class="location-coordinates"></p>
-
                 </div>
                 <div class="responsive-iframe add-iframe">
                     <iframe class="location-map" src='https://maps.google.com/?ie=UTF8&amp;ll=47.595131,-122.330414&amp;spn=0.006186,0.016512&amp;t=h&amp;z=17&amp;output=embed'></iframe>
@@ -245,6 +282,7 @@
             <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
 
         </form>
+
 
         <div id="map" style="display: none;"></div>
 

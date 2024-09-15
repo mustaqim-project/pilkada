@@ -9,11 +9,12 @@ class Kanvasing extends Model
 {
     use HasFactory;
 
-    // Specify the table name if it differs from the plural form of the model name
+    // Tentukan nama tabel jika berbeda dari bentuk jamak model
     protected $table = 'kanvasings';
 
-    // Specify which attributes can be mass assigned
+    // Tentukan atribut yang bisa diisi secara massal
     protected $fillable = [
+        'user_id',
         'provinsi',
         'kabupaten_kota',
         'kecamatan',
@@ -22,9 +23,14 @@ class Kanvasing extends Model
         'rt',
         'cakada_id',
         'foto',
-        'koordinat',
+        'lang',         // Koordinat longitude
+        'lat',          // Koordinat latitude
         'elektabilitas',
         'popularitas',
+        'stiker',
+        'alasan',
+        'pesan',
+        'deskripsi',
         'alamat',
         'nama_kk',
         'nomor_hp',
@@ -32,10 +38,18 @@ class Kanvasing extends Model
     ];
 
     /**
-     * Get the Cakada that owns the Kanvasing.
+     * Relasi ke model Cakada.
      */
     public function cakada()
     {
         return $this->belongsTo(Cakada::class, 'cakada_id');
+    }
+
+    /**
+     * Relasi ke model User (untuk field user_id).
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
