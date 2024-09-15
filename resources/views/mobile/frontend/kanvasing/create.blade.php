@@ -79,8 +79,7 @@
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end">
                             @auth
-                                <!-- Menampilkan nama pengguna dalam elemen select -->
-                                <select>
+                                <select style="display: none;">
                                     <option id="user_id" name="user_id" value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
                                 </select>
                             @endauth
@@ -202,9 +201,9 @@
 
 
                     <!-- Popularitas -->
+                    <label>Apakah kenal dengan calon ?</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-bar-chart color-theme"></i>
-                        <span>Apakah kenal dengan calon ?</span>
                         <select id="popularitas" name="popularitas" class="input" required>
                             <option value="">Pilih</option>
                             <option value="1" {{ old('popularitas') == '1' ? 'selected' : '' }}>Ya</option>
@@ -214,9 +213,9 @@
                     </div>
 
                     <!-- Elektabilitas -->
+                    <label>Apakah anda akan memilih calon tersebut?</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-star color-theme"></i>
-                        <span>Apakah anda akan memilih calon tersebut?</span>
                         <select id="elektabilitas" name="elektabilitas" class="input" required>
                             <option value="">Pilih</option>
                             <option value="1" {{ old('elektabilitas') == '1' ? 'selected' : '' }}>Ya</option>
@@ -243,9 +242,9 @@
                     </div>
 
                     <!-- Stiker -->
+                    <label>Apakah boleh memasang atribut kampanye berupa stiker/pamflet/brosur dll?</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-star color-theme"></i>
-                        <span>Apakah boleh memasang atribut kampanye berupa stiker/pamflet/brosur dll?</span>
                         <select id="stiker" name="stiker" class="input" required>
                             <option value="">Pilih</option>
                             <option value="1" {{ old('stiker') == '1' ? 'selected' : '' }}>Ya</option>
