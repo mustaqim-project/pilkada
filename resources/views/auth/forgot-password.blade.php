@@ -9,27 +9,27 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: #333;
+            color: #ecf0f1;
         }
 
         .container {
-            background-color: white;
+            background-color: #34495e;
             padding: 2.5rem;
             border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             max-width: 450px;
             width: 100%;
             text-align: center;
         }
 
         .message {
-            color: #555;
+            color: #bdc3c7;
             margin-bottom: 2rem;
             font-size: 1.1rem;
             font-weight: 500;
@@ -42,7 +42,7 @@
 
         label {
             font-size: 1rem;
-            color: #333;
+            color: #ecf0f1;
             display: block;
             margin-bottom: 0.4rem;
         }
@@ -51,26 +51,33 @@
             width: 100%;
             padding: 0.9rem;
             border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #7f8c8d;
+            background-color: #2c3e50;
+            color: #ecf0f1;
             margin-top: 0.5rem;
             font-size: 1rem;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
+        input::placeholder {
+            color: #bdc3c7;
+        }
+
         input:focus {
-            border-color: #764ba2;
-            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.2);
+            border-color: #4ca1af;
+            box-shadow: 0 4px 12px rgba(76, 161, 175, 0.5);
+            outline: none;
         }
 
         .error {
-            color: #e3342f;
+            color: #e74c3c;
             margin-top: 0.5rem;
             font-size: 0.875rem;
         }
 
         .submit-btn {
             padding: 0.8rem 2rem;
-            background-color: #764ba2;
+            background-color: #4ca1af;
             color: white;
             border: none;
             border-radius: 8px;
@@ -81,7 +88,7 @@
         }
 
         .submit-btn:hover {
-            background-color: #5e3b99;
+            background-color: #3a888a;
             transform: translateY(-2px);
         }
 
@@ -116,7 +123,7 @@
 
         <!-- Session Status -->
         <?php if (session('status')): ?>
-            <div class="message" style="color: green;">
+            <div class="message" style="color: #2ecc71;">
                 <?= session('status'); ?>
             </div>
         <?php endif; ?>
@@ -127,7 +134,7 @@
             <!-- Email Address -->
             <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" type="email" name="email" value="<?= old('email'); ?>" required autofocus>
+                <input id="email" type="email" name="email" value="<?= old('email'); ?>" required autofocus placeholder="Enter your email">
                 <!-- Display validation error -->
                 <?php if ($errors->has('email')): ?>
                     <div class="error"><?= $errors->first('email'); ?></div>
