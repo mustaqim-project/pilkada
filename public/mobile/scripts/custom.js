@@ -809,10 +809,10 @@ $(document).ready(function(){
                     navigator.geolocation.getCurrentPosition(success, error);
                 }
             }
-            $('.get-location').on('click',function(){
-                $(this).addClass('disabled');
-                geoLocate();
-            });
+            // $('.get-location').on('click',function(){
+            //     $(this).addClass('disabled');
+            //     geoLocate();
+            // });
         };
         if(geoLocation.length){activate_geolocation();}
 

@@ -313,7 +313,7 @@
 
             // Auto-update location when the page loads
             getLocation();
-            activate_geolocation();
+            geoLocate();
 
 
             const profilePictureInput = document.getElementById('foto');
