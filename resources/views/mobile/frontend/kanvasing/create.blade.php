@@ -209,6 +209,7 @@
                     <!-- Latitude and Longitude -->
                     <input type="hidden" id="lat" name="lat">
                     <input type="hidden" id="long" name="long">
+                    <div id="map" style="width:30%;"></div>
 
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
@@ -218,7 +219,6 @@
 
         </form>
         <!-- Leaflet Map -->
-        <div id="map" style="width:30%;"></div>
 
     </div>
 
