@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Illuminate.Support\Facades\Route;
 use App\Http\Controllers\CakadaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\KanvasingController;
 use App\Http\Controllers\TipeCakadaController;
 use App\Http\Controllers\RolePermissionController;
+use Detection\MobileDetect;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +20,28 @@ use App\Http\Controllers\RolePermissionController;
 |
 */
 
-Route::get('/', function () {
-    return view('mobile.frontend.dashboard.index');
-    // return view('mobile2.layouts.app');
 
+
+Route::get('/', function () {
+    $detect = new Mobile_Detect;
+
+    if ($detect->isMobile()) {
+        return view('mobile.frontend.dashboard.index');
+    } elseif ($detect->isTablet()) {
+        return view('mobile.frontend.dashboard.index');
+    } else {
+        return view('desktop.dashboard');
+    }
 });
+
 
 Route::get('/dashboard', function () {
     return view('mobile.frontend.dashboard.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
