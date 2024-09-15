@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f9;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: #333;
         }
 
         .container {
             background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            max-width: 450px;
             width: 100%;
             text-align: center;
         }
 
         .message {
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
+            color: #555;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         .form-group {
@@ -40,22 +44,22 @@
             font-size: 1rem;
             color: #333;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         input {
             width: 100%;
-            padding: 0.75rem;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            padding: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
             margin-top: 0.5rem;
             font-size: 1rem;
-            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         input:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+            border-color: #764ba2;
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.2);
         }
 
         .error {
@@ -65,35 +69,52 @@
         }
 
         .submit-btn {
-            padding: 0.75rem 1.5rem;
-            background-color: #6366f1;
+            padding: 0.8rem 2rem;
+            background-color: #764ba2;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .submit-btn:hover {
-            background-color: #4f46e5;
+            background-color: #5e3b99;
+            transform: translateY(-2px);
         }
 
         .submit-container {
             display: flex;
-            justify-content: flex-end;
-            margin-top: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* Small screen adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem;
+                max-width: 350px;
+            }
+
+            .message {
+                font-size: 1rem;
+            }
+
+            input, .submit-btn {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="message">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+            Forgot your password? No worries! Enter your email below, and we'll send you a reset link.
         </div>
 
         <!-- Session Status -->
-        <!-- You can handle session status in your server-side script -->
         <?php if (session('status')): ?>
             <div class="message" style="color: green;">
                 <?= session('status'); ?>
@@ -115,7 +136,7 @@
 
             <!-- Submit Button -->
             <div class="submit-container">
-                <button type="submit" class="submit-btn">Email Password Reset Link</button>
+                <button type="submit" class="submit-btn">Send Reset Link</button>
             </div>
         </form>
     </div>
