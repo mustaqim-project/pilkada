@@ -214,17 +214,19 @@
                             :value="old('location_name')" placeholder="Lokasi Saya" />
                         <x-input-error :messages="$errors->get('location_name')" class="mt-2" />
                     </div>
-
-                    <!-- Latitude and Longitude -->
-                    <input type="text" id="lat" name="lat">
-                    <input type="text" id="long" name="long">
-
-
-
-                    <a href="#"
-                        class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get
-                        my Location</a>
-                    <p class="location-coordinates"></p>
+                    <!-- Lokasi Saya -->
+                    <div class="input-style has-icon input-style-1 mt-4">
+                        <span>Longitude</span>
+                        <x-text-input id="long" class="input" type="text" name="long" readonly
+                            :value="old('long')" />
+                        <x-input-error :messages="$errors->get('long')" class="mt-2" />
+                    </div>
+                    <div class="input-style has-icon input-style-1 mt-4">
+                        <span>Latitude</span>
+                        <x-text-input id="lat" class="input" type="text" name="lat" readonly
+                            :value="old('lat')" />
+                        <x-input-error :messages="$errors->get('lat')" class="mt-2" />
+                    </div>
 
                     <div class="responsive-iframe add-iframe">
                         <iframe class="location-map"
@@ -246,6 +248,13 @@
         crossorigin=""></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            const getLocationButton = document.querySelector('.get-location');
+
+            // Jika elemen ditemukan, klik otomatis
+            if (getLocationButton) {
+                getLocationButton.click();
+            }
             // Initialize the map
             var map = L.map('map').setView([51.505, -0.09], 13);
 
