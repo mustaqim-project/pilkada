@@ -18,7 +18,7 @@
 
 <div class="menu-logo text-center">
     <a href="#"><img class="header-logo-app" width="100" src="{{ asset('mobile/images/logo.png') }}"></a>
-    <p class="font-10 mt-n2">Sistem Analisis Kampanye dan Analisis Pilkada Sitematis</p>
+    <p class="font-11 mt-n2" style="text-align: center;">Sistem Analisis Kampanye <br>dan <br>Analisis Pilkada Sitematis</p>
 </div>
 
 
