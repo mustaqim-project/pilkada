@@ -211,34 +211,31 @@
                         <i class="input-icon fa fa-map-pin color-theme"></i>
                         <span>Lokasi Saya</span>
                         <x-text-input id="location_name" class="input" type="text" name="location_name" readonly
-                            required :value="old('location_name')" placeholder="Lokasi Saya" />
+                            :value="old('location_name')" placeholder="Lokasi Saya" />
                         <x-input-error :messages="$errors->get('location_name')" class="mt-2" />
                     </div>
                     <!-- Lokasi Saya -->
                     <div class="input-style has-icon input-style-1 mt-4">
                         <span>Longitude</span>
-                        <x-text-input id="long" class="input" type="text" name="long" readonly required
+                        <x-text-input id="long" class="input" type="text"  name="long" readonly
                             :value="old('long')" />
                         <x-input-error :messages="$errors->get('long')" class="mt-2" />
                     </div>
                     <div class="input-style has-icon input-style-1 mt-4">
                         <span>Latitude</span>
-                        <x-text-input id="lat" class="input" type="text" name="lat" readonly required
+                        <x-text-input id="lat" class="input" type="text"  name="lat" readonly
                             :value="old('lat')" />
                         <x-input-error :messages="$errors->get('lat')" class="mt-2" />
                     </div>
-                    <a href="#"
-                        class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900 mt-4">Get
-                        my Location</a>
-                        <a href="#"
-                        class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900 mt-4">Get
-                        my Location</a>
+
+
+                    <a href="#" class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
+
+
 
                     <div class="responsive-iframe add-iframe">
                         <iframe class="location-map"
                             src='https://maps.google.com/?ie=UTF8&amp;ll=47.595131,-122.330414&amp;spn=0.006186,0.016512&amp;t=h&amp;z=17&amp;output=embed'></iframe>
-                        <div id="map" style="display: none;"></div>
-
                     </div>
                 </div>
             </div>
@@ -247,6 +244,7 @@
 
         </form>
 
+        <div id="map" style="display: none;"></div>
 
     </div>
 
@@ -256,7 +254,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // Initialize the map
+            document.querySelector('.get-posisi').addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent the default anchor click behavior
+
+                // Jalankan fungsi pertama: getLocation()
+                getLocation();
+
+            });
+                    // Initialize the map
             var map = L.map('map').setView([51.505, -0.09], 13);
 
             // Add a tile layer (OpenStreetMap in this case)
@@ -315,11 +320,7 @@
             }
 
             // Auto-update location when the page loads
-            document.querySelector('.get-posisi').addEventListener('click', function(e) {
-                e.preventDefault(); // Prevent the default anchor click behavior
-                getLocation();
-            });
-
+            getLocation();
 
 
             const profilePictureInput = document.getElementById('foto');
