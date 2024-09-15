@@ -233,7 +233,7 @@
             <div class="card card-style">
                 <div class="content">
                     <h3 class="font-700">Get Coordinates</h3>
-                    <a href="#" class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
+                    <a href="#" class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
                 </div>
                 <div class="responsive-iframe add-iframe">
                     <iframe class="location-map" src='https://maps.google.com/?ie=UTF8&amp;ll=47.595131,-122.330414&amp;spn=0.006186,0.016512&amp;t=h&amp;z=17&amp;output=embed'></iframe>
@@ -254,7 +254,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            document.querySelector('.get-posisi').addEventListener('click', function(e) {
+            document.querySelector('.get-location').addEventListener('click', function(e) {
                 e.preventDefault(); // Prevent the default anchor click behavior
 
                 // Jalankan fungsi pertama: getLocation()
