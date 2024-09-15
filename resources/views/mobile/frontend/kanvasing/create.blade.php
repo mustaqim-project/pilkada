@@ -29,7 +29,6 @@
                 <div class="content mb-0 mt-1">
                     <!-- Provinsi -->
                     <div class="input-style has-icon input-style-1 input-required">
-                        <i class="input-icon fa fa-map-marker color-theme"></i>
                         <span>Provinsi</span>
                         <select name="provinsi" id="provinsi" class="input" required>
                             <option value="">Pilih Provinsi</option>
@@ -42,7 +41,6 @@
 
                     <!-- Kabupaten/Kota -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
-                        <i class="input-icon fa fa-building color-theme"></i>
                         <span>Kabupaten/Kota</span>
                         <select name="kabupaten_kota" id="kabupaten_kota" class="input" required>
                             <option value="">Pilih Kabupaten/Kota</option>
@@ -53,7 +51,6 @@
 
                     <!-- Kecamatan -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
-                        <i class="input-icon fa fa-home color-theme"></i>
                         <span>Kecamatan</span>
                         <select name="kecamatan" id="kecamatan" class="input" required>
                             <option value="">Pilih Kecamatan</option>
@@ -63,7 +60,6 @@
 
                     <!-- Kelurahan -->
                     <div class="input-style has-icon input-style-1 input-required mt-4">
-                        <i class="input-icon fa fa-village color-theme"></i>
                         <span>Kelurahan</span>
                         <select name="kelurahan" id="kelurahan" class="input" required>
                             <option value="">Pilih Kelurahan</option>
@@ -279,7 +275,7 @@
             $('#provinsi').change(function() {
                 const provinsiId = $(this).val();
                 $.ajax({
-                    url: `/get-kabupaten-kota/${provinsiId}`,
+                    url: `/get-kabupaten/${provinsiId}`,
                     method: 'GET',
                     success: function(data) {
                         $('#kabupaten_kota').empty().append(
