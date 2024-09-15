@@ -220,28 +220,34 @@
                     <input type="hidden" id="long" name="long">
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
 
                 </div>
             </div>
 
-        <div class="card card-style">
-            <div class="content">
-                <h3 class="font-700">Get Coordinates</h3>
-                <p class="mb-0 pb-4">You can request your device coordinates, these can then be placed on a map.</p>
-                <p class="location-support mt-n3"></p>
-                <a href="#" class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get my Location</a>
-                <p class="location-coordinates"></p>
-                <h3 class="pt-2">Show Location on Map</h3>
-                <p>
-                    Tap the "Get My Location" button above and this map will automatically update with your new location. It's that simple.
-                </p>
+            <div class="card card-style">
+                <div class="content">
+                    <h3 class="font-700">Get Coordinates</h3>
+                    <p class="mb-0 pb-4">You can request your device coordinates, these can then be placed on a map.</p>
+                    <p class="location-support mt-n3"></p>
+                    <a href="#"
+                        class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get
+                        my Location</a>
+                    <p class="location-coordinates"></p>
+                    <h3 class="pt-2">Show Location on Map</h3>
+                    <p>
+                        Tap the "Get My Location" button above and this map will automatically update with your new
+                        location. It's that simple.
+                    </p>
+                </div>
+                <div class="responsive-iframe add-iframe">
+                    <iframe class="location-map"
+                        src='https://maps.google.com/?ie=UTF8&amp;ll=47.595131,-122.330414&amp;spn=0.006186,0.016512&amp;t=h&amp;z=17&amp;output=embed'></iframe>
+                </div>
             </div>
-            <div class="responsive-iframe add-iframe">
-                <iframe class="location-map" src='https://maps.google.com/?ie=UTF8&amp;ll=47.595131,-122.330414&amp;spn=0.006186,0.016512&amp;t=h&amp;z=17&amp;output=embed'></iframe>
-            </div>
-        </div>
-    </form>
+
+            <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
+
+        </form>
 
         {{-- <div class="custom-map" id="map"></div> --}}
 
