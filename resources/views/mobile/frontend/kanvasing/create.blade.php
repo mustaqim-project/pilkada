@@ -190,9 +190,9 @@
                 </div>
             </div>
 
-            <!-- Leaflet Map -->
-            <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
         </form>
+        <!-- Leaflet Map -->
+        <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
 
     </div>
 
