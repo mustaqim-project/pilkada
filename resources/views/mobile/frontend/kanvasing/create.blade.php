@@ -15,7 +15,7 @@
     </style>
     <div class="page-content">
         <div class="page-title page-title-small">
-            <h2><a href="#" data-back-button><i class="fa fa-arrow-left"></i></a>Sign Up</h2>
+            <h2><a href="/" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
         </div>
         <div class="card header-card shape-rounded" data-card-height="150">
             <div class="card-overlay bg-highlight opacity-95"></div>
