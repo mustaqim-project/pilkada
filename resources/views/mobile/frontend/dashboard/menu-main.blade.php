@@ -26,60 +26,11 @@
     <h5 class="text-uppercase opacity-20 font-12 pl-3">
         Menu
     </h5>
-    {{--
-    <a href="#" data-submenu="sub-contact">
-        <i data-feather="mail" data-feather-line="1" data-feather-size="16" data-feather-color="blue2-dark"
-            data-feather-bg="blue2-fade-dark"></i>
-        <span>
-            @if (session('lang') === 'id')
-                {{ 'Kontak' }}
-            @else
-                {{ $translate->translate('Contact') }}
-            @endif
-        </span>
-        <strong class="badge bg-highlight color-white">1</strong>
-        <i class="fa fa-circle"></i>
-    </a>
-    <div id="sub-contact" class="submenu">
-        <a href="contact.blade.php" id="nav-contact">
-            <i class="fa fa-envelope color-blue2-dark font-16 opacity-30"></i>
-            <span>
-                @if (session('lang') === 'id')
-                    {{ 'Email' }}
-                @else
-                    {{ $translate->translate('Email') }}
-                @endif
-            </span>
-            <i class="fa fa-circle"></i>
-        </a>
-        <a href="#">
-            <i class="fa fa-phone color-green1-dark font-16 opacity-50"></i>
-            <span>
-                @if (session('lang') === 'id')
-                    {{ 'Telepon' }}
-                @else
-                    {{ $translate->translate('Phone') }}
-                @endif
-            </span>
-            <i class="fa fa-circle"></i>
-        </a>
-        <a href="#">
-            <i class="fab fa-whatsapp color-whatsapp font-16 opacity-30"></i>
-            <span>
-                @if (session('lang') === 'id')
-                    {{ 'WhatsApp' }}
-                @else
-                    {{ $translate->translate('WhatsApp') }}
-                @endif
-            </span>
-            <i class="fa fa-circle"></i>
-        </a>
-    </div> --}}
-
     @if (Route::has('login'))
         <nav class="-mx-3 flex flex-1 justify-end">
             @auth
-                <a href="#" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                <a href="{{ route('profile.edit') }}"
+                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                     <i class="fa fa-user"></i>
                     <span>
                         Profile
@@ -102,25 +53,102 @@
                     @csrf
                 </form>
             @else
-                <a href="{{ route('login') }}"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                    <!-- Login Icon -->
-                    <i class="fa fa-sign-in-alt"></i>
-                    <span>Log in</span>
+                <a href="#" data-menu="menu-signin">
+                    <i class="fa fa-sign-in-alt color-green1-dark"></i>
+                    <span>Login</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                <a href="#" data-menu="menu-signup">
+                    <i class="fa fa-sign-out-alt color-green1-dark"></i>
+                    <span>Register</span>
+                    <i class="fa fa-angle-right"></i>
                 </a>
 
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}"
-                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                        <!-- Register Icon -->
-                        <i class="fa fa-user-plus"></i>
-                        <span>Register</span>
-                    </a>
-                @endif
+
             @endauth
         </nav>
     @endif
 
+    <div id="menu-signin" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="320"
+        data-menu-effect="menu-over">
+        <div class="content mb-0">
+            <h1 class="font-700 mb-0">Login</h1>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="input-style has-icon input-style-1 input-required">
+                    <i class="input-icon fa fa-user font-11"></i>
+                    <span>Email</span>
+                    <em>(required)</em>
+                    <input type="email" placeholder="email">
+                </div>
+                <div class="input-style has-icon input-style-1 input-required">
+                    <i class="input-icon fa fa-lock font-11"></i>
+                    <span>Password</span>
+                    <em>(required)</em>
+                    <input type="password" placeholder="Password">
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <a href="#" data-menu="menu-forgot" class="font-10">Forgot Password?</a>
+                    </div>
+                    <div class="col-6">
+                        <a data-menu="menu-signup" href="#" class="float-right font-10">Create Account</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <a href="#"
+                    class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green1-dark mt-4">LOGIN</a>
+            </form>
+        </div>
+    </div>
+
+    <!---------------->
+    <!---------------->
+    <!--Menu Sign Up-->
+    <!---------------->
+    <!---------------->
+    <div id="menu-signup" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="370"
+        data-menu-effect="menu-over">
+        <div class="content mb-0">
+            <h1 class="font-700 mb-0">Register</h1>
+            <p class="font-11  mt-n1 mb-0">
+                Don't have an account? Register below.
+            </p>
+            <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="input-style has-icon input-style-1 input-required">
+                    <i class="input-icon fa fa-user font-11"></i>
+                    <span>Username</span>
+                    <em>(required)</em>
+                    <input type="name" placeholder="Username">
+                </div>
+                <div class="input-style has-icon input-style-1 input-required">
+                    <i class="input-icon fa fa-at"></i>
+                    <span>Email</span>
+                    <em>(required)</em>
+                    <input type="email" placeholder="Email">
+                </div>
+                <div class="input-style has-icon input-style-1 input-required">
+                    <i class="input-icon fa fa-lock font-11"></i>
+                    <span>Password</span>
+                    <em>(required)</em>
+                    <input type="password" placeholder="Choose a Password">
+                </div>
+                <div class="input-style has-icon input-style-1 input-required">
+                    <i class="input-icon fa fa-lock font-11"></i>
+                    <span>Confirm Password</span>
+                    <em>(required)</em>
+                    <input type="password_confirmation" placeholder="Choose a Password">
+                </div>
+                <p class="text-center pb-0 mb-n1 pt-1">
+                    <a href="#" data-menu="menu-signin" class="text-center font-11 color-gray2-dark">Already
+                        Registered? Sign In Here.</a>
+                </p>
+                <a href="#"
+                    class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-blue2-dark mt-4">Register</a>
+            </form>
+        </div>
+    </div>
 
 
 
