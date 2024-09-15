@@ -177,7 +177,7 @@
                     <p id="map"></p>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="upload-file bg-highlight shadow-s rounded-s">Simpan</button>
+                    <button type="submit" class="btn upload-file bg-highlight shadow-s rounded-s">Simpan</button>
 
                 </div>
             </div>
