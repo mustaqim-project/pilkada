@@ -39,12 +39,6 @@ require __DIR__.'/auth.php';
 
 // Routes with middleware
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/cakada', [CakadaController::class, 'index'])->middleware('can:cakada read');
-    // Route::get('/cakada/create', [CakadaController::class, 'create'])->middleware('can:cakada create')->name('cakada.create');
-    // Route::post('/cakada', [CakadaController::class, 'store'])->middleware('can:cakada create');
-    // Route::get('/cakada/{id}/edit', [CakadaController::class, 'edit'])->middleware('can:cakada update');
-    // Route::put('/cakada/{id}', [CakadaController::class, 'update'])->middleware('can:cakada update');
-    // Route::delete('/cakada/{id}', [CakadaController::class, 'destroy'])->middleware('can:cakada delete');
 
     Route::get('/role-permission', [RolePermissionController::class, 'index'])->middleware('can:role_permission read')->name('role_permission.index');
     Route::post('/roles/store', [RolePermissionController::class, 'storeRole'])->middleware('can:role_permission create')->name('roles.store');

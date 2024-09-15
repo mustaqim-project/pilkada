@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -34,10 +35,10 @@ class DatabaseSeeder extends Seeder
         $adminRole->givePermissionTo(Permission::all());
         $timsesRole->givePermissionTo(['kanvasing create', 'kanvasing read']);
         $userRole->givePermissionTo(['cakada read']);
-
         // Create users
         $admin = User::create([
             'name' => 'Admin',
+            'role_id' => '1',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
         ]);
@@ -45,6 +46,7 @@ class DatabaseSeeder extends Seeder
 
         $timses = User::create([
             'name' => 'Timses',
+            'role_id' => '2',
             'email' => 'timses@example.com',
             'password' => Hash::make('password'),
         ]);
@@ -52,6 +54,7 @@ class DatabaseSeeder extends Seeder
 
         $user = User::create([
             'name' => 'User',
+            'role_id' => '3',
             'email' => 'user@example.com',
             'password' => Hash::make('password'),
         ]);

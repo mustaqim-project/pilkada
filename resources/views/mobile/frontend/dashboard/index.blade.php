@@ -107,11 +107,6 @@
             <div class="card-overlay dark-mode-tint"></div>
         </div>
 
-
-
-
-
-
         <div class="content mb-2">
             <h5 class="float-left font-16 font-500">Berita Pilkada</h5>
             <div class="clearfix"></div>
