@@ -126,71 +126,152 @@
         <div id="map"></div>
     </div>
 
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize the map
-            var map = L.map('map').setView([51.505, -0.09], 13);
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize the map
+        var map = L.map('map').setView([51.505, -0.09], 13);
 
-            // Add a tile layer (OpenStreetMap in this case)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19
-            }).addTo(map);
+        // Add a tile layer (OpenStreetMap in this case)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
 
-            // Function to get the user's location and update the map
-            function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition, showError);
-                } else {
-                    console.log("Geolocation is not supported by this browser.");
+        // Function to get the user's location and update the map
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                console.log("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+
+            // Update hidden fields with user's location
+            document.getElementById('lat').value = lat;
+            document.getElementById('long').value = lng;
+
+            // Center the map and add a marker for the user's location
+            map.setView([lat, lng], 13);
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup('Lokasi Saya')
+                .openPopup();
+
+            // Get the location name using reverse geocoding
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+                .then(response => response.json())
+                .then(data => {
+                    var locationName = data.display_name;
+                    document.getElementById('location_name').value = locationName;
+                })
+                .catch(error => console.error('Error fetching location name:', error));
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    console.log("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.log("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    console.log("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    console.log("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        // Auto-update location when the page loads
+        getLocation();
+
+
+        const profilePictureInput = document.getElementById('foto');
+        const imagePreview = document.getElementById('image_preview');
+
+        profilePictureInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
                 }
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '#';
+                imagePreview.style.display = 'none';
             }
-
-            function showPosition(position) {
-                var lat = position.coords.latitude;
-                var lng = position.coords.longitude;
-
-                // Update hidden fields with user's location
-                document.getElementById('lat').value = lat;
-                document.getElementById('long').value = lng;
-
-                // Center the map and add a marker for the user's location
-                map.setView([lat, lng], 13);
-                L.marker([lat, lng]).addTo(map)
-                    .bindPopup('Your current location.')
-                    .openPopup();
-
-                // Get the location name using reverse geocoding
-                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
-                    .then(response => response.json())
-                    .then(data => {
-                        var locationName = data.display_name;
-                        document.getElementById('location_name').value = locationName;
-                    })
-                    .catch(error => console.error('Error fetching location name:', error));
-            }
-
-            function showError(error) {
-                switch(error.code) {
-                    case error.PERMISSION_DENIED:
-                        console.log("User denied the request for Geolocation.");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        console.log("Location information is unavailable.");
-                        break;
-                    case error.TIMEOUT:
-                        console.log("The request to get user location timed out.");
-                        break;
-                    case error.UNKNOWN_ERROR:
-                        console.log("An unknown error occurred.");
-                        break;
-                }
-            }
-
-            // Auto-update location when the page loads
-            getLocation();
         });
-    </script>
+
+
+
+
+        // Load Kabupaten/Kota based on Provinsi
+        $('#provinsi').change(function() {
+            const provinsiId = $(this).val();
+            $.ajax({
+                url: `/get-kabupaten/${provinsiId}`,
+                method: 'GET',
+                success: function(data) {
+                    $('#kabupaten_kota').empty().append(
+                        '<option value="">Pilih Kabupaten/Kota</option>');
+                    $.each(data, function(index, item) {
+                        $('#kabupaten_kota').append(
+                            `<option value="${item.id}">${item.name}</option>`);
+                    });
+                    $('#kecamatan').empty().append(
+                        '<option value="">Pilih Kecamatan</option>');
+                    $('#kelurahan').empty().append(
+                        '<option value="">Pilih Kelurahan</option>');
+                }
+            });
+        });
+
+        // Load Kecamatan based on Kabupaten/Kota
+        $('#kabupaten_kota').change(function() {
+            const kabupatenKotaId = $(this).val();
+            $.ajax({
+                url: `/get-kecamatan/${kabupatenKotaId}`,
+                method: 'GET',
+                success: function(data) {
+                    $('#kecamatan').empty().append(
+                        '<option value="">Pilih Kecamatan</option>');
+                    $.each(data, function(index, item) {
+                        $('#kecamatan').append(
+                            `<option value="${item.id}">${item.name}</option>`);
+                    });
+                    $('#kelurahan').empty().append(
+                        '<option value="">Pilih Kelurahan</option>');
+                }
+            });
+        });
+
+        // Load Kelurahan based on Kecamatan
+        $('#kecamatan').change(function() {
+            const kecamatanId = $(this).val();
+            $.ajax({
+                url: `/get-kelurahan/${kecamatanId}`,
+                method: 'GET',
+                success: function(data) {
+                    $('#kelurahan').empty().append(
+                        '<option value="">Pilih Kelurahan</option>');
+                    $.each(data, function(index, item) {
+                        $('#kelurahan').append(
+                            `<option value="${item.id}">${item.name}</option>`);
+                    });
+                }
+            });
+        });
+
+    });
+</script>
 </body>
 </html>
