@@ -2,46 +2,26 @@
 <html lang="en">
     <head>
         <base href="" />
-        <title>
-            Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem
-        </title>
+        <title>Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem</title>
         <meta charset="utf-8" />
-        <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <link rel="shortcut icon" href="{{ asset('admin/desktop/assets/media/logos/favicon.ico') }}" />
 
         <!--begin::Fonts-->
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"
-        />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
         <!--end::Fonts-->
 
         <!--begin::Vendor Stylesheets (used by this page)-->
-        <link
-            href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css"
-            rel="stylesheet"
-            type="text/css"
-        />
-        <link
-            href="assets/plugins/custom/datatables/datatables.bundle.css"
-            rel="stylesheet"
-            type="text/css"
-        />
+        <link href="{{ asset('admin/desktop/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('admin/desktop/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
         <!--end::Vendor Stylesheets-->
 
         <!--begin::Global Stylesheets Bundle (used by all pages)-->
-        <link
-            href="assets/plugins/global/plugins.bundle.css"
-            rel="stylesheet"
-            type="text/css"
-        />
-        <link
-            href="assets/css/style.bundle.css"
-            rel="stylesheet"
-            type="text/css"
-        />
+        <link href="{{ asset('admin/desktop/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('admin/desktop/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
     </head>
 
+</html>
     <body
         data-kt-name="metronic"
         id="kt_app_body"
@@ -7573,16 +7553,17 @@
         </div>
         <!--end::Scrolltop-->
 
-        <!--begin::Javascript-->
         <script>
-            var hostUrl = "assets/";
+            var hostUrl = "{{ asset('admin/desktop/assets/') }}";
         </script>
+
         <!--begin::Global Javascript Bundle(used by all pages)-->
-        <script src="assets/plugins/global/plugins.bundle.js"></script>
-        <script src="assets/js/scripts.bundle.js"></script>
+        <script src="{{ asset('admin/desktop/assets/plugins/global/plugins.bundle.js') }}"></script>
+        <script src="{{ asset('admin/desktop/assets/js/scripts.bundle.js') }}"></script>
         <!--end::Global Javascript Bundle-->
+
         <!--begin::Vendors Javascript(used by this page)-->
-        <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+        <script src="{{ asset('admin/desktop/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
         <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
         <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
         <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
@@ -7594,18 +7575,19 @@
         <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
         <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
         <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-        <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+        <script src="{{ asset('admin/desktop/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
         <!--end::Vendors Javascript-->
+
         <!--begin::Custom Javascript(used by this page)-->
-        <script src="assets/js/widgets.bundle.js"></script>
-        <script src="assets/js/custom/widgets.js"></script>
-        <script src="assets/js/custom/apps/chat/chat.js"></script>
-        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-        <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-        <script src="assets/js/custom/utilities/modals/new-target.js"></script>
-        <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+        <script src="{{ asset('admin/desktop/assets/js/widgets.bundle.js') }}"></script>
+        <script src="{{ asset('admin/desktop/assets/js/custom/widgets.js') }}"></script>
+        <script src="{{ asset('admin/desktop/assets/js/custom/apps/chat/chat.js') }}"></script>
+        <script src="{{ asset('admin/desktop/assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+        <script src="{{ asset('admin/desktop/assets/js/custom/utilities/modals/create-app.js') }}"></script>
+        <script src="{{ asset('admin/desktop/assets/js/custom/utilities/modals/new-target.js') }}"></script>
+        <script src="{{ asset('admin/desktop/assets/js/custom/utilities/modals/users-search.js') }}"></script>
         <!--end::Custom Javascript-->
-        <!--end::Javascript-->
+
     </body>
     <!--end::Body-->
 </html>

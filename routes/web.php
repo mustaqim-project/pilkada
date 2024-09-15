@@ -30,22 +30,19 @@ Route::get('/', function () {
     } elseif ($detect->isTablet()) {
         return view('mobile.frontend.dashboard.index');
     } else {
-        return view('desktop.welcome');
+        return view('desktop.auth.login');
     }
 });
 
 
 Route::get('/dashboard', function () {
-
-
     $detect = new Mobile_Detect;
-
     if ($detect->isMobile()) {
         return view('mobile.frontend.dashboard.index');
     } elseif ($detect->isTablet()) {
         return view('mobile.frontend.dashboard.index');
     } else {
-        return view('desktop.dashboard');
+        return view('desktop.layouts.master');
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -64,7 +61,6 @@ require __DIR__ . '/auth.php';
 
 // Routes with middleware
 Route::middleware(['auth'])->group(function () {
-
     Route::get('/role-permission', [RolePermissionController::class, 'index'])->middleware('can:role_permission read')->name('role_permission.index');
     Route::post('/roles/store', [RolePermissionController::class, 'storeRole'])->middleware('can:role_permission create')->name('roles.store');
     Route::post('/permissions/store', [RolePermissionController::class, 'storePermission'])->middleware('can:role_permission create')->name('permissions.store');
