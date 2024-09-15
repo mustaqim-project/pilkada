@@ -228,7 +228,7 @@
                         <x-input-error :messages="$errors->get('lat')" class="mt-2" />
                     </div>
                     <a href="#"
-                        class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900"
+                        class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900"
                         style="display: none;">
                         Get my Location
                     </a>
@@ -246,17 +246,7 @@
         <div id="map" style="display: none;"></div>
 
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Mendapatkan elemen dengan class .get-location
-            const getLocationButton = document.querySelector('.get-location');
 
-            // Jika elemen ditemukan, klik otomatis
-            if (getLocationButton) {
-                getLocationButton.click();
-            }
-        });
-    </script>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
         integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
         crossorigin=""></script>
@@ -323,6 +313,7 @@
 
             // Auto-update location when the page loads
             getLocation();
+            activate_geolocation();
 
 
             const profilePictureInput = document.getElementById('foto');
