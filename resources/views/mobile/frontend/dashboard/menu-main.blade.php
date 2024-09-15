@@ -18,8 +18,7 @@
 
 <div class="menu-logo text-center">
     <a href="#"><img class="header-logo-app bg-highlight" width="80" src="{{ asset('mobile/images/logo.png') }}"></a>
-    <h1 class="pt-3 font-800 font-28 text-uppercase">SIKADSIS</h1>
-    <p class="font-11 mt-n2">Put a little <span class="color-highlight">color</span> in your life.</p>
+    <p class="font-11 mt-n2">Sistem Analisis Kampanye dan Analisis Pilkada Sitematis</p>
 </div>
 
 
