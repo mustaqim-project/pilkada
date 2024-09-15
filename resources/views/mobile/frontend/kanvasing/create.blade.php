@@ -201,8 +201,8 @@
 
 
                     <!-- Popularitas -->
-                    <label>Apakah kenal dengan calon ?</label>
-                    <div class="input-style has-icon input-style-1 input-required mt-4">
+                    <label class="mt-4">Apakah kenal dengan calon ?</label>
+                    <div class="input-style has-icon input-style-1 input-required mt-2">
                         <i class="input-icon fa fa-bar-chart color-theme"></i>
                         <select id="popularitas" name="popularitas" class="input" required>
                             <option value="">Pilih</option>
@@ -213,8 +213,8 @@
                     </div>
 
                     <!-- Elektabilitas -->
-                    <label>Apakah anda akan memilih calon tersebut?</label>
-                    <div class="input-style has-icon input-style-1 input-required mt-4">
+                    <label class="mt-4">Apakah anda akan memilih calon tersebut?</label>
+                    <div class="input-style has-icon input-style-1 input-required mt-2">
                         <i class="input-icon fa fa-star color-theme"></i>
                         <select id="elektabilitas" name="elektabilitas" class="input" required>
                             <option value="">Pilih</option>
@@ -242,7 +242,7 @@
                     </div>
 
                     <!-- Stiker -->
-                    <label>Apakah boleh memasang atribut kampanye berupa stiker/pamflet/brosur dll?</label>
+                    <label class="mt-4">Apakah boleh memasang atribut kampanye berupa stiker/pamflet/brosur dll?</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-star color-theme"></i>
                         <select id="stiker" name="stiker" class="input" required>
@@ -266,11 +266,11 @@
                         <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                     </div>
                     <!-- deskripsi -->
+                    <label class="mt-5">Kendala dilapangan jika ada!</label>
                     <div class="input-style has-icon input-style-1 input-required mt-4">
                         <i class="input-icon fa fa-address-card color-theme"></i>
-                        <span>Kendala dilapangan jika ada!</span>
                         <x-text-input id="deskripsi" class="input" type="text" name="deskripsi" :value="old('deskripsi')"
-                            required placeholder="deskripsi untuk kandidat" />
+                            required placeholder="Kendala dilapangan jika ada!" />
                         <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                     </div>
                     <!-- Lokasi Saya -->
