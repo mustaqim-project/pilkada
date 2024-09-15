@@ -219,25 +219,13 @@
                     <input type="hidden" id="lat" name="lat">
                     <input type="hidden" id="long" name="long">
 
-                    <!-- Submit Button -->
 
-                </div>
-            </div>
 
-            <div class="card card-style">
-                <div class="content">
-                    <h3 class="font-700">Get Coordinates</h3>
-                    <p class="mb-0 pb-4">You can request your device coordinates, these can then be placed on a map.</p>
-                    <p class="location-support mt-n3"></p>
                     <a href="#"
                         class="get-location btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">Get
                         my Location</a>
                     <p class="location-coordinates"></p>
-                    <h3 class="pt-2">Show Location on Map</h3>
-                    <p>
-                        Tap the "Get My Location" button above and this map will automatically update with your new
-                        location. It's that simple.
-                    </p>
+
                 </div>
                 <div class="responsive-iframe add-iframe">
                     <iframe class="location-map"
