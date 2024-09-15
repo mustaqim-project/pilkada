@@ -21,7 +21,25 @@
     {{-- <p class="font-11 mt-n2" style="text-align: center;">Sistem Analisis Kampanye <br>dan <br>Analisis Pilkada Sitematis</p> --}}
 </div>
 
+<div class="card card-style">
+    <div class="content mt-0 mb-0">
+        <div class="list-group list-custom-small list-icon-0">
 
+            <a href="#" data-menu="menu-signin">
+                <i class="fa fa-sign-in-alt color-green1-dark"></i>
+                <span>Login</span>
+                <i class="fa fa-angle-right"></i>
+            </a>
+            <a href="#" data-menu="menu-signup">
+                <i class="fa fa-sign-out-alt color-green1-dark"></i>
+                <span>Register</span>
+                <i class="fa fa-angle-right"></i>
+            </a>
+
+        </div>
+    </div>
+</div>
+{{--
 <div class="menu-items">
     <h5 class="text-uppercase opacity-20 font-12 pl-3">
         Menu
@@ -69,7 +87,13 @@
         </nav>
     @endif
 
-    <div id="menu-signin" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="320"
+
+
+
+
+</div> --}}
+
+<div id="menu-signin" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="320"
         data-menu-effect="menu-over">
         <div class="content mb-0">
             <h1 class="font-700 mb-0">Login</h1>
@@ -150,9 +174,6 @@
         </div>
     </div>
 
-
-
-</div>
 
 <div class="text-center pt-2">
     <a href="#" class="icon icon-xs mr-1 rounded-s bg-facebook"><i class="fab fa-facebook"></i></a>
