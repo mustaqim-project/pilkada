@@ -19,9 +19,9 @@
 
 
         .custom-map {
-            height: 300px;
+            height: 100vh; /* Menjadikan peta menempati seluruh layar */
             width: 100%;
-            border: 1px solid #ddd; /* Opsional: Tambahkan border untuk melihat batas peta */
+            position: relative;
         }
 
         .container {
@@ -73,6 +73,7 @@
             <div class="card-overlay bg-highlight opacity-95"></div>
             <div class="card-overlay dark-mode-tint"></div>
         </div>
+        <div class="custom-map" id="map"></div>
 
         <form method="POST" action="{{ route('kanvasing.store') }}" enctype="multipart/form-data">
             @csrf
