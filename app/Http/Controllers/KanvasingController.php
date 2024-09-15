@@ -9,6 +9,21 @@ use Illuminate\Support\Facades\Http;
 
 class KanvasingController extends Controller
 {
+
+    public function __construct()
+    {
+        // Membatasi akses dengan permission
+        $this->middleware('can:kanvasing read')->only('index');
+        $this->middleware('can:kanvasing create')->only(['store']);
+        $this->middleware('can:kanvasing create')->only(['create']);
+    }
+
+    public function index()
+    {
+        $kanvasings = Kanvasing::all();
+        return view('kanvasing.index', compact('kanvasings'));
+    }
+
     public function create()
     {
         // Fetch the data from the API
@@ -58,9 +73,4 @@ class KanvasingController extends Controller
         return redirect()->route('kanvasing.index')->with('success', 'Kanvasing entry created successfully.');
     }
 
-    public function index()
-    {
-        $kanvasings = Kanvasing::all();
-        return view('kanvasing.index', compact('kanvasings'));
-    }
 }
