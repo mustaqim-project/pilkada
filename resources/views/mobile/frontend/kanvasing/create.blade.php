@@ -13,11 +13,14 @@
             /* Jarak atas */
         }
 
-        #map {
-            height: 100rem;
-            width: 100%;
-        }
 
+        #map {
+            height: 400px; /* Adjust height as needed */
+            width: 100%;
+            border: 1px solid #ddd; /* Optional: Add border for better visual separation */
+            border-radius: 8px; /* Optional: Rounded corners */
+            margin-top: 20px; /* Space above the map */
+        }
 
         .btn-full {
             display: inline-block;
@@ -221,9 +224,9 @@
             </div>
 
         </form>
-        <!-- Leaflet Map -->
-        <div id="map"></div>
-
+        <div class="mt-4">
+            <div id="map"></div>
+        </div>
 
     </div>
 
