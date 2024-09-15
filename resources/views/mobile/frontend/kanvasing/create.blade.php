@@ -1,6 +1,10 @@
 @extends('mobile.frontend.layout.master')
 
 @section('content')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
     <style>
         #image_preview {
             max-width: 100%;
@@ -11,53 +15,6 @@
             /* Tampilkan gambar secara blok */
             margin-top: 10px;
             /* Jarak atas */
-        }
-
-
-        #map {
-            height: 300px;
-            width: 100%;
-        }
-
-        .container {
-            margin-top: 20px;
-        }
-
-        .btn-full {
-            display: inline-block;
-            width: 100%;
-            padding: 0.75rem 1.5rem;
-            /* Padding atas/bawah dan kiri/kanan */
-            border: none;
-            border-radius: 0.375rem;
-            /* Radius sudut */
-            font-size: 1rem;
-            font-weight: bold;
-            color: #fff;
-            /* Warna teks putih */
-            background-color: #007bff;
-            /* Ganti dengan warna latar belakang sesuai kebutuhan */
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-highlight {
-            background-color: #28a745;
-            /* Ganti dengan warna latar belakang highlight */
-        }
-
-        .btn-full:hover {
-            background-color: #0056b3;
-            /* Ganti dengan warna latar belakang saat hover */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Bayangan saat hover */
-        }
-
-        .btn-full:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-            /* Bayangan fokus */
         }
     </style>
     <div class="page-content">
@@ -217,20 +174,18 @@
                     <!-- Latitude and Longitude -->
                     <input type="hidden" id="lat" name="lat">
                     <input type="hidden" id="long" name="long">
+                    <p id="map"></p>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-full btn-highlight">Simpan</button>
+                    <button type="submit" class="upload-file-text color-white">Simpan</button>
 
                 </div>
             </div>
 
         </form>
 
-        <div class="container">
 
-            <div id="map"></div>
 
-        </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
@@ -377,8 +332,6 @@
                     }
                 });
             });
-
-
 
         });
     </script>
