@@ -20,11 +20,7 @@
 
 <div class="menu-items">
     <h5 class="text-uppercase opacity-20 font-12 pl-3">
-        @if (session('lang') === 'id')
-            {{ 'Menu' }}
-        @else
-            {{ $translate->translate('Menu') }}
-        @endif
+       Menu
     </h5>
     {{--
     <a href="#" data-submenu="sub-contact">
@@ -81,13 +77,7 @@
             @auth
                 <a href="#" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                     <i class="fa fa-user"></i>
-                    <span>
-                        @if (session('lang') === 'id')
-                            {{ 'Profile' }}
-                        @else
-                            {{ $translate->translate('Profile') }}
-                        @endif
-                    </span>
+                    Profile
 
                 </a>
 
@@ -141,11 +131,6 @@
     <a href="#" class="icon icon-xs mr-1 rounded-s bg-linkedin"><i class="fab fa-linkedin-in"></i></a>
     <a href="#" class="icon icon-xs rounded-s bg-whatsapp"><i class="fab fa-whatsapp"></i></a>
     <p class="mb-0 pt-3 font-10 opacity-30">
-        @if (session('lang') === 'id')
-            {{ 'Hak Cipta' }} <span class="copyright-year"></span> {{ 'Enabled. Semua hak dilindungi' }}
-        @else
-            {{ $translate->translate('Copyright') }} <span class="copyright-year"></span>
-            {{ $translate->translate('Enabled. All rights reserved') }}
-        @endif
+        {{ 'Hak Cipta' }} <span class="copyright-year"></span> {{ 'Enabled. Semua hak dilindungi' }}
     </p>
 </div>
