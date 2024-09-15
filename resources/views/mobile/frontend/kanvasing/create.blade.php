@@ -228,8 +228,7 @@
                         <x-input-error :messages="$errors->get('lat')" class="mt-2" />
                     </div>
                     <a href="#"
-                        class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900"
-                        style="display: none;">
+                        class="get-location get-posisi btn btn-full btn-m bg-red2-dark rounded-sm text-uppercase shadow-l font-900">
                         Get my Location
                     </a>
                     <div class="responsive-iframe add-iframe">
