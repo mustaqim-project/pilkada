@@ -13,24 +13,7 @@
             /* Jarak atas */
         }
 
-        #map {
-            height: 50vh;
-            /* Set height to 50% of the viewport height */
-            width: 100%;
-            /* Full width of the container */
-            margin-top: 2rem;
-            /* Margin on top */
-        }
 
-        /* Media Query for mobile devices */
-        @media (max-width: 768px) {
-            #map {
-                height: 40vh;
-                /* Adjust height for smaller screens */
-                margin-top: 1rem;
-                /* Adjust margin for smaller screens */
-            }
-        }
 
         .btn-full {
             display: inline-block;
@@ -235,7 +218,7 @@
 
         </form>
         <!-- Leaflet Map -->
-        <div id="map"></div>
+        <div id="map" style="width:30%;"></div>
 
     </div>
 
