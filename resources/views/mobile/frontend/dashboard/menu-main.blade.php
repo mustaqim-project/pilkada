@@ -20,7 +20,7 @@
 
 <div class="menu-items">
     <h5 class="text-uppercase opacity-20 font-12 pl-3">
-       Menu
+        Menu
     </h5>
     {{--
     <a href="#" data-submenu="sub-contact">
@@ -29,21 +29,21 @@
         <span>
             @if (session('lang') === 'id')
                 {{ 'Kontak' }}
-            @else
-                {{ $translate->translate('Contact') }}
-            @endif
-        </span>
-        <strong class="badge bg-highlight color-white">1</strong>
-        <i class="fa fa-circle"></i>
+    @else
+    {{ $translate->translate('Contact') }}
+    @endif
+    </span>
+    <strong class="badge bg-highlight color-white">1</strong>
+    <i class="fa fa-circle"></i>
     </a>
     <div id="sub-contact" class="submenu">
         <a href="contact.blade.php" id="nav-contact">
             <i class="fa fa-envelope color-blue2-dark font-16 opacity-30"></i>
             <span>
                 @if (session('lang') === 'id')
-                    {{ 'Email' }}
+                {{ 'Email' }}
                 @else
-                    {{ $translate->translate('Email') }}
+                {{ $translate->translate('Email') }}
                 @endif
             </span>
             <i class="fa fa-circle"></i>
@@ -52,9 +52,9 @@
             <i class="fa fa-phone color-green1-dark font-16 opacity-50"></i>
             <span>
                 @if (session('lang') === 'id')
-                    {{ 'Telepon' }}
+                {{ 'Telepon' }}
                 @else
-                    {{ $translate->translate('Phone') }}
+                {{ $translate->translate('Phone') }}
                 @endif
             </span>
             <i class="fa fa-circle"></i>
@@ -63,9 +63,9 @@
             <i class="fab fa-whatsapp color-whatsapp font-16 opacity-30"></i>
             <span>
                 @if (session('lang') === 'id')
-                    {{ 'WhatsApp' }}
+                {{ 'WhatsApp' }}
                 @else
-                    {{ $translate->translate('WhatsApp') }}
+                {{ $translate->translate('WhatsApp') }}
                 @endif
             </span>
             <i class="fa fa-circle"></i>
@@ -73,50 +73,47 @@
     </div> --}}
 
     @if (Route::has('login'))
-        <nav class="-mx-3 flex flex-1 justify-end">
-            @auth
-                <a href="#" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                    <i class="fa fa-user"></i>
-                    Profile
+    <nav class="-mx-3 flex flex-1 justify-end">
+        @auth
 
-                </a>
+        <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+            <!-- Login Icon -->
+            <i class="fa fa-sign-in-alt"></i>
+            <span>Profile</span>
+        </a>
 
 
-                <a href="#"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <!-- Logout Icon -->
-                    <i class="fa fa-sign-out-alt"></i>
-                    <span>
-                        @if (session('lang') === 'id')
-                            {{ 'Keluar' }}
-                        @else
-                            {{ __('Log Out') }}
-                        @endif
-                    </span>
-                </a>
-
-                <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
-                    @csrf
-                </form>
-            @else
-                <a href="{{ route('login') }}"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                    <!-- Login Icon -->
-                    <i class="fa fa-sign-in-alt"></i>
-                    <span>Log in</span>
-                </a>
-
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}"
-                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                        <!-- Register Icon -->
-                        <i class="fa fa-user-plus"></i>
-                        <span>Register</span>
-                    </a>
+        <a href="#" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <!-- Logout Icon -->
+            <i class="fa fa-sign-out-alt"></i>
+            <span>
+                @if (session('lang') === 'id')
+                {{ 'Keluar' }}
+                @else
+                {{ __('Log Out') }}
                 @endif
-            @endauth
-        </nav>
+            </span>
+        </a>
+
+        <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
+            @csrf
+        </form>
+        @else
+        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+            <!-- Login Icon -->
+            <i class="fa fa-sign-in-alt"></i>
+            <span>Log in</span>
+        </a>
+
+        @if (Route::has('register'))
+        <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+            <!-- Register Icon -->
+            <i class="fa fa-user-plus"></i>
+            <span>Register</span>
+        </a>
+        @endif
+        @endauth
+    </nav>
     @endif
 
 
