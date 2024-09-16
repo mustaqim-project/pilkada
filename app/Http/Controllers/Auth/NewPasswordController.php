@@ -20,7 +20,17 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request): View
     {
-        return view('auth.reset-password', ['request' => $request]);
+
+
+        $detect = new MobileDetect();
+
+        if ($detect->isMobile()) {
+            return view('mobile.auth.reset-password', ['request' => $request]);
+        } elseif ($detect->isTablet()) {
+            return view('mobile.auth.reset-password', ['request' => $request]);
+        } else {
+            return view('auth.reset-password', ['request' => $request]);
+        }
     }
 
 
