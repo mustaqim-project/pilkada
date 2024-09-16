@@ -3,7 +3,8 @@
 @section('content')
     <div class="page-content">
         <div class="page-title page-title-large">
-            <h2 data-username="Enabled!" class="greeting-text"></h2>
+            <h2 data-username="{{ auth()->check() ? auth()->user()->name : 'Everyone' }}" class="greeting-text">
+            </h2>
             <a href="#" data-menu="menu-main">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
                     <path
