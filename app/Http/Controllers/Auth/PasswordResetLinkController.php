@@ -11,21 +11,19 @@ use Detection\MobileDetect;
 
 class PasswordResetLinkController extends Controller
 {
-
+    /**
+     * Display the password reset link request view.
+     */
     public function create(): View
     {
-
         $detect = new MobileDetect();
 
-        if ($detect->isMobile()) {
-            return view('mobile.auth.forgot-password');
-        } elseif ($detect->isTablet()) {
+        if ($detect->isMobile() || $detect->isTablet()) {
             return view('mobile.auth.forgot-password');
         } else {
             return view('auth.forgot-password');
         }
     }
-
 
     /**
      * Handle an incoming password reset link request.
@@ -45,9 +43,12 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+        // Check if the reset link was sent successfully
+        if ($status == Password::RESET_LINK_SENT) {
+            return back()->with('status', __($status));
+        } else {
+            return back()->withInput($request->only('email'))
+                         ->withErrors(['email' => __($status)]);
+        }
     }
 }
