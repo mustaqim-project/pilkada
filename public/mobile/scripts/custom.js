@@ -203,25 +203,25 @@ $(document).ready(function(){
                 setTimeout(function(){
                     if($('body').hasClass('detect-theme')){$('body').removeClass('detect-theme');}
                     if($('body').hasClass('theme-light')){
-                        eraseCookie('sIkadsis_dark_mode');
+                        eraseCookie('sikadsis_dark_mode');
                         darkSwitch.prop('checked', false);
-                        createCookie('sIkadsis_light_mode', true, 1);
+                        createCookie('sikadsis_light_mode', true, 1);
                     }
                     if($('body').hasClass('theme-dark')){
-                        eraseCookie('sIkadsis_light_mode');
+                        eraseCookie('sikadsis_light_mode');
                         darkSwitch.prop('checked', true);
-                        createCookie('sIkadsis_dark_mode', true, 1);
+                        createCookie('sikadsis_dark_mode', true, 1);
                     }
                 },150);
                 return false;
             })
-            if (readCookie('sIkadsis_dark_mode')) {darkSwitch.prop('checked', true); $('body').removeClass('theme-light').addClass('theme-dark');}
-            if (readCookie('sIkadsis_light_mode')) {darkSwitch.prop('checked', false); $('body').removeClass('theme-dark').addClass('theme-light');}
+            if (readCookie('sikadsis_dark_mode')) {darkSwitch.prop('checked', true); $('body').removeClass('theme-light').addClass('theme-dark');}
+            if (readCookie('sikadsis_light_mode')) {darkSwitch.prop('checked', false); $('body').removeClass('theme-dark').addClass('theme-light');}
 
 
             //Auto Dark Mode
-            function activateDarkMode(){$('body').removeClass('theme-light').addClass('theme-dark'); $('#dark-mode-detected').removeClass('disabled'); eraseCookie('sIkadsis_light_mode'); createCookie('sIkadsis_dark_mode', true, 1);}
-            function activateLightMode(){$('body').removeClass('theme-dark').addClass('theme-light'); $('#dark-mode-detected').removeClass('disabled'); eraseCookie('sIkadsis_dark_mode'); createCookie('sIkadsis_light_mode', true, 1);}
+            function activateDarkMode(){$('body').removeClass('theme-light').addClass('theme-dark'); $('#dark-mode-detected').removeClass('disabled'); eraseCookie('sikadsis_light_mode'); createCookie('sikadsis_dark_mode', true, 1);}
+            function activateLightMode(){$('body').removeClass('theme-dark').addClass('theme-light'); $('#dark-mode-detected').removeClass('disabled'); eraseCookie('sikadsis_dark_mode'); createCookie('sikadsis_light_mode', true, 1);}
             function activateNoPreference(){$('#manual-mode-detected').removeClass('disabled');}
 
             function setColorScheme() {

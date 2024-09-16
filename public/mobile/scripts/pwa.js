@@ -26,7 +26,7 @@ $(document).ready(function(){
     setTimeout(function(){
         $('.pwa-dismiss').on('click',function(){
             console.log('User Closed Add to Home / PWA Prompt')
-            createCookie('sIkadsis_pwa_rejected_install', true, 1);
+            createCookie('sikadsis_pwa_rejected_install', true, 1);
             $('body').find('#menu-install-pwa-android, #menu-install-pwa-ios, .menu-hider').removeClass('menu-active');
         });
     },1500);
@@ -47,7 +47,7 @@ $(document).ready(function(){
             if(!$('body').hasClass('is-installed')){
                 if($('#menu-install-pwa-android, .add-to-home').length){
                     console.log('Triggering PWA Menu for Android');
-                    if (!readCookie('sIkadsis_pwa_rejected_install')) {
+                    if (!readCookie('sikadsis_pwa_rejected_install')) {
                         setTimeout(function(){
                             $('.add-to-home').addClass('add-to-home-visible add-to-home-android');
                             $('#menu-install-pwa-android, .menu-hider').addClass('menu-active')
@@ -86,7 +86,7 @@ $(document).ready(function(){
         if(!isInWebAppiOS){
             console.log('iOS Detected');
             if($('#menu-install-pwa-ios, .add-to-home').length){
-                if (!readCookie('sIkadsis_pwa_rejected_install')) {
+                if (!readCookie('sikadsis_pwa_rejected_install')) {
                     console.log('Triggering PWA / Add to Home Screen Menu for iOS');
                     setTimeout(function(){
                         $('.add-to-home').addClass('add-to-home-visible add-to-home-ios');
@@ -176,7 +176,7 @@ $(document).ready(function(){
     }
 
     if(pwaCookie == false){
-        eraseCookie('sIkadsis_pwa_rejected_install');
+        eraseCookie('sikadsis_pwa_rejected_install');
     }
 
     //Reload To Clear Button
