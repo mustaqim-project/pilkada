@@ -53,25 +53,22 @@
             <div class="row">
                 <div class="col-6">
                     <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
-                      Download App
+                        Download App
                     </a>
                 </div>
-                @if (Route::has('login'))
                 <div class="col-6">
-                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
-                        Login
-                    </a>
+                    @if (auth()->check())
+                        <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
+                            Login
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
+                            Login
+                        </a>
+                    @endif
                 </div>
-                @else
-                <div class="col-6">
-                    <a href="{{ route('login') }}" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
-                        Login
-                    </a>
-                </div>
-                @endif
             </div>
         </div>
-
 
 
 
