@@ -181,28 +181,30 @@
         </div>
     </div>
 
-    <!-- Install Prompt for Android -->
-    <div id="menu-install-pwa-android" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="370" data-menu-effect="menu-parallax" style="display: none;">
-        <img class="rounded-l mb-3" src="{{ asset('mobile/images/logo.png') }}" alt="img" width="90">
-        <h4 class="text-center mt-4 mb-2">Install Sikadsis</h4>
-        <p class="text-center boxed-text-xl">
-            Sistem Informasi Kampanye dan Analisis Pilkada Sistematis </p>
-        <div class="boxed-text-l top-25">
+
+
+    <div id="menu-install-pwa-android" class="menu menu-box-bottom menu-box-detached rounded-l" data-menu-height="350" data-menu-effect="menu-parallax">
+        <div class="boxed-text-l mt-4">
+            <img class="rounded-l mb-3" src="{{ asset('mobile/images/logo.png') }}" alt="img" width="90">
+            <h4 class="text-center mt-4 mb-2">Install Sikadsis</h4>
+            <p>Sistem Informasi Kampanye dan Analisis Pilkada Sistematis </p>
+
             <a href="#" class="pwa-install mx-auto btn btn-m rounded-s text-uppercase font-900 bg-highlight">Install</a>
+            <div class="clear"></div>
         </div>
     </div>
 
     <!-- Install instructions for iOS -->
-    <div id="menu-install-pwa-ios" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="340" data-menu-effect="menu-parallax" style="display: none;">
-        <div class="boxed-text-xl top-25">
+    <div id="menu-install-pwa-ios" class="menu menu-box-bottom menu-box-detached rounded-l" data-menu-height="320" data-menu-effect="menu-parallax">
+        <div class="boxed-text-l mt-4">
             <img class="rounded-l mb-3" src="{{ asset('mobile/images/logo.png') }}" alt="img" width="90">
             <h4 class="text-center mt-4 mb-2">Install Sikadsis</h4>
-            <p class="text-center ml-3 mr-3">
-                Sistem Informasi Kampanye dan Analisis Pilkada Sistematis </p>
+            <p>Sistem Informasi Kampanye dan Analisis Pilkada Sistematis </p>
+
             <a href="#" class="pwa-install mx-auto btn btn-m rounded-s text-uppercase font-900 bg-highlight">Install</a>
+            <div class="clear"></div>
         </div>
     </div>
-
 
 </div>
 <script>
