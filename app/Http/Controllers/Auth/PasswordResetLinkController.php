@@ -7,17 +7,24 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
+use Detection\MobileDetect;
 
 class PasswordResetLinkController extends Controller
 {
-    /**
-     * Display the password reset link request view.
-     */
+
     public function create(): View
     {
-        return view('auth.forgot-password');
-    }
 
+        $detect = new MobileDetect();
+
+        if ($detect->isMobile()) {
+            return view('mobile.auth.forgot-password');
+        } elseif ($detect->isTablet()) {
+            return view('mobile.auth.forgot-password');
+        } else {
+            return view('auth.forgot-password');
+        }
+    }
     /**
      * Handle an incoming password reset link request.
      *
