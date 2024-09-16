@@ -39,7 +39,7 @@
         }
 
         .btn-highlight {
-            background-color: #28a745;
+            background-color: #17732c;
             /* Ganti dengan warna latar belakang highlight */
         }
 
@@ -75,7 +75,7 @@
 
 
                 <!-- Login Button -->
-                <button type="submit" class="btn btn-m mt-2 mb-4 btn-full bg-green1-dark rounded-sm text-uppercase font-900">Login</button>
+                <button type="submit" class="btn btn-m mt-2 mb-4 btn-full bg-green1-dark rounded-sm text-uppercase font-900">Email Password Reset Link</button>
 
             </div>
         </div>
