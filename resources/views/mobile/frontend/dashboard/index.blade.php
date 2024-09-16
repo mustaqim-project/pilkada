@@ -1,6 +1,13 @@
 @extends('mobile.frontend.layout.master')
 
 @section('content')
+
+<style>
+    .android-banner, .ios-banner {
+        display: none;
+    }
+</style>
+
     <div class="page-content">
         <div class="page-title page-title-large">
             <h2 data-username="{{ auth()->check() ? auth()->user()->name : 'Everyone' }}" class="greeting-text">
@@ -53,8 +60,11 @@
         <div class="content mt-0">
             <div class="row">
                 <div class="col-6">
-                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
-                        Download App
+                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight android-banner">
+                        Download for Android
+                    </a>
+                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight ios-banner">
+                        Download for iOS
                     </a>
                 </div>
                 <div class="col-6">
@@ -174,4 +184,21 @@
         </div>
 
     </div>
+    <script>
+        function detectDevice() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            if (/android/i.test(userAgent)) {
+                document.querySelector('.android-banner').style.display = 'block';
+                // Optional: Hide iOS banner if needed
+                document.querySelector('.ios-banner').style.display = 'none';
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                document.querySelector('.ios-banner').style.display = 'block';
+                // Optional: Hide Android banner if needed
+                document.querySelector('.android-banner').style.display = 'none';
+            }
+        }
+
+        detectDevice();
+    </script>
 @endsection
