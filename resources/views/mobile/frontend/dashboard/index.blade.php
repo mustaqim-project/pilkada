@@ -60,12 +60,10 @@
         <div class="content mt-0">
             <div class="row">
                 <div class="col-6">
-                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight android-banner">
-                        Download for Android
-                    </a>
-                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight ios-banner">
-                        Download for iOS
-                    </a>
+                    <a href="#" class="simulate-android-banner btn btn-m btn-full rounded-s shadow-xl text-uppercase font-900 bg-highlight android-banner">Download App</a>
+
+                    <a href="#" class="simulate-ios-banner btn btn-m btn-full rounded-s shadow-xl text-uppercase font-900 bg-highlight ios-banner">Download App</a>
+
                 </div>
                 <div class="col-6">
                     @if (auth()->check())
