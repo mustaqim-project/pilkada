@@ -181,34 +181,81 @@
         </div>
     </div>
 
-    <!-- Be sure this is on your main visiting page, for example, the index.html page-->
-    <!-- Install Prompt for Android -->
-    <div id="menu-install-pwa-android" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="370" data-menu-effect="menu-parallax">
+   <!-- Install Prompt for Android -->
+<div id="menu-install-pwa-android" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="370" data-menu-effect="menu-parallax" style="display: none;">
+    <img class="mx-auto mt-4 rounded-m" src="app/icons/icon-128x128.png" alt="img" width="90">
+    <h4 class="text-center mt-4 mb-2">Add Azures on your Home Screen</h4>
+    <p class="text-center boxed-text-xl">
+        Install Azures on your home screen, and access it just like a regular app. It really is that simple!
+    </p>
+    <div class="boxed-text-l top-25">
+        <a href="#" class="pwa-install mx-auto btn btn-m rounded-s text-uppercase font-900 bg-highlight">Add to Home Screen</a>
+        <a href="#" class="pwa-dismiss close-menu btn-full mt-3 text-center text-uppercase font-900 color-gray2-light opacity-90 font-110">Maybe later</a>
+    </div>
+</div>
+
+<!-- Install instructions for iOS -->
+<div id="menu-install-pwa-ios" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="340" data-menu-effect="menu-parallax" style="display: none;">
+    <div class="boxed-text-xl top-25">
         <img class="mx-auto mt-4 rounded-m" src="app/icons/icon-128x128.png" alt="img" width="90">
         <h4 class="text-center mt-4 mb-2">Add Azures on your Home Screen</h4>
-        <p class="text-center boxed-text-xl">
-            Install Azures on your home screen, and access it just like a regular app. It really is that simple!
+        <p class="text-center ml-3 mr-3">
+            Install Azures on your home screen, and access it just like a regular app. Open your Safari menu and tap "Add to Home Screen".
         </p>
-        <div class="boxed-text-l top-25">
-            <a href="#" class="pwa-install mx-auto btn btn-m rounded-s text-uppercase font-900 bg-highlight">Add to Home Screen - Off In Demo</a>
-            <a href="#" class="pwa-dismiss close-menu btn-full mt-3 text-center text-uppercase font-900 color-gray2-light opacity-90 font-110">Maybe later</a>
-        </div>
-    </div>
+        <a href="#" class="pwa-install mx-auto btn btn-m rounded-s text-uppercase font-900 bg-highlight">Add to Home Screen</a>
 
-    <!-- Install instructions for iOS -->
-    <div id="menu-install-pwa-ios" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-height="340" data-menu-effect="menu-parallax">
-        <div class="boxed-text-xl top-25">
-            <img class="mx-auto mt-4 rounded-m" src="app/icons/icon-128x128.png" alt="img" width="90">
-            <h4 class="text-center mt-4 mb-2">Add Azures on your Home Screen</h4>
-            <p class="text-center ml-3 mr-3">
-                Install Azures on your home screen, and access it just like a regular app. Open your Safari menu and tap "Add to Home Screen".
-            </p>
-            <a href="#" class="pwa-dismiss close-menu btn-full mt-3 text-center text-uppercase font-900 color-red2-light opacity-90 font-110">Maybe later</a>
-        </div>
+        <a href="#" class="pwa-dismiss close-menu btn-full mt-3 text-center text-uppercase font-900 color-red2-light opacity-90 font-110">Maybe later</a>
     </div>
+</div>
+
 
 </div>
 <script>
+    let deferredPrompt;
+    const installBtn = document.querySelectorAll('.pwa-install');
+    const dismissBtn = document.querySelectorAll('.pwa-dismiss');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        // Show the install button
+        document.getElementById('menu-install-pwa-android').style.display = 'block';
+    });
+
+    installBtn.forEach(button => {
+        button.addEventListener('click', () => {
+            if (deferredPrompt) {
+                // Hide the install button
+                document.getElementById('menu-install-pwa-android').style.display = 'none';
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((result) => {
+                    if (result.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    } else {
+                        console.log('User dismissed the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+    });
+
+    dismissBtn.forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('menu-install-pwa-android').style.display = 'none';
+        });
+    });
+
+    // For iOS, we provide instructions instead of using the native prompt
+    // Ensure that iOS prompt instructions are shown
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+        document.getElementById('menu-install-pwa-ios').style.display = 'block';
+    }
+
     function detectDevice() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
