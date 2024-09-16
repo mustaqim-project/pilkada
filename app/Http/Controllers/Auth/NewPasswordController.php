@@ -58,9 +58,9 @@ class NewPasswordController extends Controller
 
         if ($status == Password::PASSWORD_RESET) {
             if ($detect->isMobile() || $detect->isTablet()) {
-                return view('mobile.auth.login')->with('status', __($status));
+                return view('mobile.auth.login');
             } else {
-                return view('desktop.auth.login')->with('status', __($status));
+                return view('desktop.auth.login');
             }
         } else {
             return back()->withInput($request->only('email'))
