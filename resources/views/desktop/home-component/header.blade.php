@@ -16,11 +16,10 @@
         </div>
 
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href="../../demo1/dist/index.html" class="d-lg-none">
-                <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-30px" />
+            <a href="{{ route('dashboard') }}" class="d-lg-none">
+                <img alt="Logo" src="admin/desktop/assets/media/logos/default-small.svg" class="h-30px" />
             </a>
         </div>
-
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
             <div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true"
                 data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}"

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CakadaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
@@ -9,30 +10,21 @@ use App\Http\Controllers\TipeCakadaController;
 use App\Http\Controllers\RolePermissionController;
 use Detection\MobileDetect;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
 
 Route::get('/', function () {
-    $detect = new Mobile_Detect;
+    $detect = new MobileDetect;
 
-    if ($detect->isMobile()) {
-        return view('mobile.frontend.dashboard.index');
-    } elseif ($detect->isTablet()) {
+    if ($detect->isMobile() || $detect->isTablet()) {
         return view('mobile.frontend.dashboard.index');
     } else {
-        return view('desktop.auth.login');
+        if (Auth::check()) {
+            return view('desktop.home-component.partials.dashboard');
+        } else {
+            return view('desktop.auth.login');
+        }
     }
 });
+
 
 
 Route::get('/dashboard', function () {
@@ -42,7 +34,7 @@ Route::get('/dashboard', function () {
     } elseif ($detect->isTablet()) {
         return view('mobile.frontend.dashboard.index');
     } else {
-        return view('desktop.layouts.master');
+        return view('desktop.home-component.partials.dashboard');
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -83,7 +75,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kanvasing', [KanvasingController::class, 'store'])->middleware('can:kanvasing create')->name('kanvasing.store');
     Route::get('/kanvasing', [KanvasingController::class, 'index'])->middleware('can:kanvasing read')->name('kanvasing.index');
     Route::get('/get-cakada', [KanvasingController::class, 'getCakadaByFilters'])->name('getCakadaByFilters');
-
 });
 
 
