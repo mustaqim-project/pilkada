@@ -49,6 +49,34 @@
             </div>
         </div>
 
+        <div class="content mt-0">
+            <div class="row">
+                <div class="col-6">
+                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
+                      Download App
+                    </a>
+                </div>
+                @if (Route::has('login'))
+                <div class="col-6">
+                    <a href="#" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
+                        Login
+                    </a>
+                </div>
+                @else
+                <div class="col-6">
+                    <a href="{{ route('login') }}" class="btn btn-full btn-m rounded-s text-uppercase font-900 shadow-xl bg-highlight">
+                        Login
+                    </a>
+                </div>
+                @endif
+            </div>
+        </div>
+
+
+
+
+
+
         <div class="card mt-4 preload-img" data-src="images/pictures/bed4.jpg">
             <div class="card-body">
                 <h5 class="color-white font-16 font-500" style="font-size: 1rem;">Fitur Lainnya</h5>
