@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Detection\MobileDetect;
 
 class RegisteredUserController extends Controller
 {
@@ -20,9 +21,17 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
-    }
 
+        $detect = new MobileDetect();
+
+        if ($detect->isMobile()) {
+            return view('mobile.auth.register');
+        } elseif ($detect->isTablet()) {
+            return view('mobile.auth.register');
+        } else {
+            return view('desktop.auth.register');
+        }
+    }
     /**
      * Handle an incoming registration request.
      *
