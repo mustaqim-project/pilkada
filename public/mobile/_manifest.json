@@ -4,7 +4,7 @@
     "comment": "---data-pwa-version can be found in index.html in the manifest tag",
     "comment": "---if versions are not the same it will cause an update loop",
     "lang": "en",
-    "name": "Sikadsis - Sistem Informasi Kampanye dan Analisis Pilkada Sistematis",
+    "name": "Sikadsis",
     "scope": "/",
     "display": "fullscreen",
     "start_url": "/",
