@@ -107,7 +107,13 @@ class AnalisisController extends Controller
         $cakada_id = $request->input('cakada_id');
 
         // Query data berdasarkan filter
-        $query = Kanvasing::selectRaw('SUM(setuju) as setuju, SUM(tidak_setuju) as tidak_setuju, SUM(ragu_ragu) as ragu_ragu')
+        $query = Kanvasing::selectRaw(
+            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
+            DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
+            DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
+            )
             ->when($provinsi, function ($query, $provinsi) {
                 return $query->where('provinsi', $provinsi);
             })
