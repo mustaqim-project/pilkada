@@ -241,13 +241,14 @@
         // Filter and update chart
         let chartInstance;
 
+
         $('#filterButton').click(function() {
             let provinsi = $('#provinsi').val();
             let kabupaten = $('#kabupaten_kota').val();
             let kecamatan = $('#kecamatan').val();
             let kelurahan = $('#kelurahan').val();
-            let tipe_cakada_id = $('#tipe_cakada_id').val();
-            let cakada_id = $('#cakada_id').val();
+            let tipeCakadaId = $('#tipe_cakada_id').val();
+            let cakadaId = $('#cakada_id').val();
 
             $.ajax({
                 url: "{{ route('getGrafikSuara') }}"
@@ -257,86 +258,82 @@
                     , kabupaten_kota: kabupaten
                     , kecamatan: kecamatan
                     , kelurahan: kelurahan
-                    , tipe_cakada_id: tipe_cakada_id
-                    , cakada_id: cakada_id
+                    , tipe_cakada_id: tipeCakadaId
+                    , cakada_id: cakadaId
                 }
                 , success: function(response) {
-                    loadChartJS(function() {
-                        let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
+                    let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
 
-                        if (chartInstance) {
-                            chartInstance.destroy(); // Destroy existing chart before creating a new one
+                    if (chartInstance) {
+                        chartInstance.destroy(); // Destroy previous chart instance
+                    }
+
+                    chartInstance = new Chart(ctx, {
+                        type: 'bar'
+                        , data: {
+                            labels: response.labels
+                            , datasets: [{
+                                    label: 'Setuju'
+                                    , backgroundColor: '#A0D468'
+                                    , data: response.setuju
+                                }
+                                , {
+                                    label: 'Tidak Setuju'
+                                    , backgroundColor: '#4A89DC'
+                                    , data: response.tidak_setuju
+                                }
+                                , {
+                                    label: 'Ragu-ragu'
+                                    , backgroundColor: '#FFCE56'
+                                    , data: response.ragu_ragu
+                                }
+                                , {
+                                    label: 'Kenal'
+                                    , backgroundColor: '#FF6384'
+                                    , data: response.kenal
+                                }
+                                , {
+                                    label: 'Tidak Kenal'
+                                    , backgroundColor: '#36A2EB'
+                                    , data: response.tidak_kenal
+                                }
+                            ]
                         }
-
-                        chartInstance = new Chart(ctx, {
-                            type: 'bar'
-                            , data: {
-                                labels: response.labels
-                                , datasets: [{
-                                        label: 'Setuju'
-                                        , backgroundColor: '#A0D468'
-                                        , data: response.setuju
-                                    , }
-                                    , {
-                                        label: 'Tidak Setuju'
-                                        , backgroundColor: '#4A89DC'
-                                        , data: response.tidak_setuju
-                                    , }
-                                    , {
-                                        label: 'Ragu-ragu'
-                                        , backgroundColor: '#FFCE56'
-                                        , data: response.ragu_ragu
-                                    , }
-                                    , {
-                                        label: 'Kenal'
-                                        , backgroundColor: '#FF6384'
-                                        , data: response.kenal
-                                    , }
-                                    , {
-                                        label: 'Tidak Kenal'
-                                        , backgroundColor: '#36A2EB'
-                                        , data: response.tidak_kenal
-                                    , }
-                                ]
-                            }
-                            , options: {
-                                responsive: true
-                                , maintainAspectRatio: false
-                                , scales: {
-                                    y: {
-                                        beginAtZero: true
-                                        , title: {
-                                            display: true
-                                            , text: 'Jumlah'
-                                        }
-                                    }
-                                    , x: {
-                                        title: {
-                                            display: true
-                                            , text: 'Provinsi'
-                                        }
-                                    }
-                                }
-                                , plugins: {
-                                    legend: {
-                                        display: true
-                                        , position: 'bottom'
-                                        , labels: {
-                                            fontSize: 13
-                                            , padding: 15
-                                            , boxWidth: 12
-                                        }
-                                    }
+                        , options: {
+                            responsive: true
+                            , maintainAspectRatio: false
+                            , scales: {
+                                y: {
+                                    beginAtZero: true
                                     , title: {
-                                        display: false
+                                        display: true
+                                        , text: 'Jumlah'
+                                    }
+                                }
+                                , x: {
+                                    title: {
+                                        display: true
+                                        , text: 'Kategori'
                                     }
                                 }
                             }
-                        });
+                            , plugins: {
+                                legend: {
+                                    display: true
+                                    , position: 'bottom'
+                                    , labels: {
+                                        fontSize: 13
+                                        , padding: 15
+                                        , boxWidth: 12
+                                    }
+                                }
+                            }
+                        }
                     });
                 }
             });
         });
+
 
         // Load chart.js script
         loadJS('mobile/scripts/charts.js', function() {
