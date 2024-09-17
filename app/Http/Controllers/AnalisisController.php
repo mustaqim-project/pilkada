@@ -22,9 +22,13 @@ class AnalisisController extends Controller
         return view('mobile.frontend.analisis.index');
     }
 
-
-
     public function grafik_suara()
+    {
+        return view('mobile.frontend.analisis.grafik_suara');
+    }
+
+
+    public function get_grafik_suara()
     {
         // Ambil data dari tabel Kanvasing
         $data = Kanvasing::select(
