@@ -95,7 +95,6 @@ class AnalisisController extends Controller
 
     //     return response()->json($data);
     // }
-
     public function get_grafik_suara(Request $request)
     {
         // Ambil parameter filter
@@ -121,6 +120,7 @@ class AnalisisController extends Controller
         ->when($kelurahan, fn($query) => $query->where('kelurahan', $kelurahan))
         ->when($tipe_cakada_id, fn($query) => $query->where('tipe_cakada_id', $tipe_cakada_id))
         ->when($cakada_id, fn($query) => $query->where('cakada_id', $cakada_id))
+        ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan', 'tipe_cakada_id', 'cakada_id')
         ->first();
 
         if (!$query) {
@@ -135,6 +135,7 @@ class AnalisisController extends Controller
             'ragu_ragu' => [$query->ragu_ragu],
         ]);
     }
+
 
 
     public function tren_suara()
