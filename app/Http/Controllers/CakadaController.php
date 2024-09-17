@@ -19,12 +19,10 @@ class CakadaController extends Controller
 
     public function index()
     {
-        $provinsi = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')->json();
 
-        // Ambil data tipe Cakada (1 = provinsi, 2 = kab/kota) dari database
         $cakadas = Cakada::all();
 
-        return view('desktop.cakada.index', compact('provinsi', 'cakadas'));
+        return view('desktop.cakada.index', compact('provinsi'));
     }
 
     public function create()
