@@ -2,7 +2,13 @@
 
 @section('content')
 
+<style>
+    .android-banner,
+    .ios-banner {
+        display: none;
+    }
 
+</style>
 
 <div class="page-content">
     <div class="page-title page-title-large">
@@ -55,6 +61,7 @@
         <div class="row">
             <div class="col-6">
                 <a href="#" class="simulate-android-banner btn btn-m btn-full rounded-s shadow-xl text-uppercase font-900 bg-highlight android-banner">Download App</a>
+                <a href="#" class="simulate-ios-banner btn btn-m btn-full rounded-s shadow-xl text-uppercase font-900 bg-highlight ios-banner">Download App</a>
             </div>
             <div class="col-6">
                 @if (auth()->check())
@@ -74,7 +81,7 @@
 
 
 
-    <div class="card mt-4 preload-img" data-src="images/pictures/bed4.jpg">
+    <div class="card mt-4 preload-img" data-src="admin/mobile/myhr/images/sikad.png">
         <div class="card-body">
             <h5 class="color-white font-16 font-500" style="font-size: 1rem;">Fitur Lainnya</h5>
 
@@ -245,6 +252,25 @@
     }
 
 
+    function detectDevice() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if (/android/i.test(userAgent)) {
+            document.querySelector('.android-banner').style.display = 'block';
+            // Optional: Hide iOS banner if needed
+            document.querySelector('.ios-banner').style.display = 'none';
+        } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            document.querySelector('.ios-banner').style.display = 'block';
+            // Optional: Hide Android banner if needed
+            document.querySelector('.android-banner').style.display = 'none';
+        }else{
+            document.querySelector('.android-banner').style.display = 'block';
+            // Optional: Hide iOS banner if needed
+            document.querySelector('.ios-banner').style.display = 'none';
+        }
+    }
+
+    detectDevice();
 
 </script>
 @endsection
