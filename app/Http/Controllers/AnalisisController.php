@@ -108,31 +108,24 @@ class AnalisisController extends Controller
 
         // Query data berdasarkan filter
         $query = Kanvasing::selectRaw(
-            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
-            DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
-            DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
-            DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
-            DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
-            )
-            ->when($provinsi, function ($query, $provinsi) {
-                return $query->where('provinsi', $provinsi);
-            })
-            ->when($kabupaten_kota, function ($query, $kabupaten_kota) {
-                return $query->where('kabupaten_kota', $kabupaten_kota);
-            })
-            ->when($kecamatan, function ($query, $kecamatan) {
-                return $query->where('kecamatan', $kecamatan);
-            })
-            ->when($kelurahan, function ($query, $kelurahan) {
-                return $query->where('kelurahan', $kelurahan);
-            })
-            ->when($tipe_cakada_id, function ($query, $tipe_cakada_id) {
-                return $query->where('tipe_cakada_id', $tipe_cakada_id);
-            })
-            ->when($cakada_id, function ($query, $cakada_id) {
-                return $query->where('cakada_id', $cakada_id);
-            })
-            ->first();
+            'provinsi, kabupaten_kota, kecamatan, kelurahan, tipe_cakada_id, cakada_id,
+            COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
+            COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
+            COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
+            COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
+            COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal'
+        )
+        ->when($provinsi, fn($query) => $query->where('provinsi', $provinsi))
+        ->when($kabupaten_kota, fn($query) => $query->where('kabupaten_kota', $kabupaten_kota))
+        ->when($kecamatan, fn($query) => $query->where('kecamatan', $kecamatan))
+        ->when($kelurahan, fn($query) => $query->where('kelurahan', $kelurahan))
+        ->when($tipe_cakada_id, fn($query) => $query->where('tipe_cakada_id', $tipe_cakada_id))
+        ->when($cakada_id, fn($query) => $query->where('cakada_id', $cakada_id))
+        ->first();
+
+        if (!$query) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
 
         // Siapkan data untuk grafik
         return response()->json([
@@ -142,6 +135,7 @@ class AnalisisController extends Controller
             'ragu_ragu' => [$query->ragu_ragu],
         ]);
     }
+
 
     public function tren_suara()
     {

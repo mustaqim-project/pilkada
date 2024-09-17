@@ -69,9 +69,9 @@
     $(document).ready(function() {
         // Populate Provinsi Dropdown
         $.ajax({
-            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
-            method: 'GET',
-            success: function(data) {
+            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
+            , method: 'GET'
+            , success: function(data) {
                 let provinsiDropdown = $('#provinsi');
                 data.forEach(function(provinsi) {
                     provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
@@ -85,9 +85,9 @@
             $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
             if (provinsiId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
-                    method: 'GET',
-                    success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
+                    , method: 'GET'
+                    , success: function(data) {
                         data.forEach(function(kabupaten) {
                             $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
                         });
@@ -102,9 +102,9 @@
             $('#kecamatan').html('<option value="">Pilih Kecamatan</option>');
             if (kabupatenId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`,
-                    method: 'GET',
-                    success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`
+                    , method: 'GET'
+                    , success: function(data) {
                         data.forEach(function(kecamatan) {
                             $('#kecamatan').append('<option value="' + kecamatan.id + '">' + kecamatan.name + '</option>');
                         });
@@ -119,9 +119,9 @@
             $('#kelurahan').html('<option value="">Pilih Kelurahan</option>');
             if (kecamatanId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`,
-                    method: 'GET',
-                    success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`
+                    , method: 'GET'
+                    , success: function(data) {
                         data.forEach(function(kelurahan) {
                             $('#kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.name + '</option>');
                         });
@@ -154,6 +154,8 @@
         });
 
         // Filter and update chart
+        let chartInstance;
+
         $('#filterButton').click(function() {
             let provinsi = $('#provinsi').val();
             let kabupaten = $('#kabupaten_kota').val();
@@ -163,29 +165,34 @@
             let cakada_id = $('#cakada_id').val();
 
             $.ajax({
-                url: "{{ route('getGrafikSuara') }}",
-                method: 'GET',
-                data: {
-                    provinsi: provinsi,
-                    kabupaten_kota: kabupaten,
-                    kecamatan: kecamatan,
-                    kelurahan: kelurahan,
-                    tipe_cakada_id: tipe_cakada_id,
-                    cakada_id: cakada_id
-                },
-                success: function(response) {
+                url: "{{ route('getGrafikSuara') }}"
+                , method: 'GET'
+                , data: {
+                    provinsi: provinsi
+                    , kabupaten_kota: kabupaten
+                    , kecamatan: kecamatan
+                    , kelurahan: kelurahan
+                    , tipe_cakada_id: tipe_cakada_id
+                    , cakada_id: cakada_id
+                }
+                , success: function(response) {
                     let ctx = document.getElementById('myChart').getContext('2d');
-                    let chart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: response.labels,
-                            datasets: [{
-                                label: 'Suara',
-                                data: [response.setuju, response.tidak_setuju, response.ragu_ragu],
-                                backgroundColor: ['green', 'red', 'yellow']
+
+                    if (chartInstance) {
+                        chartInstance.destroy(); // Destroy existing chart before creating a new one
+                    }
+
+                    chartInstance = new Chart(ctx, {
+                        type: 'bar'
+                        , data: {
+                            labels: response.labels
+                            , datasets: [{
+                                label: 'Suara'
+                                , data: [response.setuju, response.tidak_setuju, response.ragu_ragu]
+                                , backgroundColor: ['green', 'red', 'yellow']
                             }]
-                        },
-                        options: {
+                        }
+                        , options: {
                             scales: {
                                 y: {
                                     beginAtZero: true
@@ -197,6 +204,7 @@
             });
         });
     });
+
 </script>
 
 @endsection
