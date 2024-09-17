@@ -166,12 +166,13 @@ class AnalisisController extends Controller
 
         return response()->json([
             'labels' => ['Setuju', 'Tidak Setuju', 'Ragu-ragu', 'Kenal', 'Tidak Kenal'],
-            'setuju' => [$query->setuju], // Wrap in an array
-            'tidak_setuju' => [$query->tidak_setuju], // Wrap in an array
-            'ragu_ragu' => [$query->ragu_ragu], // Wrap in an array
-            'kenal' => [$query->kenal], // Wrap in an array
-            'tidak_kenal' => [$query->tidak_kenal], // Wrap in an array
+            'setuju' => $query->setuju, // No array wrapping
+            'tidak_setuju' => $query->tidak_setuju, // No array wrapping
+            'ragu_ragu' => $query->ragu_ragu, // No array wrapping
+            'kenal' => $query->kenal, // No array wrapping
+            'tidak_kenal' => $query->tidak_kenal, // No array wrapping
         ]);
+
     }
 
 

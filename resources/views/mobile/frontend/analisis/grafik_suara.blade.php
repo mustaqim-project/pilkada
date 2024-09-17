@@ -268,20 +268,6 @@
                         chartInstance.destroy(); // Destroy previous chart instance
                     }
 
-                    let totalLabels = response.labels.length;
-
-                    // Function to pad dataset values with zeros if not enough data points are provided
-                    function padData(data) {
-                        return [...data, ...Array(totalLabels - data.length).fill(0)];
-                    }
-
-                    // Pad the data arrays to match the number of labels
-                    let setuju = padData(response.setuju);
-                    let tidakSetuju = padData(response.tidak_setuju);
-                    let raguRagu = padData(response.ragu_ragu);
-                    let kenal = padData(response.kenal);
-                    let tidakKenal = padData(response.tidak_kenal);
-
                     chartInstance = new Chart(ctx, {
                         type: 'bar'
                         , data: {
@@ -289,27 +275,27 @@
                             , datasets: [{
                                     label: 'Setuju'
                                     , backgroundColor: '#A0D468'
-                                    , data: setuju
+                                    , data: [response.setuju]
                                 }
                                 , {
                                     label: 'Tidak Setuju'
                                     , backgroundColor: '#4A89DC'
-                                    , data: tidakSetuju
+                                    , data: [response.tidak_setuju]
                                 }
                                 , {
                                     label: 'Ragu-ragu'
                                     , backgroundColor: '#FFCE56'
-                                    , data: raguRagu
+                                    , data: [response.ragu_ragu]
                                 }
                                 , {
                                     label: 'Kenal'
                                     , backgroundColor: '#FF6384'
-                                    , data: kenal
+                                    , data: [response.kenal]
                                 }
                                 , {
                                     label: 'Tidak Kenal'
                                     , backgroundColor: '#36A2EB'
-                                    , data: tidakKenal
+                                    , data: [response.tidak_kenal]
                                 }
                             ]
                         }
