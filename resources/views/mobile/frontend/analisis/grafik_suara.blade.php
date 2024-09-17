@@ -188,10 +188,31 @@
                         , data: {
                             labels: response.labels
                             , datasets: [{
-                                label: 'Suara'
-                                , data: [response.setuju, response.tidak_setuju, response.ragu_ragu]
-                                , backgroundColor: ['green', 'red', 'yellow']
-                            }]
+                                    label: 'Setuju'
+                                    , data: response.setuju
+                                    , backgroundColor: 'green'
+                                }
+                                , {
+                                    label: 'Tidak Setuju'
+                                    , data: response.tidak_setuju
+                                    , backgroundColor: 'red'
+                                }
+                                , {
+                                    label: 'Ragu-ragu'
+                                    , data: response.ragu_ragu
+                                    , backgroundColor: 'yellow'
+                                }
+                                , {
+                                    label: 'Kenal'
+                                    , data: response.kenal
+                                    , backgroundColor: 'blue'
+                                }
+                                , {
+                                    label: 'Tidak Kenal'
+                                    , data: response.tidak_kenal
+                                    , backgroundColor: 'grey'
+                                }
+                            ]
                         }
                         , options: {
                             scales: {
@@ -204,6 +225,7 @@
                 }
             });
         });
+
     });
 
 </script>
