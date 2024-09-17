@@ -273,12 +273,12 @@
                         , data: {
                             labels: response.labels
                             , datasets: [{
-                                    label: 'Setuju'
+                                    label: 'Memilih'
                                     , backgroundColor: '#A0D468'
                                     , data: [response.setuju]
                                 }
                                 , {
-                                    label: 'Tidak Setuju'
+                                    label: 'Tidak Memilih'
                                     , backgroundColor: '#4A89DC'
                                     , data: [response.tidak_setuju]
                                 }
@@ -288,7 +288,7 @@
                                     , data: [response.ragu_ragu]
                                 }
                                 , {
-                                    label: 'Kenal'
+                                    label: 'Kenal Dengan'
                                     , backgroundColor: '#FF6384'
                                     , data: [response.kenal]
                                 }
