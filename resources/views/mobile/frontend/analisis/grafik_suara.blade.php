@@ -1,65 +1,106 @@
 @extends('mobile.frontend.layout.master')
 
-
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="container">
-    <h2>Grafik Suara</h2>
+
+<div class="page-content">
+    <div class="page-title page-title-small">
+        <h2><a href="{{ route('dashboard') }}" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
+    </div>
+    <div class="card header-card shape-rounded" data-card-height="210">
+        <div class="card-overlay bg-highlight opacity-95"></div>
+        <div class="card-overlay dark-mode-tint"></div>
+        <div class="card-bg preload-img" data-src="admin/mobile/myhr/images/sikad.png"></div>
+    </div>
+
 
     <!-- Filter Form -->
-    <div class="row">
-        <div class="col-md-4">
-            <label for="provinsi">Provinsi</label>
-            <select id="provinsi" class="form-control">
-                <option value="">Pilih Provinsi</option>
-                <!-- Option Provinsi akan diisi melalui JavaScript -->
-            </select>
-        </div>
-        <div class="col-md-4">
-            <label for="kabupaten_kota">Kabupaten/Kota</label>
-            <select id="kabupaten_kota" class="form-control">
-                <option value="">Pilih Kabupaten/Kota</option>
-                <!-- Option Kabupaten/Kota akan diisi melalui JavaScript -->
-            </select>
-        </div>
-        <div class="col-md-4">
-            <label for="kecamatan">Kecamatan</label>
-            <select id="kecamatan" class="form-control">
-                <option value="">Pilih Kecamatan</option>
-                <!-- Option Kecamatan akan diisi melalui JavaScript -->
-            </select>
-        </div>
-        <div class="col-md-4 mt-3">
-            <label for="kelurahan">Kelurahan</label>
-            <select id="kelurahan" class="form-control">
-                <option value="">Pilih Kelurahan</option>
-                <!-- Option Kelurahan akan diisi melalui JavaScript -->
-            </select>
-        </div>
-        <div class="col-md-4 mt-3">
-            <label for="tipe_cakada_id">Tipe Cakada</label>
-            <select id="tipe_cakada_id" class="form-control">
-                <option value="">Pilih Tipe Cakada</option>
-                @foreach($tipe_cakada as $item)
-                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-4 mt-3">
-            <label for="cakada_id">Nama Kandidat</label>
-            <select id="cakada_id" class="form-control">
-                <option value="">Pilih Nama Kandidat</option>
-                <!-- Option Kandidat akan diisi melalui JavaScript -->
-            </select>
+    <div class="card card-style">
+        <div class="content mb-0 mt-1">
+            <!-- user id -->
+            <Label>Tim Lapangan</Label>
+            @if (Route::has('login'))
+            <div class="input-style has-icon input-style-1 input-required">
+                <select name="user_id" id="user_id" class="input" required>
+                    <option id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+                        {{ Auth::user()->name }}</option>
+                </select>
+                <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
+            </div>
+            @endif
+
+            <!-- Provinsi -->
+            <div class="input-style has-icon input-style-1 input-required">
+                <span>Provinsi</span>
+                <select name="provinsi" id="provinsi" class="input" required>
+                    <option value="">Pilih Provinsi</option>
+                </select>
+                <x-input-error :messages="$errors->get('provinsi')" class="mt-2" />
+            </div>
+
+            <!-- Kabupaten/Kota -->
+            <div class="input-style has-icon input-style-1 input-required mt-4">
+                <span>Kabupaten/Kota</span>
+                <select name="kabupaten_kota" id="kabupaten_kota" class="input" required>
+                    <option value="">Pilih Kabupaten/Kota</option>
+                </select>
+                <x-input-error :messages="$errors->get('kabupaten_kota')" class="mt-2" />
+            </div>
+
+
+            <!-- Kecamatan -->
+            <div class="input-style has-icon input-style-1 input-required mt-4">
+                <span>Kecamatan</span>
+                <select name="kecamatan" id="kecamatan" class="input" required>
+                    <option value="">Pilih Kecamatan</option>
+                </select>
+                <x-input-error :messages="$errors->get('kecamatan')" class="mt-2" />
+            </div>
+
+            <!-- Kelurahan -->
+            <div class="input-style has-icon input-style-1 input-required mt-4">
+                <span>Kelurahan</span>
+                <select name="kelurahan" id="kelurahan" class="input" required>
+                    <option value="">Pilih Kelurahan</option>
+                </select>
+                <x-input-error :messages="$errors->get('kelurahan')" class="mt-2" />
+            </div>
+
+
+            <!-- Tipe Cakada ID -->
+            <label class="mt-4">Pilkada</label>
+            <div class="input-style has-icon input-style-1 input-required mt-4">
+                <select id="tipe_cakada_id" name="tipe_cakada_id" class="input" required>
+                    <option value="" disabled selected>Pilih Tipe Pilkada</option>
+                    @foreach ($tipe_cakada as $item)
+                    <option value="{{ $item->id }}" {{ old('tipe_cakada_id') == $item->id ? 'selected' : '' }}>
+                        {{ $item->name }}
+                    </option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('tipe_cakada_id')" class="mt-2" />
+            </div>
+
+            <!-- Cakada ID -->
+            <label class="mt-4">Nama Kandidat</label>
+            <div class="input-style has-icon input-style-1 input-required mt-4">
+                <select id="cakada_id" name="cakada_id" class="input" required>
+                    <option value="">Pilih Nama Kandidat</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+                <x-input-error :messages="$errors->get('cakada_id')" class="mt-2" />
+            </div>
         </div>
     </div>
     <button id="filterButton" class="btn btn-primary mt-3">Tampilkan Grafik</button>
 
     <!-- Chart -->
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <canvas id="myChart" width="400" height="200"></canvas>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Popularitas Dan Elektabilitas</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="grafikSuaraChart" /></canvas>
+            </div>
         </div>
     </div>
 
@@ -177,7 +218,7 @@
                     , cakada_id: cakada_id
                 }
                 , success: function(response) {
-                    let ctx = document.getElementById('myChart').getContext('2d');
+                    let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
 
                     if (chartInstance) {
                         chartInstance.destroy(); // Destroy existing chart before creating a new one
@@ -186,23 +227,64 @@
                     chartInstance = new Chart(ctx, {
                         type: 'bar'
                         , data: {
-                            labels: response.labels
-                            , datasets: [{
-                                label: 'Suara'
-                                , data: [
-                                    response.setuju
-                                    , response.tidak_setuju
-                                    , response.ragu_ragu
-                                    , response.kenal
-                                    , response.tidak_kenal
-                                ]
-                                , backgroundColor: ['green', 'red', 'yellow', 'blue', 'gray']
-                            }]
+                            labels: response.labels, // Replace with the correct label data from the response
+                            datasets: [{
+                                    label: 'Setuju'
+                                    , backgroundColor: '#A0D468'
+                                    , data: response.setuju, // Data for 'Setuju'
+                                }
+                                , {
+                                    label: 'Tidak Setuju'
+                                    , backgroundColor: '#4A89DC'
+                                    , data: response.tidak_setuju, // Data for 'Tidak Setuju'
+                                }
+                                , {
+                                    label: 'Ragu-ragu'
+                                    , backgroundColor: '#FFCE56'
+                                    , data: response.ragu_ragu, // Data for 'Ragu-ragu'
+                                }
+                                , {
+                                    label: 'Kenal'
+                                    , backgroundColor: '#FF6384'
+                                    , data: response.kenal, // Data for 'Kenal'
+                                }
+                                , {
+                                    label: 'Tidak Kenal'
+                                    , backgroundColor: '#36A2EB'
+                                    , data: response.tidak_kenal, // Data for 'Tidak Kenal'
+                                }
+                            ]
                         }
                         , options: {
-                            scales: {
+                            responsive: true
+                            , maintainAspectRatio: false
+                            , scales: {
                                 y: {
                                     beginAtZero: true
+                                    , title: {
+                                        display: true
+                                        , text: 'Jumlah'
+                                    }
+                                }
+                                , x: {
+                                    title: {
+                                        display: true
+                                        , text: 'Provinsi'
+                                    }
+                                }
+                            }
+                            , plugins: {
+                                legend: {
+                                    display: true
+                                    , position: 'bottom'
+                                    , labels: {
+                                        fontSize: 13
+                                        , padding: 15
+                                        , boxWidth: 12
+                                    }
+                                }
+                                , title: {
+                                    display: false
                                 }
                             }
                         }
@@ -210,6 +292,7 @@
                 }
             });
         });
+
 
     });
 
