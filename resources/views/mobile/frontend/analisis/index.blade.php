@@ -24,35 +24,15 @@
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="{{ route('analisis.segmen-pemilih') }}">
-                        <i class="ml-3 mr-3" data-feather="bar-chart-2" style="color: #33B5FF;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Segmentasi Pemilih</h5>
-                    </a>
-                </div>
-                <div class="col-4 text-center">
-                    <a href="{{ route('analisis.tren-suara') }}">
-                        <i class="ml-3 mr-3" data-feather="activity" style="color: #FFC733;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Tren Suara</h5>
-                    </a>
-                </div>
-            </div>
-            <div class="row mt-3 pt-1 mb-3">
-                <div class="col-4 text-center">
                     <a href="{{ route('analisis.strength') }}">
                         <i class="ml-3 mr-3" data-feather="shield" style="color: #28a745;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">SWOT Strength</h5>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Wilayah Tertinggi</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
                     <a href="{{ route('analisis.weakness') }}">
                         <i class="ml-3 mr-3" data-feather="alert-triangle" style="color: #dc3545;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">SWOT Weakness</h5>
-                    </a>
-                </div>
-                <div class="col-4 text-center">
-                    <a href="{{ route('analisis.satisfaction') }}">
-                        <i class="ml-3 mr-3" data-feather="smile" style="color: #17a2b8;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Kepuasan Pemilih</h5>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Wilayah Terendah</h5>
                     </a>
                 </div>
             </div>

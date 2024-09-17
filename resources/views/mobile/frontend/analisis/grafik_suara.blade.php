@@ -189,8 +189,8 @@
                             labels: response.labels
                             , datasets: [{
                                     label: 'Memilih'
-                                    , data: response.setuju
-                                    , backgroundColor: 'green'
+                                    , data: response.setuju, // Now array format
+                                    backgroundColor: 'green'
                                 }
                                 , {
                                     label: 'Tidak Memilih'
@@ -225,6 +225,7 @@
                 }
             });
         });
+
 
     });
 
