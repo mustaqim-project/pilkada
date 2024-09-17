@@ -142,6 +142,15 @@
 
 <script>
     $(document).ready(function() {
+        // Function to dynamically load a JavaScript file
+        function loadJS(url, callback) {
+            var scriptTag = document.createElement('script');
+            scriptTag.src = url;
+            scriptTag.onload = callback;
+            scriptTag.onreadystatechange = callback;
+            document.body.appendChild(scriptTag);
+        }
+
         // Populate Provinsi Dropdown
         $.ajax({
             url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
@@ -154,7 +163,7 @@
             }
         });
 
-        // Populate Kabupaten/Kota when Provinsi changes
+        // Populate Kabupaten/Kota based on Provinsi selection
         $('#provinsi').change(function() {
             let provinsiId = $(this).val();
             $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
@@ -171,7 +180,7 @@
             }
         });
 
-        // Populate Kecamatan when Kabupaten/Kota changes
+        // Populate Kecamatan based on Kabupaten/Kota selection
         $('#kabupaten_kota').change(function() {
             let kabupatenId = $(this).val();
             $('#kecamatan').html('<option value="">Pilih Kecamatan</option>');
@@ -188,7 +197,7 @@
             }
         });
 
-        // Populate Kelurahan when Kecamatan changes
+        // Populate Kelurahan based on Kecamatan selection
         $('#kecamatan').change(function() {
             let kecamatanId = $(this).val();
             $('#kelurahan').html('<option value="">Pilih Kelurahan</option>');
@@ -231,108 +240,102 @@
 
         // Filter and update chart
         let chartInstance;
-        if ($('.chart').length > 0) {
-            var loadJS = function(url, implementationCode, location) {
-                var scriptTag = document.createElement('script');
-                scriptTag.src = url;
-                scriptTag.onload = implementationCode;
-                scriptTag.onreadystatechange = implementationCode;
-                location.appendChild(scriptTag);
-            };
-            $('#filterButton').click(function() {
-                let provinsi = $('#provinsi').val();
-                let kabupaten = $('#kabupaten_kota').val();
-                let kecamatan = $('#kecamatan').val();
-                let kelurahan = $('#kelurahan').val();
-                let tipeCakadaId = $('#tipe_cakada_id').val();
-                let cakadaId = $('#cakada_id').val();
+        $('#filterButton').click(function() {
+            let provinsi = $('#provinsi').val();
+            let kabupaten = $('#kabupaten_kota').val();
+            let kecamatan = $('#kecamatan').val();
+            let kelurahan = $('#kelurahan').val();
+            let tipeCakadaId = $('#tipe_cakada_id').val();
+            let cakadaId = $('#cakada_id').val();
 
-                $.ajax({
-                    url: "{{ route('getGrafikSuara') }}"
-                    , method: 'GET'
-                    , data: {
-                        provinsi: provinsi
-                        , kabupaten_kota: kabupaten
-                        , kecamatan: kecamatan
-                        , kelurahan: kelurahan
-                        , tipe_cakada_id: tipeCakadaId
-                        , cakada_id: cakadaId
+            $.ajax({
+                url: "{{ route('getGrafikSuara') }}"
+                , method: 'GET'
+                , data: {
+                    provinsi: provinsi
+                    , kabupaten_kota: kabupaten
+                    , kecamatan: kecamatan
+                    , kelurahan: kelurahan
+                    , tipe_cakada_id: tipeCakadaId
+                    , cakada_id: cakadaId
+                }
+                , success: function(response) {
+                    let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
+
+                    if (chartInstance) {
+                        chartInstance.destroy(); // Destroy previous chart instance
                     }
-                    , success: function(response) {
-                        let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
 
-                        if (chartInstance) {
-                            chartInstance.destroy(); // Destroy previous chart instance
+                    chartInstance = new Chart(ctx, {
+                        type: 'bar'
+                        , data: {
+                            labels: response.labels
+                            , datasets: [{
+                                    label: 'Setuju'
+                                    , backgroundColor: '#A0D468'
+                                    , data: response.setuju.map(value => value[0])
+                                }
+                                , {
+                                    label: 'Tidak Setuju'
+                                    , backgroundColor: '#4A89DC'
+                                    , data: response.tidak_setuju.map(value => value[0])
+                                }
+                                , {
+                                    label: 'Ragu-ragu'
+                                    , backgroundColor: '#FFCE56'
+                                    , data: response.ragu_ragu.map(value => value[0])
+                                }
+                                , {
+                                    label: 'Kenal'
+                                    , backgroundColor: '#FF6384'
+                                    , data: response.kenal.map(value => value[0])
+                                }
+                                , {
+                                    label: 'Tidak Kenal'
+                                    , backgroundColor: '#36A2EB'
+                                    , data: response.tidak_kenal.map(value => value[0])
+                                }
+                            ]
                         }
-
-                        chartInstance = new Chart(ctx, {
-                            type: 'bar'
-                            , data: {
-                                labels: response.labels
-                                , datasets: [{
-                                        label: 'Setuju'
-                                        , backgroundColor: '#A0D468'
-                                        , data: response.setuju.map(value => value[0])
-                                    }
-                                    , {
-                                        label: 'Tidak Setuju'
-                                        , backgroundColor: '#4A89DC'
-                                        , data: response.tidak_setuju.map(value => value[0])
-                                    }
-                                    , {
-                                        label: 'Ragu-ragu'
-                                        , backgroundColor: '#FFCE56'
-                                        , data: response.ragu_ragu.map(value => value[0])
-                                    }
-                                    , {
-                                        label: 'Kenal'
-                                        , backgroundColor: '#FF6384'
-                                        , data: response.kenal.map(value => value[0])
-                                    }
-                                    , {
-                                        label: 'Tidak Kenal'
-                                        , backgroundColor: '#36A2EB'
-                                        , data: response.tidak_kenal.map(value => value[0])
-                                    }
-                                ]
-                            }
-                            , options: {
-                                responsive: true
-                                , maintainAspectRatio: false
-                                , scales: {
-                                    y: {
-                                        beginAtZero: true
-                                        , title: {
-                                            display: true
-                                            , text: 'Jumlah'
-                                        }
-                                    }
-                                    , x: {
-                                        title: {
-                                            display: true
-                                            , text: 'Kategori'
-                                        }
-                                    }
-                                }
-                                , plugins: {
-                                    legend: {
+                        , options: {
+                            responsive: true
+                            , maintainAspectRatio: false
+                            , scales: {
+                                y: {
+                                    beginAtZero: true
+                                    , title: {
                                         display: true
-                                        , position: 'bottom'
-                                        , labels: {
-                                            fontSize: 13
-                                            , padding: 15
-                                            , boxWidth: 12
-                                        }
+                                        , text: 'Jumlah'
+                                    }
+                                }
+                                , x: {
+                                    title: {
+                                        display: true
+                                        , text: 'Kategori'
                                     }
                                 }
                             }
-                        });
-                    }
-                });
+                            , plugins: {
+                                legend: {
+                                    display: true
+                                    , position: 'bottom'
+                                    , labels: {
+                                        fontSize: 13
+                                        , padding: 15
+                                        , boxWidth: 12
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
             });
+        });
 
-			loadJS('mobile/scripts/charts.js', call_charts_to_page, document.body);
-        }
+        // Load chart.js script
+        loadJS('mobile/scripts/charts.js', function() {
+            // Chart initialization can be placed here if needed
+        });
     });
 
 </script>
