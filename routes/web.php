@@ -1,14 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Mobile_Detect;
+use Detection\MobileDetect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CakadaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\KanvasingController;
 use App\Http\Controllers\TipeCakadaController;
 use App\Http\Controllers\RolePermissionController;
-use Detection\MobileDetect;
 
 
 Route::get('/', function () {
@@ -75,6 +77,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kanvasing', [KanvasingController::class, 'store'])->middleware('can:kanvasing create')->name('kanvasing.store');
     Route::get('/kanvasing', [KanvasingController::class, 'index'])->middleware('can:kanvasing read')->name('kanvasing.index');
     Route::get('/get-cakada', [KanvasingController::class, 'getCakadaByFilters'])->name('getCakadaByFilters');
+
+
+
+    Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis create')->name('analisis.read');
 });
 
 
