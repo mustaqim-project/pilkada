@@ -68,8 +68,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/cakada', [CakadaController::class, 'index'])->middleware('can:cakada read')->name('cakada.index');
     Route::post('/cakada', [CakadaController::class, 'store'])->middleware('can:cakada create')->name('cakada.store');
+    Route::get('/cakada/{cakada}/edit', [CakadaController::class, 'edit'])->middleware('can:cakada update')->name('cakada.edit');
     Route::put('/cakada/{cakada}', [CakadaController::class, 'update'])->middleware('can:cakada update')->name('cakada.update');
     Route::delete('/cakada/{cakada}', [CakadaController::class, 'destroy'])->middleware('can:cakada delete')->name('cakada.destroy');
+
 
     Route::get('/kanvasing/create', [KanvasingController::class, 'create'])->middleware('can:kanvasing create')->name('kanvasing.create');
     Route::post('/kanvasing', [KanvasingController::class, 'store'])->middleware('can:kanvasing create')->name('kanvasing.store');

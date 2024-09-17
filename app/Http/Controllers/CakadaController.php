@@ -1,13 +1,11 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
 use App\Models\Cakada;
 
 class CakadaController extends Controller
 {
-
     public function __construct()
     {
         // Membatasi akses dengan permission
@@ -19,19 +17,16 @@ class CakadaController extends Controller
 
     public function index()
     {
-
+        // Mengambil semua data cakada
         $cakadas = Cakada::all();
 
-        return view('desktop.cakada.index', compact('provinsi'));
-    }
-
-    public function create()
-    {
-        return view('cakada.create');
+        // Passing data cakadas ke view
+        return view('desktop.cakada.index', compact('cakadas'));
     }
 
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'provinsi' => 'required|string',
             'kabupaten_kota' => 'required|string',
@@ -39,18 +34,25 @@ class CakadaController extends Controller
             'nama_calon_wakil' => 'required|string',
         ]);
 
+        // Simpan data cakada baru
         Cakada::create($request->all());
 
-        return redirect()->route('cakada.index')->with('success', 'Cakada created successfully.');
+        // Redirect kembali dengan pesan sukses
+        return response()->json(['success' => 'Cakada berhasil dibuat.']);
     }
 
-    public function edit(Cakada $cakada)
+    public function edit($id)
     {
-        return view('cakada.edit', compact('cakada'));
+        // Mengambil data cakada berdasarkan ID
+        $cakada = Cakada::find($id);
+
+        // Mengirim data cakada untuk modal edit
+        return response()->json($cakada);
     }
 
-    public function update(Request $request, Cakada $cakada)
+    public function update(Request $request, $id)
     {
+        // Validasi input
         $request->validate([
             'provinsi' => 'required|string',
             'kabupaten_kota' => 'required|string',
@@ -58,15 +60,21 @@ class CakadaController extends Controller
             'nama_calon_wakil' => 'required|string',
         ]);
 
+        // Mengambil data cakada berdasarkan ID dan memperbarui
+        $cakada = Cakada::findOrFail($id);
         $cakada->update($request->all());
 
-        return redirect()->route('cakada.index')->with('success', 'Cakada updated successfully.');
+        // Redirect kembali dengan pesan sukses
+        return response()->json(['success' => 'Cakada berhasil diperbarui.']);
     }
 
-    public function destroy(Cakada $cakada)
+    public function destroy($id)
     {
+        // Menghapus data cakada berdasarkan ID
+        $cakada = Cakada::findOrFail($id);
         $cakada->delete();
 
-        return redirect()->route('cakada.index')->with('success', 'Cakada deleted successfully.');
+        // Redirect kembali dengan pesan sukses
+        return response()->json(['success' => 'Cakada berhasil dihapus.']);
     }
 }
