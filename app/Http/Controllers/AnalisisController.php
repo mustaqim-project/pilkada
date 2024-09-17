@@ -146,7 +146,7 @@ class AnalisisController extends Controller
         $cakada_id = $request->input('cakada_id');
 
         $query = Kanvasing::selectRaw(
-            'COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
+        'COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
          COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
          COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
          COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
@@ -164,14 +164,19 @@ class AnalisisController extends Controller
             return response()->json(['message' => 'Data not found'], 404);
         }
 
-        return response()->json([
-            'labels' => ['Setuju', 'Tidak Setuju', 'Ragu-ragu', 'Kenal', 'Tidak Kenal'],
-            'setuju' => $query->setuju,
-            'tidak_setuju' => $query->tidak_setuju,
-            'ragu_ragu' => $query->ragu_ragu,
-            'kenal' => $query->kenal,
-            'tidak_kenal' => $query->tidak_kenal,
-        ]);
+        $labels = ['Setuju', 'Tidak Setuju', 'Ragu-Ragu', 'Kenal', 'Tidak Kenal'];
+
+        // Buat format data untuk grafik
+        $response = [
+            'labels' => $labels,
+            'setuju' => $grafikData->pluck('setuju'),
+            'tidak_setuju' => $grafikData->pluck('tidak_setuju'),
+            'ragu_ragu' => $grafikData->pluck('ragu_ragu'),
+            'kenal' => $grafikData->pluck('kenal'),
+            'tidak_kenal' => $grafikData->pluck('tidak_kenal'),
+        ];
+
+        return response()->json($response);
     }
 
 

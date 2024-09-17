@@ -254,37 +254,37 @@
                     let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
 
                     if (chartInstance) {
-                        chartInstance.destroy(); // Destroy existing chart before creating a new one
+                        chartInstance.destroy(); // Hapus chart sebelumnya
                     }
 
                     chartInstance = new Chart(ctx, {
                         type: 'bar'
                         , data: {
-                            labels: response.labels, // Replace with the correct label data from the response
+                            labels: response.labels, // Ambil label dari respons
                             datasets: [{
                                     label: 'Setuju'
                                     , backgroundColor: '#A0D468'
-                                    , data: response.setuju, // Data for 'Setuju'
+                                    , data: response.setuju, // Data untuk 'Setuju'
                                 }
                                 , {
                                     label: 'Tidak Setuju'
                                     , backgroundColor: '#4A89DC'
-                                    , data: response.tidak_setuju, // Data for 'Tidak Setuju'
+                                    , data: response.tidak_setuju, // Data untuk 'Tidak Setuju'
                                 }
                                 , {
                                     label: 'Ragu-ragu'
                                     , backgroundColor: '#FFCE56'
-                                    , data: response.ragu_ragu, // Data for 'Ragu-ragu'
+                                    , data: response.ragu_ragu, // Data untuk 'Ragu-ragu'
                                 }
                                 , {
                                     label: 'Kenal'
                                     , backgroundColor: '#FF6384'
-                                    , data: response.kenal, // Data for 'Kenal'
+                                    , data: response.kenal, // Data untuk 'Kenal'
                                 }
                                 , {
                                     label: 'Tidak Kenal'
                                     , backgroundColor: '#36A2EB'
-                                    , data: response.tidak_kenal, // Data for 'Tidak Kenal'
+                                    , data: response.tidak_kenal, // Data untuk 'Tidak Kenal'
                                 }
                             ]
                         }
@@ -316,15 +316,13 @@
                                         , boxWidth: 12
                                     }
                                 }
-                                , title: {
-                                    display: false
-                                }
                             }
                         }
                     });
                 }
             });
         });
+
 
 
     });
