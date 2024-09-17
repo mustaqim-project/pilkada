@@ -55,9 +55,6 @@
                                 <label for="provinsi">Provinsi</label>
                                 <select name="provinsi" id="provinsi" class="form-control" required>
                                     <option value="">Pilih Provinsi</option>
-                                    @foreach($provinsi as $prov)
-                                    <option value="{{ $prov['id'] }}">{{ $prov['name'] }}</option>
-                                    @endforeach
                                 </select>
                             </div>
 
@@ -65,7 +62,6 @@
                                 <label for="kabupaten_kota" class="form-label">Kabupaten/Kota</label>
                                 <select name="kabupaten_kota" id="kabupaten_kota" class="form-control" required>
                                     <option value="">Pilih Kabupaten/Kota</option>
-                                    <!-- Options will be populated by JavaScript -->
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -129,24 +125,31 @@
             <script>
                 $(document).ready(function() {
                     // Event change pada Provinsi
-                    $('#provinsi').on('change', function() {
-                        var provinsi_id = $(this).val();
-                        if (provinsi_id) {
+                    $.ajax({
+                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
+                        , method: 'GET'
+                        , success: function(data) {
+                            let provinsiDropdown = $('#provinsi');
+                            data.forEach(function(provinsi) {
+                                provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
+                            });
+                        }
+                    });
+
+                    // Load kabupaten/kota when a provinsi is selected
+                    $('#provinsi').change(function() {
+                        let provinsiId = $(this).val();
+                        $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
+                        if (provinsiId) {
                             $.ajax({
-                                url: '/get-kabupaten/' + provinsi_id
-                                , type: 'GET'
-                                , dataType: 'json'
+                                url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
+                                , method: 'GET'
                                 , success: function(data) {
-                                    $('#kabupaten_kota').empty().append(
-                                        '<option value="">Pilih Kabupaten/Kota</option>');
-                                    $.each(data, function(key, value) {
-                                        $('#kabupaten_kota').append('<option value="' + value
-                                            .id + '">' + value.name + '</option>');
+                                    data.forEach(function(kabupaten) {
+                                        $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
                                     });
                                 }
                             });
-                        } else {
-                            $('#kabupaten_kota').empty();
                         }
                     });
                 });
