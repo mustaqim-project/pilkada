@@ -188,12 +188,12 @@
                         , data: {
                             labels: response.labels
                             , datasets: [{
-                                    label: 'Setuju'
+                                    label: 'Memilih'
                                     , data: response.setuju
                                     , backgroundColor: 'green'
                                 }
                                 , {
-                                    label: 'Tidak Setuju'
+                                    label: 'Tidak Memilih'
                                     , data: response.tidak_setuju
                                     , backgroundColor: 'red'
                                 }
