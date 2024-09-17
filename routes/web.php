@@ -1,6 +1,5 @@
 <?php
 
-use Mobile_Detect;
 use Detection\MobileDetect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +29,7 @@ Route::get('/', function () {
 
 
 Route::get('/dashboard', function () {
-    $detect = new Mobile_Detect;
+    $detect = new MobileDetect;
     if ($detect->isMobile()) {
         return view('mobile.frontend.dashboard.index');
     } elseif ($detect->isTablet()) {
