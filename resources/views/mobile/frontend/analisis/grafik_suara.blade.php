@@ -21,7 +21,7 @@
                 <h3 class="text-center">Mobile OS</h3>
                 <p class="text-center mt-n2 mb-2 font-11 color-highlight">Growth of Mobile OS 2020</p>
                 <div class="chart-container" style="width:100%; height:350px;">
-                    <canvas class="chart" id="vertical-chart" /></canvas>
+                    <canvas class="chart" id="grafikSuaraChart" /></canvas>
                 </div>
             </div>
         </div>
