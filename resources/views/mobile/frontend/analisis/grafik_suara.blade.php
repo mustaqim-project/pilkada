@@ -271,7 +271,6 @@
                     chartInstance = new Chart(ctx, {
                         type: 'bar'
                         , data: {
-                            labels: response.labels
                             , datasets: [{
                                     label: 'Setuju'
                                     , backgroundColor: '#A0D468'
