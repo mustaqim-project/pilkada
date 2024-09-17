@@ -50,22 +50,28 @@
                     var elektabilitasChart = new Chart(ChartElektabilitas, {
                         type: 'bar',
                         data: {
-                            labels: @json($data->pluck('provinsi')),
+                            labels: @json($data->pluck('provinsi_name')->unique()),
                             datasets: [
                                 {
                                     label: 'Setuju',
                                     backgroundColor: '#A0D468',
-                                    data: @json($data->pluck('setuju')),
+                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
+                                        return $group->sum('setuju');
+                                    })->values()),
                                 },
                                 {
                                     label: 'Tidak Setuju',
                                     backgroundColor: '#4A89DC',
-                                    data: @json($data->pluck('tidak_setuju')),
+                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
+                                        return $group->sum('tidak_setuju');
+                                    })->values()),
                                 },
                                 {
                                     label: 'Ragu-ragu',
                                     backgroundColor: '#FFCE56',
-                                    data: @json($data->pluck('ragu_ragu')),
+                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
+                                        return $group->sum('ragu_ragu');
+                                    })->values()),
                                 }
                             ]
                         },
@@ -106,17 +112,21 @@
                     var popularitasChart = new Chart(ChartPopularitas, {
                         type: 'bar',
                         data: {
-                            labels: @json($data->pluck('provinsi')),
+                            labels: @json($data->pluck('provinsi_name')->unique()),
                             datasets: [
                                 {
                                     label: 'Kenal',
                                     backgroundColor: '#FF6384',
-                                    data: @json($data->pluck('kenal')),
+                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
+                                        return $group->sum('kenal');
+                                    })->values()),
                                 },
                                 {
                                     label: 'Tidak Kenal',
                                     backgroundColor: '#36A2EB',
-                                    data: @json($data->pluck('tidak_kenal')),
+                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
+                                        return $group->sum('tidak_kenal');
+                                    })->values()),
                                 }
                             ]
                         },
