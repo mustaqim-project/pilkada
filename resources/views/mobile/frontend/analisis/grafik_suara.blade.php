@@ -331,7 +331,7 @@
                 });
             });
 
-            loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
+			loadJS('mobile/scripts/charts.js', call_charts_to_page, document.body);
         }
     });
 
