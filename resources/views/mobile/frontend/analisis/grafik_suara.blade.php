@@ -14,11 +14,7 @@
     </div>
 
     <!-- Homepage Slider -->
-    <div class="page-content">
-        <div class="page-title page-title-small">
-            <h2><a href="#" data-back-button><i class="fa fa-arrow-left"></i></a>Charts</h2>
-            <a href="#" data-menu="menu-main" class="bg-fade-gray1-dark shadow-xl preload-img" data-src="images/avatars/5s.png"></a>
-        </div>
+
 
         <div class="card card-style">
             <div class="content">
@@ -29,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 
     <script>
