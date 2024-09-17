@@ -80,8 +80,8 @@ class AnalisisController extends Controller
         });
 
         // Pisahkan data berdasarkan level geografis dan cakada_id
-        $elektabilitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id']);
-        $popularitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id']);
+        $elektabilitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id', 'cakada_name']);
+        $popularitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id', 'cakada_name']);
 
 
         dd( $elektabilitasData,$popularitasData );
