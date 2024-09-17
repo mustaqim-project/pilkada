@@ -22,13 +22,9 @@ class AnalisisController extends Controller
         return view('mobile.frontend.analisis.index');
     }
 
+
+
     public function grafik_suara()
-    {
-        return view('mobile.frontend.analisis.grafik_suara');
-    }
-
-
-    public function get_grafik_suara()
     {
         // Ambil data dari tabel Kanvasing
         $data = Kanvasing::select(
@@ -87,11 +83,11 @@ class AnalisisController extends Controller
         $elektabilitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id']);
         $popularitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id']);
 
-        return response()->json([
-            'elektabilitasData' => $elektabilitasData,
-            'popularitasData' => $popularitasData
-        ]);
-        // return view('mobile.frontend.analisis.grafik_suara', compact('elektabilitasData', 'popularitasData'));
+        // return response()->json([
+        //     'elektabilitasData' => $elektabilitasData,
+        //     'popularitasData' => $popularitasData
+        // ]);
+        return view('mobile.frontend.analisis.grafik_suara', compact('elektabilitasData', 'popularitasData'));
     }
 
     public function tren_suara()

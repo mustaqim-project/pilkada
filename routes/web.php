@@ -83,7 +83,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis read')->name('analisis.read');
 
     Route::get('/grafik-suara', [AnalisisController::class, 'grafik_suara'])->middleware('can:analisis read')->name('analisis.grafik-suara');
-    Route::get('/get-grafik-suara', [AnalisisController::class, 'get_grafik_suara'])->middleware('can:analisis read');
 
 
 
