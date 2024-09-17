@@ -29,15 +29,17 @@
 
             <!-- SweetAlert Success -->
             @if(session('success'))
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: '{{ session('success') }}',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                </script>
+            <script>
+                Swal.fire({
+                    icon: 'success'
+                    , title: 'Success'
+                    , text: '{{ session('
+                    success ') }}'
+                    , timer: 2000
+                    , showConfirmButton: false
+                });
+
+            </script>
             @endif
 
             <!-- Button untuk tambah data -->
@@ -97,11 +99,29 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                            $provinsiMap = [];
+                            foreach ($provinsi as $prov) {
+                            $provinsiMap[$prov['id']] = $prov['name'];
+                            }
+                            @endphp
+
                             @forelse ($cakadas as $cakada)
+                            @php
+                            $provinsiName = $provinsiMap[$cakada->provinsi] ?? 'Unknown';
+
+                            // Ambil kabupaten/kota
+                            $regencies = app('App\Http\Controllers\CakadaController')->getRegencies($cakada->provinsi);
+                            $regenciesMap = [];
+                            foreach ($regencies as $regency) {
+                            $regenciesMap[$regency['id']] = $regency['name'];
+                            }
+                            $kabupatenKotaName = $regenciesMap[$cakada->kabupaten_kota] ?? 'Unknown';
+                            @endphp
                             <tr>
                                 <td>{{ $cakada->id }}</td>
-                                <td>{{ $cakada->provinsi }}</td>
-                                <td>{{ $cakada->kabupaten_kota }}</td>
+                                <td>{{ $provinsiName }}</td>
+                                <td>{{ $kabupatenKotaName }}</td>
                                 <td>{{ $cakada->nama_calon_kepala }}</td>
                                 <td>{{ $cakada->nama_calon_wakil }}</td>
                                 <td>
@@ -118,6 +138,7 @@
                                 <td colspan="6" class="text-center">Tidak ada data.</td>
                             </tr>
                             @endforelse
+
                         </tbody>
                     </table>
                 </div>
@@ -127,9 +148,9 @@
                 $(document).ready(function() {
                     // Load data untuk provinsi
                     $.ajax({
-                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
-                        method: 'GET',
-                        success: function(data) {
+                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
+                        , method: 'GET'
+                        , success: function(data) {
                             let provinsiDropdown = $('#provinsi');
                             data.forEach(function(provinsi) {
                                 provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
@@ -143,9 +164,9 @@
                         $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
                         if (provinsiId) {
                             $.ajax({
-                                url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
-                                method: 'GET',
-                                success: function(data) {
+                                url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
+                                , method: 'GET'
+                                , success: function(data) {
                                     data.forEach(function(kabupaten) {
                                         $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
                                     });
@@ -158,9 +179,9 @@
                     $('.btn-edit').click(function() {
                         let id = $(this).data('id');
                         $.ajax({
-                            url: `/cakada/${id}/edit`,
-                            method: 'GET',
-                            success: function(data) {
+                            url: `/cakada/${id}/edit`
+                            , method: 'GET'
+                            , success: function(data) {
                                 $('#modalCakada').modal('show');
                                 $('#cakada_id').val(data.id);
                                 $('#provinsi').val(data.provinsi);
@@ -173,6 +194,7 @@
                         });
                     });
                 });
+
             </script>
 
         </div>

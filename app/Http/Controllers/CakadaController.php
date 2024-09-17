@@ -17,11 +17,24 @@ class CakadaController extends Controller
 
     public function index()
     {
-        // Mengambil semua data cakada
+        $provinsiResponse = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
+        $provinsiData = $provinsiResponse->json();
+
+        // Simpan provinsi dalam cache
+        cache(['provinsi' => $provinsiData], 60); // Simpan selama 60 menit
+
+        // Ambil data provinsi yang sudah disimpan
+        $provinsi = cache('provinsi');
+
         $cakadas = Cakada::all();
 
-        // Passing data cakadas ke view
-        return view('desktop.cakada.index', compact('cakadas'));
+        return view('cakada.index', compact('cakadas', 'provinsi'));
+    }
+
+    public function getRegencies($provinsiId)
+    {
+        $regenciesResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/{$provinsiId}.json");
+        return $regenciesResponse->json();
     }
 
     public function store(Request $request)
