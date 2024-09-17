@@ -2,7 +2,49 @@
 
 @section('content')
 
+<style>
+    .container {
+        margin-top: 20px;
+    }
 
+    .btn-full {
+        display: inline-block;
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        /* Padding atas/bawah dan kiri/kanan */
+        border: none;
+        border-radius: 0.375rem;
+        /* Radius sudut */
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        /* Warna teks putih */
+        background-color: #007bff;
+        /* Ganti dengan warna latar belakang sesuai kebutuhan */
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-highlight {
+        background-color: #28a745;
+        /* Ganti dengan warna latar belakang highlight */
+    }
+
+    .btn-full:hover {
+        background-color: #0056b3;
+        /* Ganti dengan warna latar belakang saat hover */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Bayangan saat hover */
+    }
+
+    .btn-full:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+        /* Bayangan fokus */
+    }
+
+</style>
 <div class="page-content">
     <div class="page-title page-title-small">
         <h2><a href="{{ route('dashboard') }}" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
@@ -18,16 +60,7 @@
     <div class="card card-style">
         <div class="content mb-0 mt-1">
             <!-- user id -->
-            <Label>Tim Lapangan</Label>
-            @if (Route::has('login'))
-            <div class="input-style has-icon input-style-1 input-required">
-                <select name="user_id" id="user_id" class="input" required>
-                    <option id="user_id" name="user_id" value="{{ Auth::user()->id }}">
-                        {{ Auth::user()->name }}</option>
-                </select>
-                <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
-            </div>
-            @endif
+
 
             <!-- Provinsi -->
             <div class="input-style has-icon input-style-1 input-required">
@@ -92,7 +125,7 @@
             </div>
         </div>
     </div>
-    <button id="filterButton" class="btn btn-primary mt-3">Tampilkan Grafik</button>
+    <button type="submit" id="filterButton" class="btn btn-full btn-highlight">Tampilkan Grafik</button>
 
     <!-- Chart -->
     <div class="card card-style">
