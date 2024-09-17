@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis create')->name('analisis.read');
+    Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis read')->name('analisis.read');
 });
 
 
