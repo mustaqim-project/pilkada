@@ -137,45 +137,43 @@ class AnalisisController extends Controller
     // }
 
     public function get_grafik_suara(Request $request)
-{
-    // Ambil parameter filter
-    $provinsi = $request->input('provinsi');
-    $kabupaten_kota = $request->input('kabupaten_kota');
-    $kecamatan = $request->input('kecamatan');
-    $kelurahan = $request->input('kelurahan');
-    $tipe_cakada_id = $request->input('tipe_cakada_id');
-    $cakada_id = $request->input('cakada_id');
+    {
+        $provinsi = $request->input('provinsi');
+        $kabupaten_kota = $request->input('kabupaten_kota');
+        $kecamatan = $request->input('kecamatan');
+        $kelurahan = $request->input('kelurahan');
+        $tipe_cakada_id = $request->input('tipe_cakada_id');
+        $cakada_id = $request->input('cakada_id');
 
-    // Query data berdasarkan filter
-    $query = Kanvasing::selectRaw(
-        'COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
-         COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
-         COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
-         COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
-         COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal'
-    )
-    ->when($provinsi, fn($query) => $query->where('provinsi', $provinsi))
-    ->when($kabupaten_kota, fn($query) => $query->where('kabupaten_kota', $kabupaten_kota))
-    ->when($kecamatan, fn($query) => $query->where('kecamatan', $kecamatan))
-    ->when($kelurahan, fn($query) => $query->where('kelurahan', $kelurahan))
-    ->when($tipe_cakada_id, fn($query) => $query->where('tipe_cakada_id', $tipe_cakada_id))
-    ->when($cakada_id, fn($query) => $query->where('cakada_id', $cakada_id))
-    ->first();
+        $query = Kanvasing::selectRaw(
+            'COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
+             COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
+             COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
+             COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
+             COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal'
+        )
+        ->when($provinsi, fn($query) => $query->where('provinsi', $provinsi))
+        ->when($kabupaten_kota, fn($query) => $query->where('kabupaten_kota', $kabupaten_kota))
+        ->when($kecamatan, fn($query) => $query->where('kecamatan', $kecamatan))
+        ->when($kelurahan, fn($query) => $query->where('kelurahan', $kelurahan))
+        ->when($tipe_cakada_id, fn($query) => $query->where('tipe_cakada_id', $tipe_cakada_id))
+        ->when($cakada_id, fn($query) => $query->where('cakada_id', $cakada_id))
+        ->first();
 
-    if (!$query) {
-        return response()->json(['message' => 'Data not found'], 404);
+        if (!$query) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+
+        // Siapkan data untuk grafik dengan format array
+        return response()->json([
+            'labels' => ['Setuju', 'Tidak Setuju', 'Ragu-ragu', 'Kenal', 'Tidak Kenal'],
+            'setuju' => [$query->setuju],  // return as arrays
+            'tidak_setuju' => [$query->tidak_setuju],
+            'ragu_ragu' => [$query->ragu_ragu],
+            'kenal' => [$query->kenal],
+            'tidak_kenal' => [$query->tidak_kenal],
+        ]);
     }
-
-    // Siapkan data untuk grafik
-    return response()->json([
-        'labels' => ['Setuju', 'Tidak Setuju', 'Ragu-ragu', 'Kenal', 'Tidak Kenal'],
-        'setuju' => $query->setuju,
-        'tidak_setuju' => $query->tidak_setuju,
-        'ragu_ragu' => $query->ragu_ragu,
-        'kenal' => $query->kenal,
-        'tidak_kenal' => $query->tidak_kenal,
-    ]);
-}
 
 
 
