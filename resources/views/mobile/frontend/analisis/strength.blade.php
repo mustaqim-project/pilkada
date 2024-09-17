@@ -17,7 +17,7 @@
     <!-- Chart -->
     <div class="card card-style">
         <div class="content">
-            <h3 class="text-center">Top Kabupaten/Kota Setuju</h3>
+            <h3 class="text-center">Top 3 Kecamatan dengan Jumlah Pemilih Tertinggi</h3>
             <div class="chart-container" style="width:100%; height:350px;">
                 <canvas class="chart" id="chartKabupatenSetuju"></canvas>
             </div>
@@ -25,15 +25,7 @@
     </div>
     <div class="card card-style">
         <div class="content">
-            <h3 class="text-center">Top Kabupaten/Kota Ragu-Ragu</h3>
-            <div class="chart-container" style="width:100%; height:350px;">
-                <canvas class="chart" id="chartKabupatenRaguRagu"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="card card-style">
-        <div class="content">
-            <h3 class="text-center">Top Kecamatan Setuju</h3>
+            <h3 class="text-center">Top 3 Kelurahan dengan Jumlah Pemilih Tertinggi</h3>
             <div class="chart-container" style="width:100%; height:350px;">
                 <canvas class="chart" id="chartKecamatanSetuju"></canvas>
             </div>
@@ -41,15 +33,7 @@
     </div>
     <div class="card card-style">
         <div class="content">
-            <h3 class="text-center">Top Kecamatan Ragu-Ragu</h3>
-            <div class="chart-container" style="width:100%; height:350px;">
-                <canvas class="chart" id="chartKecamatanRaguRagu"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="card card-style">
-        <div class="content">
-            <h3 class="text-center">Popularitas Kabupaten/Kota</h3>
+            <h3 class="text-center">Top 3 Kecamatan dengan Popularitas Tertinggi</h3>
             <div class="chart-container" style="width:100%; height:350px;">
                 <canvas class="chart" id="chartPopularitasKabupaten"></canvas>
             </div>
@@ -57,9 +41,25 @@
     </div>
     <div class="card card-style">
         <div class="content">
-            <h3 class="text-center">Popularitas Kecamatan</h3>
+            <h3 class="text-center">Top 3 Kelurahan dengan Popularitas Tertinggi</h3>
             <div class="chart-container" style="width:100%; height:350px;">
                 <canvas class="chart" id="chartPopularitasKecamatan"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Top 3 Kecamatan dengan Jumlah Pemilih Ragu-Ragu Tertinggi</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="chartKabupatenRaguRagu"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Top 3 Kelurahan dengan Jumlah Pemilih Ragu-Ragu Tertinggi</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="chartKecamatanRaguRagu"></canvas>
             </div>
         </div>
     </div>
