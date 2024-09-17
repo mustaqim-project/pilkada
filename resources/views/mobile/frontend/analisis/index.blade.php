@@ -19,28 +19,46 @@
             <div class="row mt-3 pt-1 mb-3">
                 <div class="col-4 text-center">
                     <a href="#">
-                        <i class="ml-3 mr-3" data-feather="user" style="color: #FF5733;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Kunjungan Warga</h5>
+                        <i class="ml-3 mr-3" data-feather="map-pin" style="color: #FF5733;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Suara per Wilayah</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
                     <a href="#">
-                        <i class="ml-3 mr-3" data-feather="pie-chart" style="color: #33B5FF;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
-                            Analisis Suara</h5>
+                        <i class="ml-3 mr-3" data-feather="bar-chart-2" style="color: #33B5FF;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Segmentasi Pemilih</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="manajemen-relawan.html">
-                        <i class="ml-3 mr-3" data-feather="users" style="color: #FFC733;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
-                            Manajemen Relawan</h5>
+                    <a href="#">
+                        <i class="ml-3 mr-3" data-feather="activity" style="color: #FFC733;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Tren Suara</h5>
                     </a>
                 </div>
-
+            </div>
+            <div class="row mt-3 pt-1 mb-3">
+                <div class="col-4 text-center">
+                    <a href="#">
+                        <i class="ml-3 mr-3" data-feather="shield" style="color: #28a745;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">SWOT Kekuatan</h5>
+                    </a>
+                </div>
+                <div class="col-4 text-center">
+                    <a href="#">
+                        <i class="ml-3 mr-3" data-feather="alert-triangle" style="color: #dc3545;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">SWOT Ancaman</h5>
+                    </a>
+                </div>
+                <div class="col-4 text-center">
+                    <a href="#">
+                        <i class="ml-3 mr-3" data-feather="smile" style="color: #17a2b8;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Kepuasan Pemilih</h5>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
 
 
 @endsection

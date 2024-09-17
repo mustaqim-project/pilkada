@@ -50,7 +50,7 @@
                     <a href="manajemen-relawan.html">
                         <i class="ml-3 mr-3" data-feather="users" style="color: #FFC733;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
-                            Manajemen Relawan</h5>
+                            Manajemen Pilkada</h5>
                     </a>
                 </div>
 
