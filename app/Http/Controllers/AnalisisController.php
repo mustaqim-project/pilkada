@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kanvasing;
 use DB;
-// Menampilkan grafik analisis suara
 use Illuminate\Support\Facades\Http;
 use App\Models\Cakada;
+use App\Models\TipeCakada;
 
 class AnalisisController extends Controller
 {
