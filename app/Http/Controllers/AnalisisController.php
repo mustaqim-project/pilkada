@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-Use App\Models\Kanvasing;
+use App\Models\Kanvasing;
 use DB;
+// Menampilkan grafik analisis suara
+use Illuminate\Support\Facades\Http;
+use App\Models\Cakada;
+
 class AnalisisController extends Controller
 {
     public function __construct()
@@ -18,21 +22,19 @@ class AnalisisController extends Controller
         return view('mobile.frontend.analisis.index');
     }
 
-    // Menampilkan grafik analisis suara
-    use Illuminate\Support\Facades\Http;
-    use App\Models\Cakada;
+
 
     public function grafik_suara()
     {
         $data = Kanvasing::select(
-                'provinsi',
-                'cakada_id',
-                DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
-                DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
-                DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
-                DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
-                DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
-            )
+            'provinsi',
+            'cakada_id',
+            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
+            DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
+            DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
+        )
             ->groupBy('provinsi', 'cakada_id')
             ->get();
 
@@ -58,7 +60,7 @@ class AnalisisController extends Controller
         }
 
         // Gabungkan data
-        $data->transform(function($item) use ($cakadas, $provinces, $regencies, $districts, $villages) {
+        $data->transform(function ($item) use ($cakadas, $provinces, $regencies, $districts, $villages) {
             $cakada = $cakadas[$item->cakada_id] ?? null;
             if ($cakada) {
                 $item->cakada_name = $cakada->name;
@@ -87,48 +89,57 @@ class AnalisisController extends Controller
         return view('mobile.frontend.analisis.grafik_suara', compact('data'));
     }
 
-     public function tren_suara()
-     {
-         // Mengelompokkan data pemilih berdasarkan wilayah dari kabupaten/kota ke kelurahan
-         $trenPemilih = Kanvasing::select(
-                 'provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan',
-                 DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
-                 DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
-                 DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu')
-             )
-             ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan')
-             ->get();
+    public function tren_suara()
+    {
+        // Mengelompokkan data pemilih berdasarkan wilayah dari kabupaten/kota ke kelurahan
+        $trenPemilih = Kanvasing::select(
+            'provinsi',
+            'kabupaten_kota',
+            'kecamatan',
+            'kelurahan',
+            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu')
+        )
+            ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan')
+            ->get();
 
-         return view('mobile.frontend.analisis.tren_suara', compact('trenPemilih'));
-     }
+        return view('mobile.frontend.analisis.tren_suara', compact('trenPemilih'));
+    }
 
-     // Menampilkan daerah strength (elektabilitas tertinggi)
-     public function strength()
-     {
-         // Mencari daerah dengan elektabilitas tertinggi (kabupaten, kecamatan, kelurahan)
-         $strengthDaerah = Kanvasing::select(
-                 'provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan',
-                 DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju')
-             )
-             ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan')
-             ->orderBy('setuju', 'DESC') // Urutkan berdasarkan jumlah "setuju"
-             ->first(); // Ambil daerah tertinggi
+    // Menampilkan daerah strength (elektabilitas tertinggi)
+    public function strength()
+    {
+        // Mencari daerah dengan elektabilitas tertinggi (kabupaten, kecamatan, kelurahan)
+        $strengthDaerah = Kanvasing::select(
+            'provinsi',
+            'kabupaten_kota',
+            'kecamatan',
+            'kelurahan',
+            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju')
+        )
+            ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan')
+            ->orderBy('setuju', 'DESC') // Urutkan berdasarkan jumlah "setuju"
+            ->first(); // Ambil daerah tertinggi
 
-         return view('mobile.frontend.analisis.strength', compact('strengthDaerah'));
-     }
+        return view('mobile.frontend.analisis.strength', compact('strengthDaerah'));
+    }
 
-     // Menampilkan daerah weakness (elektabilitas terendah)
-     public function weakness()
-     {
-         // Mencari daerah dengan elektabilitas terendah (kabupaten, kecamatan, kelurahan)
-         $weaknessDaerah = Kanvasing::select(
-                 'provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan',
-                 DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju')
-             )
-             ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan')
-             ->orderBy('setuju', 'ASC') // Urutkan berdasarkan jumlah "setuju"
-             ->first(); // Ambil daerah terendah
+    // Menampilkan daerah weakness (elektabilitas terendah)
+    public function weakness()
+    {
+        // Mencari daerah dengan elektabilitas terendah (kabupaten, kecamatan, kelurahan)
+        $weaknessDaerah = Kanvasing::select(
+            'provinsi',
+            'kabupaten_kota',
+            'kecamatan',
+            'kelurahan',
+            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju')
+        )
+            ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan')
+            ->orderBy('setuju', 'ASC') // Urutkan berdasarkan jumlah "setuju"
+            ->first(); // Ambil daerah terendah
 
-         return view('mobile.frontend.analisis.weakness', compact('weaknessDaerah'));
-     }
+        return view('mobile.frontend.analisis.weakness', compact('weaknessDaerah'));
+    }
 }
