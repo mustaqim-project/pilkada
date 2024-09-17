@@ -28,24 +28,24 @@ class AnalisisController extends Controller
     {
         // Ambil data dari tabel Kanvasing
         $data = Kanvasing::select(
-                'provinsi',
-                'kabupaten_kota',
-                'kecamatan',
-                'kelurahan',
-                'cakada_id',
-                DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
-                DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
-                DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
-                DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
-                DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
-            )
+            'provinsi',
+            'kabupaten_kota',
+            'kecamatan',
+            'kelurahan',
+            'cakada_id',
+            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
+            DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
+            DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
+            DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
+        )
             ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan', 'cakada_id')
             ->get();
 
         // Ambil data cakada
         $cakadas = Cakada::all()->keyBy('id');
 
-        // Ambil data dari API
+        // Ambil data dari API wilayah Indonesia
         $provinces = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')->json();
         $regencies = [];
         $districts = [];
@@ -64,10 +64,13 @@ class AnalisisController extends Controller
         }
 
         // Gabungkan data
-        $data->transform(function($item) use ($cakadas, $provinces, $regencies, $districts, $villages) {
+        $data->transform(function ($item) use ($cakadas, $provinces, $regencies, $districts, $villages) {
             $cakada = $cakadas[$item->cakada_id] ?? null;
-            $item->cakada_name = $cakada ? $cakada->name : 'Unknown';
 
+            // Gabungkan nama calon kepala dan wakil
+            $item->cakada_name = $cakada ? $cakada->nama_calon_kepala . ' & ' . $cakada->nama_calon_wakil : 'Unknown';
+
+            // Ambil nama provinsi, kabupaten, kecamatan, dan kelurahan
             $item->provinsi_name = collect($provinces)->firstWhere('id', $item->provinsi)['name'] ?? 'Unknown';
             $item->kabupaten_name = collect($regencies[$item->provinsi] ?? [])->firstWhere('id', $item->kabupaten_kota)['name'] ?? 'Unknown';
             $item->kecamatan_name = collect($districts[$item->kabupaten_kota] ?? [])->firstWhere('id', $item->kecamatan)['name'] ?? 'Unknown';
