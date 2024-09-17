@@ -148,12 +148,12 @@ class AnalisisController extends Controller
 
         // Query data berdasarkan filter
         $query = Kanvasing::selectRaw(
-                        'provinsi, kabupaten_kota, kecamatan, kelurahan, tipe_cakada_id, cakada_id,
-                COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
-                COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
-                COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
-                COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
-                COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal'
+            'provinsi, kabupaten_kota, kecamatan, kelurahan, tipe_cakada_id, cakada_id,
+            COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
+            COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
+            COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
+            COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
+            COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal'
         )
             ->when($provinsi, fn($query) => $query->where('provinsi', $provinsi))
             ->when($kabupaten_kota, fn($query) => $query->where('kabupaten_kota', $kabupaten_kota))
@@ -161,7 +161,9 @@ class AnalisisController extends Controller
             ->when($kelurahan, fn($query) => $query->where('kelurahan', $kelurahan))
             ->when($tipe_cakada_id, fn($query) => $query->where('tipe_cakada_id', $tipe_cakada_id))
             ->when($cakada_id, fn($query) => $query->where('cakada_id', $cakada_id))
+            ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan', 'tipe_cakada_id', 'cakada_id')
             ->first();
+
 
         if (!$query) {
             return response()->json(['message' => 'Data not found'], 404);
