@@ -146,11 +146,11 @@ class AnalisisController extends Controller
         $cakada_id = $request->input('cakada_id');
 
         $query = Kanvasing::selectRaw(
-        'COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
-         COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
-         COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
-         COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
-         COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal'
+            'COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju,
+             COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju,
+             COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu,
+             COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal,
+             COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal'
         )
             ->when($provinsi, fn($query) => $query->where('provinsi', $provinsi))
             ->when($kabupaten_kota, fn($query) => $query->where('kabupaten_kota', $kabupaten_kota))
@@ -164,20 +164,16 @@ class AnalisisController extends Controller
             return response()->json(['message' => 'Data not found'], 404);
         }
 
-        $labels = ['Setuju', 'Tidak Setuju', 'Ragu-Ragu', 'Kenal', 'Tidak Kenal'];
-
-        // Buat format data untuk grafik
-        $response = [
-            'labels' => $labels,
-            'setuju' => $grafikData->pluck('setuju'),
-            'tidak_setuju' => $grafikData->pluck('tidak_setuju'),
-            'ragu_ragu' => $grafikData->pluck('ragu_ragu'),
-            'kenal' => $grafikData->pluck('kenal'),
-            'tidak_kenal' => $grafikData->pluck('tidak_kenal'),
-        ];
-
-        return response()->json($response);
+        return response()->json([
+            'labels' => ['Setuju', 'Tidak Setuju', 'Ragu-ragu', 'Kenal', 'Tidak Kenal'],
+            'setuju' => [$query->setuju], // Wrap in an array
+            'tidak_setuju' => [$query->tidak_setuju], // Wrap in an array
+            'ragu_ragu' => [$query->ragu_ragu], // Wrap in an array
+            'kenal' => [$query->kenal], // Wrap in an array
+            'tidak_kenal' => [$query->tidak_kenal], // Wrap in an array
+        ]);
     }
+
 
 
 
