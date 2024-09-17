@@ -238,110 +238,107 @@
             });
         });
 
+        // Filter and update chart
         let chartInstance;
-        if ($('.chart').length > 0) {
-            var loadJS = function(url, implementationCode, location) {
-                var scriptTag = document.createElement('script');
-                scriptTag.src = url;
-                scriptTag.onload = implementationCode;
-                scriptTag.onreadystatechange = implementationCode;
-                location.appendChild(scriptTag);
-            };
 
-            $('#filterButton').click(function() {
-                let provinsi = $('#provinsi').val();
-                let kabupaten = $('#kabupaten_kota').val();
-                let kecamatan = $('#kecamatan').val();
-                let kelurahan = $('#kelurahan').val();
-                let tipeCakadaId = $('#tipe_cakada_id').val();
-                let cakadaId = $('#cakada_id').val();
 
-                $.ajax({
-                    url: "{{ route('getGrafikSuara') }}"
-                    , method: 'GET'
-                    , data: {
-                        provinsi: provinsi
-                        , kabupaten_kota: kabupaten
-                        , kecamatan: kecamatan
-                        , kelurahan: kelurahan
-                        , tipe_cakada_id: tipeCakadaId
-                        , cakada_id: cakadaId
+        $('#filterButton').click(function() {
+            let provinsi = $('#provinsi').val();
+            let kabupaten = $('#kabupaten_kota').val();
+            let kecamatan = $('#kecamatan').val();
+            let kelurahan = $('#kelurahan').val();
+            let tipeCakadaId = $('#tipe_cakada_id').val();
+            let cakadaId = $('#cakada_id').val();
+
+            $.ajax({
+                url: "{{ route('getGrafikSuara') }}"
+                , method: 'GET'
+                , data: {
+                    provinsi: provinsi
+                    , kabupaten_kota: kabupaten
+                    , kecamatan: kecamatan
+                    , kelurahan: kelurahan
+                    , tipe_cakada_id: tipeCakadaId
+                    , cakada_id: cakadaId
+                }
+                , success: function(response) {
+                    let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
+
+                    if (chartInstance) {
+                        chartInstance.destroy(); // Destroy previous chart instance
                     }
-                    , success: function(response) {
-                        let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
 
-                        if (chartInstance) {
-                            chartInstance.destroy(); // Destroy previous chart instance
+                    chartInstance = new Chart(ctx, {
+                        type: 'bar'
+                        , data: {
+                            labels: response.labels
+                            , datasets: [{
+                                    label: 'Setuju'
+                                    , backgroundColor: '#A0D468'
+                                    , data: response.setuju
+                                }
+                                , {
+                                    label: 'Tidak Setuju'
+                                    , backgroundColor: '#4A89DC'
+                                    , data: response.tidak_setuju
+                                }
+                                , {
+                                    label: 'Ragu-ragu'
+                                    , backgroundColor: '#FFCE56'
+                                    , data: response.ragu_ragu
+                                }
+                                , {
+                                    label: 'Kenal'
+                                    , backgroundColor: '#FF6384'
+                                    , data: response.kenal
+                                }
+                                , {
+                                    label: 'Tidak Kenal'
+                                    , backgroundColor: '#36A2EB'
+                                    , data: response.tidak_kenal
+                                }
+                            ]
                         }
-
-                        chartInstance = new Chart(ctx, {
-                            type: 'bar'
-                            , data: {
-                                labels: response.labels
-                                , datasets: [{
-                                        label: 'Setuju'
-                                        , backgroundColor: '#A0D468'
-                                        , data: response.setuju
-                                    }
-                                    , {
-                                        label: 'Tidak Setuju'
-                                        , backgroundColor: '#4A89DC'
-                                        , data: response.tidak_setuju
-                                    }
-                                    , {
-                                        label: 'Ragu-ragu'
-                                        , backgroundColor: '#FFCE56'
-                                        , data: response.ragu_ragu
-                                    }
-                                    , {
-                                        label: 'Kenal'
-                                        , backgroundColor: '#FF6384'
-                                        , data: response.kenal
-                                    }
-                                    , {
-                                        label: 'Tidak Kenal'
-                                        , backgroundColor: '#36A2EB'
-                                        , data: response.tidak_kenal
-                                    }
-                                ]
-                            }
-                            , options: {
-                                responsive: true
-                                , maintainAspectRatio: false
-                                , scales: {
-                                    y: {
-                                        beginAtZero: true
-                                        , title: {
-                                            display: true
-                                            , text: 'Jumlah'
-                                        }
-                                    }
-                                    , x: {
-                                        title: {
-                                            display: true
-                                            , text: 'Kategori'
-                                        }
-                                    }
-                                }
-                                , plugins: {
-                                    legend: {
+                        , options: {
+                            responsive: true
+                            , maintainAspectRatio: false
+                            , scales: {
+                                y: {
+                                    beginAtZero: true
+                                    , title: {
                                         display: true
-                                        , position: 'bottom'
-                                        , labels: {
-                                            fontSize: 13
-                                            , padding: 15
-                                            , boxWidth: 12
-                                        }
+                                        , text: 'Jumlah'
+                                    }
+                                }
+                                , x: {
+                                    title: {
+                                        display: true
+                                        , text: 'Kategori'
                                     }
                                 }
                             }
-                        });
-                    }
-                });
+                            , plugins: {
+                                legend: {
+                                    display: true
+                                    , position: 'bottom'
+                                    , labels: {
+                                        fontSize: 13
+                                        , padding: 15
+                                        , boxWidth: 12
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
             });
 
-            loadJS('mobile/scripts/charts.js', call_charts_to_page, document.body);
-        }
+        });
+
+        // Load chart.js script
+        loadJS('mobile/scripts/charts.js', function() {
+            // Chart initialization can be placed here if needed
+        });
     });
 
 </script>
