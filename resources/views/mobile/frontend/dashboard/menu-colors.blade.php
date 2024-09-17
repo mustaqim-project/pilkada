@@ -3,13 +3,13 @@
     <div class="card-bg preload-img" data-src="images/pictures/20s.jpg"></div>
 </div>
 
-<h1 class="text-center color-white mt-4 font-35 font-800">Sidaksis</h1>
+<h1 class="text-center color-white mt-4 font-35 font-800">Sikadsis</h1>
 <p class="text-center color-white font-12 mt-n1 pb-2 mb-3">Put a little color in your life</p>
 
 <div class="card card-style">
     <div class="highlight-changer pt-3 pb-2">
         <p class="text-center">
-            Sidaksis is packed with a beautiful color scheme.<br>Tap on your favorite! The page will adapt!
+            Sikadsis is packed with a beautiful color scheme.<br>Tap on your favorite! The page will adapt!
         </p>
         <a href="#" data-change-highlight="green3"><i class="fa fa-circle color-green3-dark"></i><span class="color-green3-light">Default</span></a>
         <a href="#" data-change-highlight="blue2"><i class="fa fa-circle color-blue2-dark"></i><span class="color-blue2-light">Blue</span></a>
