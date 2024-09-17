@@ -63,33 +63,13 @@
                 @foreach($elektabilitasData as $provinsi => $kabupaten)
                 @foreach($kabupaten as $kabupatenKota => $kecamatan)
                 @foreach($kecamatan as $kecamatan => $kelurahan)
-                @foreach($kelurahan as $kelurahan => $cakadaGroup)
+                @foreach($kelurahan as $cakadaGroup)
                 @foreach($cakadaGroup as $cakadaId => $items)
-                var ChartElektabilitas {
-                    {
-                        $cakadaId
-                    }
-                } = $('#grafikElektabilitas_{{ $cakadaId }}');
-                var ChartPopularitas {
-                    {
-                        $cakadaId
-                    }
-                } = $('#grafikPopularitas_{{ $cakadaId }}');
+                var ChartElektabilitas = $('#grafikElektabilitas_{{ $cakadaId }}');
+                var ChartPopularitas = $('#grafikPopularitas_{{ $cakadaId }}');
 
-                if (ChartElektabilitas {
-                        {
-                            $cakadaId
-                        }
-                    }.length) {
-                    var elektabilitasChart {
-                        {
-                            $cakadaId
-                        }
-                    } = new Chart(ChartElektabilitas {
-                        {
-                            $cakadaId
-                        }
-                    }, {
+                if (ChartElektabilitas.length) {
+                    var elektabilitasChart = new Chart(ChartElektabilitas, {
                         type: 'bar'
                         , data: {
                             labels: ['Memilih', 'Tidak Memilih', 'Ragu-ragu']
@@ -101,7 +81,7 @@
                                     , @json($items - > sum('tidak_setuju'))
                                     , @json($items - > sum('ragu_ragu'))
                                 ]
-                            , }]
+                            }]
                         }
                         , options: {
                             responsive: true
@@ -136,20 +116,8 @@
                     });
                 }
 
-                if (ChartPopularitas {
-                        {
-                            $cakadaId
-                        }
-                    }.length) {
-                    var popularitasChart {
-                        {
-                            $cakadaId
-                        }
-                    } = new Chart(ChartPopularitas {
-                        {
-                            $cakadaId
-                        }
-                    }, {
+                if (ChartPopularitas.length) {
+                    var popularitasChart = new Chart(ChartPopularitas, {
                         type: 'bar'
                         , data: {
                             labels: ['Kenal', 'Tidak Kenal']
@@ -160,7 +128,7 @@
                                     @json($items - > sum('kenal'))
                                     , @json($items - > sum('tidak_kenal'))
                                 ]
-                            , }]
+                            }]
                         }
                         , options: {
                             responsive: true
