@@ -201,118 +201,122 @@ class AnalisisController extends Controller
     // }
     public function strength()
     {
-        // Ambil seluruh data dari kanvasings
-        $kanvasings = DB::table('kanvasings')
-            ->select('kabupaten_kota', 'kecamatan', 'kelurahan', 'elektabilitas', 'popularitas')
-            ->get();
+        // Mencari daerah dengan elektabilitas setuju dan ragu-ragu tertinggi berdasarkan kabupaten dan kecamatan
+        $topKabupatenKotaKecamatanSetuju = DB::table(DB::raw('(
+            SELECT kabupaten_kota, kecamatan,
+                   COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) AS setuju
+            FROM kanvasings
+            GROUP BY kabupaten_kota, kecamatan
+        ) AS subquery'))
+        ->orderBy('setuju', 'DESC')
+        ->limit(3)
+        ->get();
 
-        // Hitung berdasarkan elektabilitas dan popularitas
-        $groupedData = $kanvasings->groupBy(['kabupaten_kota', 'kecamatan', 'kelurahan']);
+        $topKabupatenKotaKecamatanRaguRagu = DB::table(DB::raw('(
+            SELECT kabupaten_kota, kecamatan,
+                   COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) AS ragu_ragu
+            FROM kanvasings
+            GROUP BY kabupaten_kota, kecamatan
+        ) AS subquery'))
+        ->orderBy('ragu_ragu', 'DESC')
+        ->limit(3)
+        ->get();
 
-        $results = [
-            'topKabupatenKotaKecamatanSetuju' => [],
-            'topKabupatenKotaKecamatanRaguRagu' => [],
-            'topKecamatanKelurahanSetuju' => [],
-            'topKecamatanKelurahanRaguRagu' => [],
-            'topKabupatenKotaKecamatanPopularitasSetuju' => [],
-            'topKecamatanKelurahanPopularitasSetuju' => []
-        ];
+        // Mencari daerah dengan elektabilitas setuju dan ragu-ragu tertinggi berdasarkan kecamatan dan kelurahan
+        $topKecamatanKelurahanSetuju = DB::table(DB::raw('(
+            SELECT kecamatan, kelurahan,
+                   COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) AS setuju
+            FROM kanvasings
+            GROUP BY kecamatan, kelurahan
+        ) AS subquery'))
+        ->orderBy('setuju', 'DESC')
+        ->limit(3)
+        ->get();
 
-        // Store API responses to prevent multiple requests for the same data
-        $districtNamesCache = [];
-        $villageNamesCache = [];
+        $topKecamatanKelurahanRaguRagu = DB::table(DB::raw('(
+            SELECT kecamatan, kelurahan,
+                   COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) AS ragu_ragu
+            FROM kanvasings
+            GROUP BY kecamatan, kelurahan
+        ) AS subquery'))
+        ->orderBy('ragu_ragu', 'DESC')
+        ->limit(3)
+        ->get();
 
-        $getDistrictName = function ($kabupaten_kota) use (&$districtNamesCache) {
-            if (!isset($districtNamesCache[$kabupaten_kota])) {
-                $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/$kabupaten_kota.json");
-                $districtNamesCache[$kabupaten_kota] = $response->successful() ? $response->json()['name'] : 'Unknown';
-            }
-            return $districtNamesCache[$kabupaten_kota];
+        // Mencari daerah dengan popularitas setuju tertinggi
+        $topKabupatenKotaKecamatanPopularitasSetuju = DB::table(DB::raw('(
+            SELECT kabupaten_kota, kecamatan,
+                   COUNT(CASE WHEN popularitas = 1 THEN 1 END) AS setuju
+            FROM kanvasings
+            GROUP BY kabupaten_kota, kecamatan
+        ) AS subquery'))
+        ->orderBy('setuju', 'DESC')
+        ->limit(3)
+        ->get();
+
+        $topKecamatanKelurahanPopularitasSetuju = DB::table(DB::raw('(
+            SELECT kecamatan, kelurahan,
+                   COUNT(CASE WHEN popularitas = 1 THEN 1 END) AS setuju
+            FROM kanvasings
+            GROUP BY kecamatan, kelurahan
+        ) AS subquery'))
+        ->orderBy('setuju', 'DESC')
+        ->limit(3)
+        ->get();
+
+        // Fungsi untuk mengambil nama kecamatan dan kelurahan dari API
+        $getDistrictNames = function ($kabupatenKota) {
+            $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/$kabupatenKota.json");
+            return $response->successful() ? $response->json()['name'] : 'Unknown';
         };
 
-        $getVillageName = function ($kecamatan) use (&$villageNamesCache) {
-            if (!isset($villageNamesCache[$kecamatan])) {
-                $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/$kecamatan.json");
-                $villageNamesCache[$kecamatan] = $response->successful() ? $response->json()['name'] : 'Unknown';
-            }
-            return $villageNamesCache[$kecamatan];
+        $getVillageNames = function ($kecamatan) {
+            $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/$kecamatan.json");
+            return $response->successful() ? $response->json()['name'] : 'Unknown';
         };
 
-        foreach ($groupedData as $kabupatenKota => $kecamatanData) {
-            foreach ($kecamatanData as $kecamatan => $kelurahanData) {
-                $districtName = $getDistrictName($kabupatenKota);
-                foreach ($kelurahanData as $kelurahan => $data) {
-                    $villageName = $getVillageName($kecamatan);
+        // Tambahkan nama kecamatan dan kelurahan dari API ke hasil query
+        $topKabupatenKotaKecamatanSetuju = $topKabupatenKotaKecamatanSetuju->map(function ($item) use ($getDistrictNames) {
+            $item->kecamatan_name = $getDistrictNames($item->kecamatan);
+            return $item;
+        });
 
-                    // Hitung jumlah "setuju" dan "ragu-ragu" berdasarkan elektabilitas dan popularitas
-                    $setujuCount = $data->where('elektabilitas', 1)->count();
-                    $raguRaguCount = $data->where('elektabilitas', 3)->count();
-                    $popularitasSetujuCount = $data->where('popularitas', 1)->count();
+        $topKabupatenKotaKecamatanRaguRagu = $topKabupatenKotaKecamatanRaguRagu->map(function ($item) use ($getDistrictNames) {
+            $item->kecamatan_name = $getDistrictNames($item->kecamatan);
+            return $item;
+        });
 
-                    // Simpan hasil dengan nama kecamatan dan kelurahan
-                    if ($setujuCount > 0) {
-                        $results['topKabupatenKotaKecamatanSetuju'][] = [
-                            'kabupaten_kota' => $kabupatenKota,
-                            'kecamatan' => $kecamatan,
-                            'kecamatan_name' => $districtName,
-                            'setuju' => $setujuCount
-                        ];
-                    }
-                    if ($raguRaguCount > 0) {
-                        $results['topKabupatenKotaKecamatanRaguRagu'][] = [
-                            'kabupaten_kota' => $kabupatenKota,
-                            'kecamatan' => $kecamatan,
-                            'kecamatan_name' => $districtName,
-                            'ragu_ragu' => $raguRaguCount
-                        ];
-                    }
-                    if ($popularitasSetujuCount > 0) {
-                        $results['topKabupatenKotaKecamatanPopularitasSetuju'][] = [
-                            'kabupaten_kota' => $kabupatenKota,
-                            'kecamatan' => $kecamatan,
-                            'kecamatan_name' => $districtName,
-                            'setuju' => $popularitasSetujuCount
-                        ];
-                    }
-                    if ($setujuCount > 0) {
-                        $results['topKecamatanKelurahanSetuju'][] = [
-                            'kecamatan' => $kecamatan,
-                            'kelurahan' => $kelurahan,
-                            'kelurahan_name' => $villageName,
-                            'setuju' => $setujuCount
-                        ];
-                    }
-                    if ($raguRaguCount > 0) {
-                        $results['topKecamatanKelurahanRaguRagu'][] = [
-                            'kecamatan' => $kecamatan,
-                            'kelurahan' => $kelurahan,
-                            'kelurahan_name' => $villageName,
-                            'ragu_ragu' => $raguRaguCount
-                        ];
-                    }
-                    if ($popularitasSetujuCount > 0) {
-                        $results['topKecamatanKelurahanPopularitasSetuju'][] = [
-                            'kecamatan' => $kecamatan,
-                            'kelurahan' => $kelurahan,
-                            'kelurahan_name' => $villageName,
-                            'setuju' => $popularitasSetujuCount
-                        ];
-                    }
-                }
-            }
-        }
+        $topKecamatanKelurahanSetuju = $topKecamatanKelurahanSetuju->map(function ($item) use ($getVillageNames) {
+            $item->kelurahan_name = $getVillageNames($item->kelurahan);
+            return $item;
+        });
 
-        // Sort and limit the results to the top 3
-        foreach ($results as &$result) {
-            usort($result, function ($a, $b) {
-                return $b['setuju'] <=> $a['setuju'];
-            });
-            $result = array_slice($result, 0, 3);
-        }
+        $topKecamatanKelurahanRaguRagu = $topKecamatanKelurahanRaguRagu->map(function ($item) use ($getVillageNames) {
+            $item->kelurahan_name = $getVillageNames($item->kelurahan);
+            return $item;
+        });
+
+        $topKabupatenKotaKecamatanPopularitasSetuju = $topKabupatenKotaKecamatanPopularitasSetuju->map(function ($item) use ($getDistrictNames) {
+            $item->kecamatan_name = $getDistrictNames($item->kecamatan);
+            return $item;
+        });
+
+        $topKecamatanKelurahanPopularitasSetuju = $topKecamatanKelurahanPopularitasSetuju->map(function ($item) use ($getVillageNames) {
+            $item->kelurahan_name = $getVillageNames($item->kelurahan);
+            return $item;
+        });
 
         // Mengirimkan data dalam format JSON
-        return response()->json($results);
+        return response()->json([
+            'topKabupatenKotaKecamatanSetuju' => $topKabupatenKotaKecamatanSetuju,
+            'topKabupatenKotaKecamatanRaguRagu' => $topKabupatenKotaKecamatanRaguRagu,
+            'topKecamatanKelurahanSetuju' => $topKecamatanKelurahanSetuju,
+            'topKecamatanKelurahanRaguRagu' => $topKecamatanKelurahanRaguRagu,
+            'topKabupatenKotaKecamatanPopularitasSetuju' => $topKabupatenKotaKecamatanPopularitasSetuju,
+            'topKecamatanKelurahanPopularitasSetuju' => $topKecamatanKelurahanPopularitasSetuju
+        ]);
     }
+
 
 
     // Menampilkan daerah weakness (elektabilitas terendah)
