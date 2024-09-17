@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="page-content">
     <div class="page-title page-title-small">
         <h2><a href="{{ route('dashboard') }}" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
@@ -13,20 +12,25 @@
         <div class="card-bg preload-img" data-src="admin/mobile/myhr/images/sikad.png"></div>
     </div>
 
-    <!-- Homepage Slider -->
-
-
-        <div class="card card-style">
-            <div class="content">
-                <h3 class="text-center">Mobile OS</h3>
-                <p class="text-center mt-n2 mb-2 font-11 color-highlight">Growth of Mobile OS 2020</p>
-                <div class="chart-container" style="width:100%; height:350px;">
-                    <canvas class="chart" id="grafikSuaraChart" /></canvas>
-                </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Elektabilitas Calon</h3>
+            <p class="text-center mt-n2 mb-2 font-11 color-highlight">Elektabilitas Berdasarkan Provinsi</p>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="grafikElektabilitas"></canvas>
             </div>
         </div>
+    </div>
 
-
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Popularitas Calon</h3>
+            <p class="text-center mt-n2 mb-2 font-11 color-highlight">Popularitas Berdasarkan Provinsi</p>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="grafikPopularitas"></canvas>
+            </div>
+        </div>
+    </div>
 
     <script>
         if ($('.chart').length > 0) {
@@ -39,10 +43,11 @@
             };
 
             var call_charts_to_page = function() {
-                var verticalChart = $('#grafikSuaraChart');
+                var ChartElektabilitas = $('#grafikElektabilitas');
+                var ChartPopularitas = $('#grafikPopularitas');
 
-                if (verticalChart.length) {
-                    var verticalDemoChart = new Chart(verticalChart, {
+                if (ChartElektabilitas.length) {
+                    var elektabilitasChart = new Chart(ChartElektabilitas, {
                         type: 'bar',
                         data: {
                             labels: @json($data->pluck('provinsi')),
@@ -61,7 +66,48 @@
                                     label: 'Ragu-ragu',
                                     backgroundColor: '#FFCE56',
                                     data: @json($data->pluck('ragu_ragu')),
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Jumlah'
+                                    }
                                 },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Provinsi'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'bottom',
+                                    labels: {
+                                        fontSize: 13,
+                                        padding: 15,
+                                        boxWidth: 12
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                if (ChartPopularitas.length) {
+                    var popularitasChart = new Chart(ChartPopularitas, {
+                        type: 'bar',
+                        data: {
+                            labels: @json($data->pluck('provinsi')),
+                            datasets: [
                                 {
                                     label: 'Kenal',
                                     backgroundColor: '#FF6384',
@@ -101,9 +147,6 @@
                                         padding: 15,
                                         boxWidth: 12
                                     }
-                                },
-                                title: {
-                                    display: false
                                 }
                             }
                         }
@@ -114,6 +157,4 @@
             loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
         }
     </script>
-
-
-    @endsection
+@endsection

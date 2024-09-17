@@ -21,19 +21,18 @@ class AnalisisController extends Controller
     // Menampilkan grafik analisis suara
     public function grafik_suara()
     {
-        // Mengelompokkan data elektabilitas dan popularitas berdasarkan wilayah
         $data = Kanvasing::select(
                 'provinsi',
+                'cakada_id',
                 DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
                 DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
                 DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
                 DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
                 DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
             )
-            ->groupBy('provinsi')
+            ->groupBy('provinsi', 'cakada_id') // Tambahkan cakada_id di sini
             ->get();
 
-        // Kirim data ke view
         return view('mobile.frontend.analisis.grafik_suara', compact('data'));
     }
 
