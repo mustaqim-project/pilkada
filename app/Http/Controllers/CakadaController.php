@@ -24,7 +24,7 @@ class CakadaController extends Controller
         // Ambil data tipe Cakada (1 = provinsi, 2 = kab/kota) dari database
         $cakadas = Cakada::all();
 
-        return view('cakada.index', compact('provinsi', 'cakadas'));
+        return view('desktop.cakada.index', compact('provinsi', 'cakadas'));
     }
 
     public function create()
