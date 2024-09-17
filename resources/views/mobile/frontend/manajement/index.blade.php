@@ -14,16 +14,16 @@
     <!-- Homepage Slider -->
     <div class="content text-center">
         <div class="card card-style ml-0 mr-0 bg-white">
-            <div class="row mt-3 pt-1 mb-3">
-                <div class="col-4 text-center">
+            <div class="row justify-content-center mt-3 pt-1 mb-3">
+                <div class="col-6 text-center">
                     <a href="#">
-                        <i class="ml-3 mr-3" data-feather="shield" style="color: #28a745;"></i>
+                        <i class="ml-3 mr-3" data-feather="users" style="color: #28a745;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Manajemen Timses</h5>
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-6 text-center">
                     <a href="#">
-                        <i class="ml-3 mr-3" data-feather="activity" style="color: #FFC733;"></i>
+                        <i class="ml-3 mr-3" data-feather="clipboard" style="color: #FFC733;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Manajemen Kanvasing</h5>
                     </a>
                 </div>
@@ -31,24 +31,25 @@
             <div class="row mt-3 pt-1 mb-3">
                 <div class="col-4 text-center">
                     <a href="#">
-                        <i class="ml-3 mr-3" data-feather="map-pin" style="color: #FF5733;"></i>
+                        <i class="ml-3 mr-3" data-feather="flag" style="color: #FF5733;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Jenis Pilkada</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
                     <a href="#">
-                        <i class="ml-3 mr-3" data-feather="bar-chart-2" style="color: #33B5FF;"></i>
+                        <i class="ml-3 mr-3" data-feather="user-check" style="color: #33B5FF;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Calon Kepala Daerah</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
                     <a href="#">
-                        <i class="ml-3 mr-3" data-feather="alert-triangle" style="color: #dc3545;"></i>
+                        <i class="ml-3 mr-3" data-feather="lock" style="color: #dc3545;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Akses User</h5>
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
 
 @endsection
