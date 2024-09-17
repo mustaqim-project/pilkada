@@ -144,12 +144,12 @@
     $(document).ready(function() {
         // Populate Provinsi Dropdown
         $.ajax({
-            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
-            , method: 'GET'
-            , success: function(data) {
+            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
+            method: 'GET',
+            success: function(data) {
                 let provinsiDropdown = $('#provinsi');
                 data.forEach(function(provinsi) {
-                    provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
+                    provinsiDropdown.append(`<option value="${provinsi.id}">${provinsi.name}</option>`);
                 });
             }
         });
@@ -160,11 +160,11 @@
             $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
             if (provinsiId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
-                    , method: 'GET'
-                    , success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
+                    method: 'GET',
+                    success: function(data) {
                         data.forEach(function(kabupaten) {
-                            $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
+                            $('#kabupaten_kota').append(`<option value="${kabupaten.id}">${kabupaten.name}</option>`);
                         });
                     }
                 });
@@ -177,11 +177,11 @@
             $('#kecamatan').html('<option value="">Pilih Kecamatan</option>');
             if (kabupatenId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`
-                    , method: 'GET'
-                    , success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`,
+                    method: 'GET',
+                    success: function(data) {
                         data.forEach(function(kecamatan) {
-                            $('#kecamatan').append('<option value="' + kecamatan.id + '">' + kecamatan.name + '</option>');
+                            $('#kecamatan').append(`<option value="${kecamatan.id}">${kecamatan.name}</option>`);
                         });
                     }
                 });
@@ -194,33 +194,34 @@
             $('#kelurahan').html('<option value="">Pilih Kelurahan</option>');
             if (kecamatanId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`
-                    , method: 'GET'
-                    , success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`,
+                    method: 'GET',
+                    success: function(data) {
                         data.forEach(function(kelurahan) {
-                            $('#kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.name + '</option>');
+                            $('#kelurahan').append(`<option value="${kelurahan.id}">${kelurahan.name}</option>`);
                         });
                     }
                 });
             }
         });
 
+        // Update Cakada options based on filters
         $('#provinsi, #kabupaten_kota, #tipe_cakada_id').change(function() {
             let provinsi = $('#provinsi').val();
             let kabupatenKota = $('#kabupaten_kota').val();
             let tipeCakada = $('#tipe_cakada_id').val();
 
             $.ajax({
-                url: "{{ route('getCakadaByFilters') }}"
-                , method: 'GET'
-                , data: {
-                    provinsi: provinsi
-                    , kabupaten_kota: kabupatenKota
-                    , tipe_cakada_id: tipeCakada
-                }
-                , success: function(response) {
+                url: "{{ route('getCakadaByFilters') }}",
+                method: 'GET',
+                data: {
+                    provinsi: provinsi,
+                    kabupaten_kota: kabupatenKota,
+                    tipe_cakada_id: tipeCakada
+                },
+                success: function(response) {
                     let options = '<option value="">Pilih Nama Kandidat</option>';
-                    $.each(response, function(index, cakada) {
+                    response.forEach(function(cakada) {
                         options += `<option value="${cakada.id}">${cakada.nama_calon_kepala}-${cakada.nama_calon_wakil}</option>`;
                     });
                     $('#cakada_id').html(options);
@@ -236,84 +237,85 @@
             let kabupaten = $('#kabupaten_kota').val();
             let kecamatan = $('#kecamatan').val();
             let kelurahan = $('#kelurahan').val();
-            let tipe_cakada_id = $('#tipe_cakada_id').val();
-            let cakada_id = $('#cakada_id').val();
+            let tipeCakadaId = $('#tipe_cakada_id').val();
+            let cakadaId = $('#cakada_id').val();
 
             $.ajax({
-                url: "{{ route('getGrafikSuara') }}"
-                , method: 'GET'
-                , data: {
-                    provinsi: provinsi
-                    , kabupaten_kota: kabupaten
-                    , kecamatan: kecamatan
-                    , kelurahan: kelurahan
-                    , tipe_cakada_id: tipe_cakada_id
-                    , cakada_id: cakada_id
-                }
-                , success: function(response) {
+                url: "{{ route('getGrafikSuara') }}",
+                method: 'GET',
+                data: {
+                    provinsi: provinsi,
+                    kabupaten_kota: kabupaten,
+                    kecamatan: kecamatan,
+                    kelurahan: kelurahan,
+                    tipe_cakada_id: tipeCakadaId,
+                    cakada_id: cakadaId
+                },
+                success: function(response) {
                     let ctx = document.getElementById('grafikSuaraChart').getContext('2d');
 
                     if (chartInstance) {
-                        chartInstance.destroy(); // Hapus chart sebelumnya
+                        chartInstance.destroy(); // Destroy previous chart instance
                     }
 
                     chartInstance = new Chart(ctx, {
-                        type: 'bar'
-                        , data: {
-                            labels: response.labels, // Ambil label dari respons
-                            datasets: [{
-                                    label: 'Setuju'
-                                    , backgroundColor: '#A0D468'
-                                    , data: response.setuju, // Data untuk 'Setuju'
-                                }
-                                , {
-                                    label: 'Tidak Setuju'
-                                    , backgroundColor: '#4A89DC'
-                                    , data: response.tidak_setuju, // Data untuk 'Tidak Setuju'
-                                }
-                                , {
-                                    label: 'Ragu-ragu'
-                                    , backgroundColor: '#FFCE56'
-                                    , data: response.ragu_ragu, // Data untuk 'Ragu-ragu'
-                                }
-                                , {
-                                    label: 'Kenal'
-                                    , backgroundColor: '#FF6384'
-                                    , data: response.kenal, // Data untuk 'Kenal'
-                                }
-                                , {
-                                    label: 'Tidak Kenal'
-                                    , backgroundColor: '#36A2EB'
-                                    , data: response.tidak_kenal, // Data untuk 'Tidak Kenal'
+                        type: 'bar',
+                        data: {
+                            labels: response.labels,
+                            datasets: [
+                                {
+                                    label: 'Setuju',
+                                    backgroundColor: '#A0D468',
+                                    data: response.setuju.map(value => value[0])
+                                },
+                                {
+                                    label: 'Tidak Setuju',
+                                    backgroundColor: '#4A89DC',
+                                    data: response.tidak_setuju.map(value => value[0])
+                                },
+                                {
+                                    label: 'Ragu-ragu',
+                                    backgroundColor: '#FFCE56',
+                                    data: response.ragu_ragu.map(value => value[0])
+                                },
+                                {
+                                    label: 'Kenal',
+                                    backgroundColor: '#FF6384',
+                                    data: response.kenal.map(value => value[0])
+                                },
+                                {
+                                    label: 'Tidak Kenal',
+                                    backgroundColor: '#36A2EB',
+                                    data: response.tidak_kenal.map(value => value[0])
                                 }
                             ]
-                        }
-                        , options: {
-                            responsive: true
-                            , maintainAspectRatio: false
-                            , scales: {
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
                                 y: {
-                                    beginAtZero: true
-                                    , title: {
-                                        display: true
-                                        , text: 'Jumlah'
-                                    }
-                                }
-                                , x: {
+                                    beginAtZero: true,
                                     title: {
-                                        display: true
-                                        , text: 'Provinsi'
+                                        display: true,
+                                        text: 'Jumlah'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Kategori'
                                     }
                                 }
-                            }
-                            , plugins: {
+                            },
+                            plugins: {
                                 legend: {
-                                    display: true
-                                    , position: 'bottom'
-                                    , labels: {
-                                        fontSize: 13
-                                        , padding: 15
-                                        , boxWidth: 12
+                                    display: true,
+                                    position: 'bottom',
+                                    labels: {
+                                        fontSize: 13,
+                                        padding: 15,
+                                        boxWidth: 12
                                     }
                                 }
                             }
@@ -322,11 +324,8 @@
                 }
             });
         });
-
-
-
     });
-
 </script>
+
 
 @endsection
