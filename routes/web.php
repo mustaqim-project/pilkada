@@ -85,10 +85,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/grafik-suara', [AnalisisController::class, 'grafik_suara'])->middleware('can:analisis read')->name('analisis.grafik-suara');
     Route::get('/get-grafik-suara', [AnalisisController::class, 'get_grafik_suara'])->name('getGrafikSuara');
 
+    Route::get('/strength', [AnalisisController::class, 'strength'])->middleware('can:analisis read')->name('analisis.strength');
+
+    Route::get('/get-strength', [AnalisisController::class, 'get_strength'])->name('get-strength');
+
 
     Route::get('/segmen-pemilih', [AnalisisController::class, 'segmen_pemilih'])->middleware('can:analisis read')->name('analisis.segmen-pemilih');
     Route::get('/tren-suara', [AnalisisController::class, 'tren_suara'])->middleware('can:analisis read')->name('analisis.tren-suara');
-    Route::get('/strength', [AnalisisController::class, 'strength'])->middleware('can:analisis read')->name('analisis.strength');
     Route::get('/weakness', [AnalisisController::class, 'weakness'])->middleware('can:analisis read')->name('analisis.weakness');
     Route::get('/satisfaction', [AnalisisController::class, 'satisfaction'])->middleware('can:analisis read')->name('analisis.satisfaction');
 
