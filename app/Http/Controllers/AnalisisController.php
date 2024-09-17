@@ -163,7 +163,7 @@ class AnalisisController extends Controller
     if (!$query) {
         return response()->json(['message' => 'Data not found'], 404);
     }
-    dd($query);
+    // dd($query);
 
     // Siapkan data untuk grafik
     return response()->json([
