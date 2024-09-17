@@ -130,6 +130,29 @@
             }
         });
 
+        $('#provinsi, #kabupaten_kota, #tipe_cakada_id').change(function() {
+            let provinsi = $('#provinsi').val();
+            let kabupatenKota = $('#kabupaten_kota').val();
+            let tipeCakada = $('#tipe_cakada_id').val();
+
+            $.ajax({
+                url: "{{ route('getCakadaByFilters') }}"
+                , method: 'GET'
+                , data: {
+                    provinsi: provinsi
+                    , kabupaten_kota: kabupatenKota
+                    , tipe_cakada_id: tipeCakada
+                }
+                , success: function(response) {
+                    let options = '<option value="">Pilih Nama Kandidat</option>';
+                    $.each(response, function(index, cakada) {
+                        options += `<option value="${cakada.id}">${cakada.nama_calon_kepala}-${cakada.nama_calon_wakil}</option>`;
+                    });
+                    $('#cakada_id').html(options);
+                }
+            });
+        });
+
         // Filter and update chart
         $('#filterButton').click(function() {
             let provinsi = $('#provinsi').val();
