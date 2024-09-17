@@ -1,279 +1,179 @@
 @extends('mobile.frontend.layout.master')
 
+
 @section('content')
 
-<div class="page-content">
-    <div class="page-title page-title-small">
-        <h2><a href="{{ route('dashboard') }}" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
+<div class="container">
+    <h2>Grafik Suara</h2>
+
+    <!-- Filter Form -->
+    <div class="row">
+        <div class="col-md-4">
+            <label for="provinsi">Provinsi</label>
+            <select id="provinsi" class="form-control">
+                <option value="">Pilih Provinsi</option>
+                <!-- Option Provinsi akan diisi melalui JavaScript -->
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="kabupaten_kota">Kabupaten/Kota</label>
+            <select id="kabupaten_kota" class="form-control">
+                <option value="">Pilih Kabupaten/Kota</option>
+                <!-- Option Kabupaten/Kota akan diisi melalui JavaScript -->
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="kecamatan">Kecamatan</label>
+            <select id="kecamatan" class="form-control">
+                <option value="">Pilih Kecamatan</option>
+                <!-- Option Kecamatan akan diisi melalui JavaScript -->
+            </select>
+        </div>
+        <div class="col-md-4 mt-3">
+            <label for="kelurahan">Kelurahan</label>
+            <select id="kelurahan" class="form-control">
+                <option value="">Pilih Kelurahan</option>
+                <!-- Option Kelurahan akan diisi melalui JavaScript -->
+            </select>
+        </div>
+        <div class="col-md-4 mt-3">
+            <label for="tipe_cakada_id">Tipe Cakada</label>
+            <select id="tipe_cakada_id" class="form-control">
+                <option value="">Pilih Tipe Cakada</option>
+                @foreach($tipe_cakada as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-4 mt-3">
+            <label for="cakada_id">Nama Kandidat</label>
+            <select id="cakada_id" class="form-control">
+                <option value="">Pilih Nama Kandidat</option>
+                <!-- Option Kandidat akan diisi melalui JavaScript -->
+            </select>
+        </div>
     </div>
-    <div class="card header-card shape-rounded" data-card-height="210">
-        <div class="card-overlay bg-highlight opacity-95"></div>
-        <div class="card-overlay dark-mode-tint"></div>
-        <div class="card-bg preload-img" data-src="admin/mobile/myhr/images/sikad.png"></div>
+
+    <!-- Chart -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
     </div>
 
-    {{-- @foreach ($elektabilitasData as $provinsi => $kabupaten)
-        @foreach ($kabupaten as $kabupatenKota => $kecamatan)
-            @foreach ($kecamatan as $kecamatan => $kelurahan)
-                @foreach ($kelurahan as $kelurahan => $cakadaGroup)
-                    @foreach ($cakadaGroup as $cakadaId => $items)
-                        <div class="card card-style">
-                            <div class="content">
-                                <h3 class="text-center">Elektabilitas Calon: {{ $items->first()->cakada_name }}</h3>
-                                <p class="text-center mt-n2 mb-2 font-11 color-highlight">
-                                    Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
-                                    Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
-                                </p>
-                                <div class="chart-container" style="width:100%; height:350px;">
-                                    <canvas class="chart" id="grafikElektabilitas_{{ $cakadaId }}"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card-style">
-                            <div class="content">
-                                <h3 class="text-center">Popularitas Calon: {{ $items->first()->cakada_name }}</h3>
-                                <p class="text-center mt-n2 mb-2 font-11 color-highlight">
-                                    Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
-                                    Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
-                                </p>
-                                <div class="chart-container" style="width:100%; height:350px;">
-                                    <canvas class="chart" id="grafikPopularitas_{{ $cakadaId }}"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @endforeach
-            @endforeach
-        @endforeach
-    @endforeach
+    <button id="filterButton" class="btn btn-primary mt-3">Tampilkan Grafik</button>
 
-    <script>
-        if ($('.chart').length > 0) {
-            var loadJS = function(url, implementationCode, location) {
-                var scriptTag = document.createElement('script');
-                scriptTag.src = url;
-                scriptTag.onload = implementationCode;
-                scriptTag.onreadystatechange = implementationCode;
-                location.appendChild(scriptTag);
-            };
-
-            var call_charts_to_page = function() {
-                @foreach ($elektabilitasData as $provinsi => $kabupaten)
-                    @foreach ($kabupaten as $kabupatenKota => $kecamatan)
-                        @foreach ($kecamatan as $kecamatan => $kelurahan)
-                            @foreach ($kelurahan as $kelurahan => $cakadaGroup)
-                                @foreach ($cakadaGroup as $cakadaId => $items)
-                                    var ChartElektabilitas{{ $cakadaId }} = $('#grafikElektabilitas_{{ $cakadaId }}');
-                                    var ChartPopularitas{{ $cakadaId }} = $('#grafikPopularitas_{{ $cakadaId }}');
-
-                                    if (ChartElektabilitas{{ $cakadaId }}.length) {
-                                        var elektabilitasChart{{ $cakadaId }} = new Chart(ChartElektabilitas{{ $cakadaId }}, {
-                                            type: 'bar',
-                                            data: {
-                                                labels: ['Memilih', 'Tidak Memilih', 'Ragu-ragu'],
-                                                datasets: [{
-                                                    label: 'Elektabilitas',
-                                                    backgroundColor: ['#A0D468', '#4A89DC', '#FFCE56'],
-                                                    data: [
-                                                        @json($items->sum('setuju')),
-                                                        @json($items->sum('tidak_setuju')),
-                                                        @json($items->sum('ragu_ragu'))
-                                                    ],
-                                                }]
-                                            },
-                                            options: {
-                                                responsive: true,
-                                                maintainAspectRatio: false,
-                                                scales: {
-                                                    y: {
-                                                        beginAtZero: true,
-                                                        title: {
-                                                            display: true,
-                                                            text: 'Jumlah'
-                                                        }
-                                                    },
-                                                    x: {
-                                                        title: {
-                                                            display: true,
-                                                            text: 'Elektabilitas'
-                                                        }
-                                                    }
-                                                },
-                                                plugins: {
-                                                    legend: {
-                                                        display: true,
-                                                        position: 'bottom',
-                                                        labels: {
-                                                            fontSize: 13,
-                                                            padding: 15,
-                                                            boxWidth: 12
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    }
-
-                                    if (ChartPopularitas{{ $cakadaId }}.length) {
-                                        var popularitasChart{{ $cakadaId }} = new Chart(ChartPopularitas{{ $cakadaId }}, {
-                                            type: 'bar',
-                                            data: {
-                                                labels: ['Kenal', 'Tidak Kenal'],
-                                                datasets: [{
-                                                    label: 'Popularitas',
-                                                    backgroundColor: ['#FF6384', '#36A2EB'],
-                                                    data: [
-                                                        @json($items->sum('kenal')),
-                                                        @json($items->sum('tidak_kenal'))
-                                                    ],
-                                                }]
-                                            },
-                                            options: {
-                                                responsive: true,
-                                                maintainAspectRatio: false,
-                                                scales: {
-                                                    y: {
-                                                        beginAtZero: true,
-                                                        title: {
-                                                            display: true,
-                                                            text: 'Jumlah'
-                                                        }
-                                                    },
-                                                    x: {
-                                                        title: {
-                                                            display: true,
-                                                            text: 'Popularitas'
-                                                        }
-                                                    }
-                                                },
-                                                plugins: {
-                                                    legend: {
-                                                        display: true,
-                                                        position: 'bottom',
-                                                        labels: {
-                                                            fontSize: 13,
-                                                            padding: 15,
-                                                            boxWidth: 12
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    }
-                                @endforeach
-                            @endforeach
-                        @endforeach
-                    @endforeach
-                @endforeach
-            };
-
-            loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
-        }
-    </script> --}}
-
-    @foreach ($elektabilitasData as $provinsi => $kabupaten)
-    @foreach ($kabupaten as $kabupatenKota => $kecamatan)
-        @foreach ($kecamatan as $kecamatan => $kelurahan)
-            @foreach ($kelurahan as $kelurahan => $cakadaGroup)
-                @foreach ($cakadaGroup as $cakadaId => $items)
-                    <div class="card card-style">
-                        <div class="content">
-                            <h3 class="text-center">Elektabilitas Calon: {{ $items->first()->cakada_name }}</h3>
-                            <p class="text-center mt-n2 mb-2 font-11 color-highlight">
-                                Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
-                                Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
-                            </p>
-                            <div class="chart-container" style="width:100%; height:350px;">
-                                <canvas class="chart" id="grafikElektabilitas_{{ $kelurahan }}"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-style">
-                        <div class="content">
-                            <h3 class="text-center">Popularitas Calon: {{ $items->first()->cakada_name }}</h3>
-                            <p class="text-center mt-n2 mb-2 font-11 color-highlight">
-                                Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
-                                Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
-                            </p>
-                            <div class="chart-container" style="width:100%; height:350px;">
-                                <canvas class="chart" id="grafikPopularitas_{{ $kelurahan }}"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @endforeach
-        @endforeach
-    @endforeach
-@endforeach
+</div>
 
 <script>
-    if ($('.chart').length > 0) {
-        var loadJS = function(url, implementationCode, location) {
-            var scriptTag = document.createElement('script');
-            scriptTag.src = url;
-            scriptTag.onload = implementationCode;
-            scriptTag.onreadystatechange = implementationCode;
-            location.appendChild(scriptTag);
-        };
+    $(document).ready(function() {
+        // Populate Provinsi Dropdown
+        $.ajax({
+            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
+            method: 'GET',
+            success: function(data) {
+                let provinsiDropdown = $('#provinsi');
+                data.forEach(function(provinsi) {
+                    provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
+                });
+            }
+        });
 
-        var call_charts_to_page = function() {
-            @foreach ($elektabilitasData as $provinsi => $kabupaten)
-                @foreach ($kabupaten as $kabupatenKota => $kecamatan)
-                    @foreach ($kecamatan as $kecamatan => $kelurahan)
-                        @foreach ($kelurahan as $kelurahan => $cakadaGroup)
-                            @foreach ($cakadaGroup as $cakadaId => $items)
-                                var ChartElektabilitas{{ $kelurahan }} = $('#grafikElektabilitas_{{ $kelurahan }}');
-                                var ChartPopularitas{{ $kelurahan }} = $('#grafikPopularitas_{{ $kelurahan }}');
+        // Populate Kabupaten/Kota when Provinsi changes
+        $('#provinsi').change(function() {
+            let provinsiId = $(this).val();
+            $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
+            if (provinsiId) {
+                $.ajax({
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
+                    method: 'GET',
+                    success: function(data) {
+                        data.forEach(function(kabupaten) {
+                            $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
 
-                                // Inisialisasi chart untuk Elektabilitas
-                                new Chart(ChartElektabilitas{{ $kelurahan }}, {
-                                    type: 'bar',
-                                    data: {
-                                        labels: ['Setuju', 'Tidak Setuju', 'Ragu-ragu'],
-                                        datasets: [{
-                                            label: 'Elektabilitas',
-                                            data: [
-                                                {{ $items->sum('setuju') }},
-                                                {{ $items->sum('tidak_setuju') }},
-                                                {{ $items->sum('ragu_ragu') }}
-                                            ],
-                                            backgroundColor: ['#4CAF50', '#FF5722', '#FFC107']
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        maintainAspectRatio: false
-                                    }
-                                });
+        // Populate Kecamatan when Kabupaten/Kota changes
+        $('#kabupaten_kota').change(function() {
+            let kabupatenId = $(this).val();
+            $('#kecamatan').html('<option value="">Pilih Kecamatan</option>');
+            if (kabupatenId) {
+                $.ajax({
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`,
+                    method: 'GET',
+                    success: function(data) {
+                        data.forEach(function(kecamatan) {
+                            $('#kecamatan').append('<option value="' + kecamatan.id + '">' + kecamatan.name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
 
-                                // Inisialisasi chart untuk Popularitas
-                                new Chart(ChartPopularitas{{ $kelurahan }}, {
-                                    type: 'bar',
-                                    data: {
-                                        labels: ['Kenal', 'Tidak Kenal'],
-                                        datasets: [{
-                                            label: 'Popularitas',
-                                            data: [
-                                                {{ $items->sum('kenal') }},
-                                                {{ $items->sum('tidak_kenal') }}
-                                            ],
-                                            backgroundColor: ['#2196F3', '#FFC107']
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        maintainAspectRatio: false
-                                    }
-                                });
-                            @endforeach
-                        @endforeach
-                    @endforeach
-                @endforeach
-            @endforeach
-        };
+        // Populate Kelurahan when Kecamatan changes
+        $('#kecamatan').change(function() {
+            let kecamatanId = $(this).val();
+            $('#kelurahan').html('<option value="">Pilih Kelurahan</option>');
+            if (kecamatanId) {
+                $.ajax({
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`,
+                    method: 'GET',
+                    success: function(data) {
+                        data.forEach(function(kelurahan) {
+                            $('#kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
 
-        loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
-    }
+        // Filter and update chart
+        $('#filterButton').click(function() {
+            let provinsi = $('#provinsi').val();
+            let kabupaten = $('#kabupaten_kota').val();
+            let kecamatan = $('#kecamatan').val();
+            let kelurahan = $('#kelurahan').val();
+            let tipe_cakada_id = $('#tipe_cakada_id').val();
+            let cakada_id = $('#cakada_id').val();
+
+            $.ajax({
+                url: "{{ route('getGrafikSuara') }}",
+                method: 'GET',
+                data: {
+                    provinsi: provinsi,
+                    kabupaten_kota: kabupaten,
+                    kecamatan: kecamatan,
+                    kelurahan: kelurahan,
+                    tipe_cakada_id: tipe_cakada_id,
+                    cakada_id: cakada_id
+                },
+                success: function(response) {
+                    let ctx = document.getElementById('myChart').getContext('2d');
+                    let chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: response.labels,
+                            datasets: [{
+                                label: 'Suara',
+                                data: [response.setuju, response.tidak_setuju, response.ragu_ragu],
+                                backgroundColor: ['green', 'red', 'yellow']
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    });
 </script>
 
 @endsection
