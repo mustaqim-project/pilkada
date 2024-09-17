@@ -84,7 +84,6 @@
 
             <!-- Tabel Daftar Cakada -->
             <div class="card mb-4">
-                <div class="card-header">Daftar Cakada</div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
