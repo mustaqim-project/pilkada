@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\KanvasingController;
+use App\Http\Controllers\ManajementController;
 use App\Http\Controllers\TipeCakadaController;
 use App\Http\Controllers\RolePermissionController;
 
@@ -80,6 +81,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis read')->name('analisis.read');
+    Route::get('/manajement', [ManajementController::class, 'index'])->middleware('can:manajement read')->name('manajement.read');
 });
 
 

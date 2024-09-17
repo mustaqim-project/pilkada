@@ -47,7 +47,7 @@
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="manajemen-relawan.html">
+                    <a href="{{ route('manajement.read') }}">
                         <i class="ml-3 mr-3" data-feather="users" style="color: #FFC733;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
                             Manajemen Pilkada</h5>
