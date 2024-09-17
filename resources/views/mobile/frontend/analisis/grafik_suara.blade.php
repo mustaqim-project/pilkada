@@ -13,39 +13,38 @@
     </div>
 
     @foreach ($elektabilitasData as $provinsi => $kabupaten)
-    @foreach ($kabupaten as $kabupatenKota => $kecamatan)
-    @foreach ($kecamatan as $kecamatan => $kelurahan)
-    @foreach ($kelurahan as $kelurahan => $cakadaGroup)
-    @foreach ($cakadaGroup as $cakadaId => $items)
-    <div class="card card-style">
-        <div class="content">
-
-            <h3 class="text-center">Elektabilitas Calon: {{ $items->first()->cakada_name }}</h3>
-            <p class="text-center mt-n2 mb-2 font-11 color-highlight">
-                Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
-                Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
-            </p>
-            <div class="chart-container" style="width:100%; height:350px;">
-                <canvas class="chart" id="grafikElektabilitas_{{ $cakadaId }}"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="card card-style">
-        <div class="content">
-            <h3 class="text-center">Popularitas Calon: {{ $items->first()->cakada_name }}</h3>
-            <p class="text-center mt-n2 mb-2 font-11 color-highlight">
-                Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
-                Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
-            </p>
-            <div class="chart-container" style="width:100%; height:350px;">
-                <canvas class="chart" id="grafikPopularitas_{{ $cakadaId }}"></canvas>
-            </div>
-        </div>
-    </div>
-    @endforeach
-    @endforeach
-    @endforeach
-    @endforeach
+        @foreach ($kabupaten as $kabupatenKota => $kecamatan)
+            @foreach ($kecamatan as $kecamatan => $kelurahan)
+                @foreach ($kelurahan as $kelurahan => $cakadaGroup)
+                    @foreach ($cakadaGroup as $cakadaId => $items)
+                        <div class="card card-style">
+                            <div class="content">
+                                <h3 class="text-center">Elektabilitas Calon: {{ $items->first()->cakada_name }}</h3>
+                                <p class="text-center mt-n2 mb-2 font-11 color-highlight">
+                                    Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
+                                    Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
+                                </p>
+                                <div class="chart-container" style="width:100%; height:350px;">
+                                    <canvas class="chart" id="grafikElektabilitas_{{ $cakadaId }}"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-style">
+                            <div class="content">
+                                <h3 class="text-center">Popularitas Calon: {{ $items->first()->cakada_name }}</h3>
+                                <p class="text-center mt-n2 mb-2 font-11 color-highlight">
+                                    Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
+                                    Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
+                                </p>
+                                <div class="chart-container" style="width:100%; height:350px;">
+                                    <canvas class="chart" id="grafikPopularitas_{{ $cakadaId }}"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endforeach
+            @endforeach
+        @endforeach
     @endforeach
 
     <script>
@@ -59,150 +58,116 @@
             };
 
             var call_charts_to_page = function() {
-                @foreach($elektabilitasData as $provinsi => $kabupaten)
-                @foreach($kabupaten as $kabupatenKota => $kecamatan)
-                @foreach($kecamatan as $kecamatan => $kelurahan)
-                @foreach($kelurahan as $kelurahan => $cakadaGroup)
-                @foreach($cakadaGroup as $cakadaId => $items)
-                var ChartElektabilitas {
-                    {
-                        $cakadaId
-                    }
-                } = document.getElementById('grafikElektabilitas_{{ $cakadaId }}');
-                var ChartPopularitas {
-                    {
-                        $cakadaId
-                    }
-                } = document.getElementById('grafikPopularitas_{{ $cakadaId }}');
+                @foreach ($elektabilitasData as $provinsi => $kabupaten)
+                    @foreach ($kabupaten as $kabupatenKota => $kecamatan)
+                        @foreach ($kecamatan as $kecamatan => $kelurahan)
+                            @foreach ($kelurahan as $kelurahan => $cakadaGroup)
+                                @foreach ($cakadaGroup as $cakadaId => $items)
+                                    var ChartElektabilitas{{ $cakadaId }} = $('#grafikElektabilitas_{{ $cakadaId }}');
+                                    var ChartPopularitas{{ $cakadaId }} = $('#grafikPopularitas_{{ $cakadaId }}');
 
-                if (ChartElektabilitas {
-                        {
-                            $cakadaId
-                        }
-                    }) {
-                    var elektabilitasChart {
-                        {
-                            $cakadaId
-                        }
-                    } = new Chart(ChartElektabilitas {
-                        {
-                            $cakadaId
-                        }
-                    }, {
-                        type: 'bar'
-                        , data: {
-                            labels: ['Memilih', 'Tidak Memilih', 'Ragu-ragu']
-                            , datasets: [{
-                                label: 'Elektabilitas'
-                                , backgroundColor: ['#A0D468', '#4A89DC', '#FFCE56']
-                                , data: [
-                                    @json($items - > sum('setuju'))
-                                    , @json($items - > sum('tidak_setuju'))
-                                    , @json($items - > sum('ragu_ragu'))
-                                ]
-                            , }]
-                        }
-                        , options: {
-                            responsive: true
-                            , maintainAspectRatio: false
-                            , scales: {
-                                y: {
-                                    beginAtZero: true
-                                    , title: {
-                                        display: true
-                                        , text: 'Jumlah'
+                                    if (ChartElektabilitas{{ $cakadaId }}.length) {
+                                        var elektabilitasChart{{ $cakadaId }} = new Chart(ChartElektabilitas{{ $cakadaId }}, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Memilih', 'Tidak Memilih', 'Ragu-ragu'],
+                                                datasets: [{
+                                                    label: 'Elektabilitas',
+                                                    backgroundColor: ['#A0D468', '#4A89DC', '#FFCE56'],
+                                                    data: [
+                                                        @json($items->sum('setuju')),
+                                                        @json($items->sum('tidak_setuju')),
+                                                        @json($items->sum('ragu_ragu'))
+                                                    ],
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Jumlah'
+                                                        }
+                                                    },
+                                                    x: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Elektabilitas'
+                                                        }
+                                                    }
+                                                },
+                                                plugins: {
+                                                    legend: {
+                                                        display: true,
+                                                        position: 'bottom',
+                                                        labels: {
+                                                            fontSize: 13,
+                                                            padding: 15,
+                                                            boxWidth: 12
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
                                     }
-                                }
-                                , x: {
-                                    title: {
-                                        display: true
-                                        , text: 'Elektabilitas'
-                                    }
-                                }
-                            }
-                            , plugins: {
-                                legend: {
-                                    display: true
-                                    , position: 'bottom'
-                                    , labels: {
-                                        fontSize: 13
-                                        , padding: 15
-                                        , boxWidth: 12
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
 
-                if (ChartPopularitas {
-                        {
-                            $cakadaId
-                        }
-                    }) {
-                    var popularitasChart {
-                        {
-                            $cakadaId
-                        }
-                    } = new Chart(ChartPopularitas {
-                        {
-                            $cakadaId
-                        }
-                    }, {
-                        type: 'bar'
-                        , data: {
-                            labels: ['Kenal', 'Tidak Kenal']
-                            , datasets: [{
-                                label: 'Popularitas'
-                                , backgroundColor: ['#FF6384', '#36A2EB']
-                                , data: [
-                                    @json($items - > sum('kenal'))
-                                    , @json($items - > sum('tidak_kenal'))
-                                ]
-                            , }]
-                        }
-                        , options: {
-                            responsive: true
-                            , maintainAspectRatio: false
-                            , scales: {
-                                y: {
-                                    beginAtZero: true
-                                    , title: {
-                                        display: true
-                                        , text: 'Jumlah'
+                                    if (ChartPopularitas{{ $cakadaId }}.length) {
+                                        var popularitasChart{{ $cakadaId }} = new Chart(ChartPopularitas{{ $cakadaId }}, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Kenal', 'Tidak Kenal'],
+                                                datasets: [{
+                                                    label: 'Popularitas',
+                                                    backgroundColor: ['#FF6384', '#36A2EB'],
+                                                    data: [
+                                                        @json($items->sum('kenal')),
+                                                        @json($items->sum('tidak_kenal'))
+                                                    ],
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Jumlah'
+                                                        }
+                                                    },
+                                                    x: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Popularitas'
+                                                        }
+                                                    }
+                                                },
+                                                plugins: {
+                                                    legend: {
+                                                        display: true,
+                                                        position: 'bottom',
+                                                        labels: {
+                                                            fontSize: 13,
+                                                            padding: 15,
+                                                            boxWidth: 12
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
                                     }
-                                }
-                                , x: {
-                                    title: {
-                                        display: true
-                                        , text: 'Popularitas'
-                                    }
-                                }
-                            }
-                            , plugins: {
-                                legend: {
-                                    display: true
-                                    , position: 'bottom'
-                                    , labels: {
-                                        fontSize: 13
-                                        , padding: 15
-                                        , boxWidth: 12
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
+                                @endforeach
+                            @endforeach
+                        @endforeach
+                    @endforeach
                 @endforeach
-                @endforeach
-                @endforeach
-                @endforeach
-                @endforeach
-
             };
 
             loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
         }
-
     </script>
-    @endsection
+@endsection
