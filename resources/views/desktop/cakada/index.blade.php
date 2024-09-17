@@ -29,15 +29,17 @@
 
             <!-- SweetAlert Success -->
             @if(session('success'))
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: '{{ session('success') }}',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                </script>
+            <script>
+                Swal.fire({
+                    icon: 'success'
+                    , title: 'Success'
+                    , text: '{{ session('
+                    success ') }}'
+                    , timer: 2000
+                    , showConfirmButton: false
+                });
+
+            </script>
             @endif
 
             <!-- Button untuk tambah data -->
@@ -100,8 +102,8 @@
                             @forelse ($cakadas as $cakada)
                             <tr>
                                 <td>{{ $cakada->id }}</td>
-                                <td>{{ $cakada->provinsi }}</td>
-                                <td>{{ $cakada->kabupaten_kota }}</td>
+                                <td data-provinsi-id="{{ $cakada->provinsi }}">{{ $cakada->provinsi }}</td>
+                                <td data-kabupaten-id="{{ $cakada->kabupaten_kota }}">{{ $cakada->kabupaten_kota }}</td>
                                 <td>{{ $cakada->nama_calon_kepala }}</td>
                                 <td>{{ $cakada->nama_calon_wakil }}</td>
                                 <td>
@@ -118,6 +120,7 @@
                                 <td colspan="6" class="text-center">Tidak ada data.</td>
                             </tr>
                             @endforelse
+
                         </tbody>
                     </table>
                 </div>
@@ -127,9 +130,9 @@
                 $(document).ready(function() {
                     // Load data untuk provinsi
                     $.ajax({
-                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
-                        method: 'GET',
-                        success: function(data) {
+                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
+                        , method: 'GET'
+                        , success: function(data) {
                             let provinsiDropdown = $('#provinsi');
                             data.forEach(function(provinsi) {
                                 provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
@@ -143,9 +146,9 @@
                         $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
                         if (provinsiId) {
                             $.ajax({
-                                url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
-                                method: 'GET',
-                                success: function(data) {
+                                url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
+                                , method: 'GET'
+                                , success: function(data) {
                                     data.forEach(function(kabupaten) {
                                         $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
                                     });
@@ -158,9 +161,9 @@
                     $('.btn-edit').click(function() {
                         let id = $(this).data('id');
                         $.ajax({
-                            url: `/cakada/${id}/edit`,
-                            method: 'GET',
-                            success: function(data) {
+                            url: `/cakada/${id}/edit`
+                            , method: 'GET'
+                            , success: function(data) {
                                 $('#modalCakada').modal('show');
                                 $('#cakada_id').val(data.id);
                                 $('#provinsi').val(data.provinsi);
@@ -172,7 +175,19 @@
                             }
                         });
                     });
+
+                    // Setelah tabel di-load, ganti ID dengan nama
+                    $('td[data-provinsi-id]').each(function() {
+                        let provinsiId = $(this).data('provinsi-id');
+                        $(this).text(provinsiData[provinsiId]); // Ganti ID dengan nama provinsi
+                    });
+
+                    $('td[data-kabupaten-id]').each(function() {
+                        let kabupatenId = $(this).data('kabupaten-id');
+                        $(this).text(kabupatenData[kabupatenId]); // Ganti ID dengan nama kabupaten/kota
+                    });
                 });
+
             </script>
 
         </div>
