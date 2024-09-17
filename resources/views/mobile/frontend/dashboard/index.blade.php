@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-4 text-center">
                     <a href="analisis-suara.html">
-                        <i class="ml-3 mr-3" data-feather="pie-chart" style="color: #FF6F61;"></i>
+                        <i class="ml-3 mr-3" data-feather="pie-chart" style="color: #0c0cb3;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
                             Analisis Suara</h5>
                     </a>
