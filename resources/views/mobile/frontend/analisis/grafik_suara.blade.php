@@ -2,6 +2,7 @@
 
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container">
     <h2>Grafik Suara</h2>
