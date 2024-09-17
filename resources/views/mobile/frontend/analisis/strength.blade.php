@@ -17,17 +17,59 @@
     <!-- Chart -->
     <div class="card card-style">
         <div class="content">
-            <h3 class="text-center">Popularitas Dan Elektabilitas</h3>
+            <h3 class="text-center">Top Kabupaten/Kota Setuju</h3>
             <div class="chart-container" style="width:100%; height:350px;">
-                <canvas class="chart" id="grafikStrength"></canvas>
+                <canvas class="chart" id="chartKabupatenSetuju"></canvas>
             </div>
         </div>
     </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Top Kabupaten/Kota Ragu-Ragu</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="chartKabupatenRaguRagu"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Top Kecamatan Setuju</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="chartKecamatanSetuju"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Top Kecamatan Ragu-Ragu</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="chartKecamatanRaguRagu"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Popularitas Kabupaten/Kota</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="chartPopularitasKabupaten"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="card card-style">
+        <div class="content">
+            <h3 class="text-center">Popularitas Kecamatan</h3>
+            <div class="chart-container" style="width:100%; height:350px;">
+                <canvas class="chart" id="chartPopularitasKecamatan"></canvas>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
     $(document).ready(function() {
-        // Function to dynamically load a JavaScript file
+        let charts = [];
+
         function loadJS(url, callback) {
             var scriptTag = document.createElement('script');
             scriptTag.src = url;
@@ -36,100 +78,107 @@
             document.body.appendChild(scriptTag);
         }
 
-        // Filter and update chart
-        let chartInstance;
+        function createChart(chartId, labels, datasetLabel, data, backgroundColor) {
+            let ctx = document.getElementById(chartId).getContext('2d');
+            let chartInstance = new Chart(ctx, {
+                type: 'bar'
+                , data: {
+                    labels: labels
+                    , datasets: [{
+                        label: datasetLabel
+                        , backgroundColor: backgroundColor
+                        , data: data
+                    }]
+                }
+                , options: {
+                    responsive: true
+                    , maintainAspectRatio: false
+                    , scales: {
+                        y: {
+                            beginAtZero: true
+                            , title: {
+                                display: true
+                                , text: 'Jumlah'
+                            }
+                        }
+                        , x: {
+                            title: {
+                                display: true
+                                , text: 'Wilayah'
+                            }
+                        }
+                    }
+                    , plugins: {
+                        legend: {
+                            display: true
+                            , position: 'bottom'
+                        }
+                    }
+                }
+            });
+            charts.push(chartInstance);
+        }
 
         $.ajax({
             url: "{{ route('get-strength') }}"
             , method: 'GET'
-            , data: {
-                provinsi: provinsi
-                , kabupaten_kota: kabupaten
-                , kecamatan: kecamatan
-                , kelurahan: kelurahan
-                , tipe_cakada_id: tipeCakadaId
-                , cakada_id: cakadaId
-            }
             , success: function(response) {
-                let ctx = document.getElementById('grafikStrength').getContext('2d');
+                // Destroy previous charts if they exist
+                charts.forEach(chart => chart.destroy());
 
-                if (chartInstance) {
-                    chartInstance.destroy(); // Destroy previous chart instance
-                }
+                // Prepare data for each chart
+                createChart(
+                    'chartKabupatenSetuju'
+                    , response.topKabupatenKotaKecamatanSetuju.map(item => item.kecamatan_name)
+                    , 'Setuju'
+                    , response.topKabupatenKotaKecamatanSetuju.map(item => item.setuju)
+                    , '#A0D468'
+                );
 
-                // Labels for the x-axis (kecamatan_name)
-                const labels = response.topKabupatenKotaKecamatanSetuju.map(item => item.kecamatan_name);
+                createChart(
+                    'chartKabupatenRaguRagu'
+                    , response.topKabupatenKotaKecamatanRaguRagu.map(item => item.kecamatan_name)
+                    , 'Ragu-Ragu'
+                    , response.topKabupatenKotaKecamatanRaguRagu.map(item => item.ragu_ragu)
+                    , '#FFCE56'
+                );
 
-                // Data for the bar chart
-                const dataSetuju = response.topKabupatenKotaKecamatanSetuju.map(item => item.setuju);
-                const dataRaguRagu = response.topKabupatenKotaKecamatanRaguRagu.map(item => item.ragu_ragu);
-                const dataKenal = response.topKabupatenKotaKecamatanPopularitasSetuju.map(item => item.setuju);
-                const dataTidakKenal = dataSetuju.map((_, i) => Math.max(...[dataSetuju[i], dataRaguRagu[i], dataKenal[i]]) - Math.min(...[dataSetuju[i], dataRaguRagu[i], dataKenal[i]]));
+                createChart(
+                    'chartKecamatanSetuju'
+                    , response.topKecamatanKelurahanSetuju.map(item => item.kelurahan_name)
+                    , 'Setuju'
+                    , response.topKecamatanKelurahanSetuju.map(item => item.setuju)
+                    , '#4A89DC'
+                );
 
-                chartInstance = new Chart(ctx, {
-                    type: 'bar'
-                    , data: {
-                        labels: labels
-                        , datasets: [{
-                                label: 'Setuju'
-                                , backgroundColor: '#A0D468'
-                                , data: dataSetuju
-                            }
-                            , {
-                                label: 'Ragu-ragu'
-                                , backgroundColor: '#FFCE56'
-                                , data: dataRaguRagu
-                            }
-                            , {
-                                label: 'Kenal Dengan'
-                                , backgroundColor: '#FF6384'
-                                , data: dataKenal
-                            }
-                            , {
-                                label: 'Tidak Kenal'
-                                , backgroundColor: '#36A2EB'
-                                , data: dataTidakKenal
-                            }
-                        ]
-                    }
-                    , options: {
-                        responsive: true
-                        , maintainAspectRatio: false
-                        , scales: {
-                            y: {
-                                beginAtZero: true
-                                , title: {
-                                    display: true
-                                    , text: 'Jumlah'
-                                }
-                            }
-                            , x: {
-                                title: {
-                                    display: true
-                                    , text: 'Kecamatan'
-                                }
-                            }
-                        }
-                        , plugins: {
-                            legend: {
-                                display: true
-                                , position: 'bottom'
-                                , labels: {
-                                    fontSize: 13
-                                    , padding: 15
-                                    , boxWidth: 12
-                                }
-                            }
-                        }
-                    }
-                });
+                createChart(
+                    'chartKecamatanRaguRagu'
+                    , response.topKecamatanKelurahanRaguRagu.map(item => item.kelurahan_name)
+                    , 'Ragu-Ragu'
+                    , response.topKecamatanKelurahanRaguRagu.map(item => item.ragu_ragu)
+                    , '#FFCE56'
+                );
+
+                createChart(
+                    'chartPopularitasKabupaten'
+                    , response.topKabupatenKotaKecamatanPopularitasSetuju.map(item => item.kecamatan_name)
+                    , 'Popularitas Setuju'
+                    , response.topKabupatenKotaKecamatanPopularitasSetuju.map(item => item.setuju)
+                    , '#FF6384'
+                );
+
+                createChart(
+                    'chartPopularitasKecamatan'
+                    , response.topKecamatanKelurahanPopularitasSetuju.map(item => item.kelurahan_name)
+                    , 'Popularitas Setuju'
+                    , response.topKecamatanKelurahanPopularitasSetuju.map(item => item.setuju)
+                    , '#36A2EB'
+                );
             }
         });
 
-        // Load chart.js script
-        loadJS('mobile/scripts/charts.js', function() {
-            // Chart initialization can be placed here if needed
-        });
+        // Load chart.js script if needed
+        loadJS('mobile/scripts/charts.js', function() {});
     });
 
 </script>
