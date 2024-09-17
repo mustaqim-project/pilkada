@@ -26,16 +26,20 @@ class AnalisisController extends Controller
 
     public function grafik_suara()
     {
+        // Ambil data dari tabel Kanvasing
         $data = Kanvasing::select(
-            'provinsi',
-            'cakada_id',
-            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
-            DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
-            DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
-            DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
-            DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
-        )
-            ->groupBy('provinsi', 'cakada_id')
+                'provinsi',
+                'kabupaten_kota',
+                'kecamatan',
+                'kelurahan',
+                'cakada_id',
+                DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju'),
+                DB::raw('COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) as tidak_setuju'),
+                DB::raw('COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) as ragu_ragu'),
+                DB::raw('COUNT(CASE WHEN popularitas = 1 THEN 1 END) as kenal'),
+                DB::raw('COUNT(CASE WHEN popularitas = 2 THEN 1 END) as tidak_kenal')
+            )
+            ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan', 'cakada_id')
             ->get();
 
         // Ambil data cakada
@@ -51,42 +55,32 @@ class AnalisisController extends Controller
             if (!isset($regencies[$item->provinsi])) {
                 $regencies[$item->provinsi] = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/{$item->provinsi}.json")->json();
             }
-            if (!isset($districts[$item->provinsi])) {
-                $districts[$item->provinsi] = [];
+            if (!isset($districts[$item->kabupaten_kota])) {
+                $districts[$item->kabupaten_kota] = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/{$item->kabupaten_kota}.json")->json();
             }
-            if (!isset($villages[$item->provinsi])) {
-                $villages[$item->provinsi] = [];
+            if (!isset($villages[$item->kecamatan])) {
+                $villages[$item->kecamatan] = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/{$item->kecamatan}.json")->json();
             }
         }
 
         // Gabungkan data
-        $data->transform(function ($item) use ($cakadas, $provinces, $regencies, $districts, $villages) {
+        $data->transform(function($item) use ($cakadas, $provinces, $regencies, $districts, $villages) {
             $cakada = $cakadas[$item->cakada_id] ?? null;
-            if ($cakada) {
-                $item->cakada_name = $cakada->name;
-            }
+            $item->cakada_name = $cakada ? $cakada->name : 'Unknown';
 
-            $item->provinsi_name = collect($provinces)->firstWhere('id', $item->provinsi)->name ?? 'Unknown';
-
-            if (!isset($regencies[$item->provinsi])) {
-                $regencies[$item->provinsi] = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/{$item->provinsi}.json")->json();
-            }
-            $item->kabupaten_name = collect($regencies[$item->provinsi])->firstWhere('id', $item->kabupaten_kota)->name ?? 'Unknown';
-
-            if (!isset($districts[$item->kabupaten_kota])) {
-                $districts[$item->kabupaten_kota] = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/{$item->kabupaten_kota}.json")->json();
-            }
-            $item->kecamatan_name = collect($districts[$item->kabupaten_kota])->firstWhere('id', $item->kecamatan)->name ?? 'Unknown';
-
-            if (!isset($villages[$item->kecamatan])) {
-                $villages[$item->kecamatan] = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/{$item->kecamatan}.json")->json();
-            }
-            $item->kelurahan_name = collect($villages[$item->kecamatan])->firstWhere('id', $item->kelurahan)->name ?? 'Unknown';
+            $item->provinsi_name = collect($provinces)->firstWhere('id', $item->provinsi)['name'] ?? 'Unknown';
+            $item->kabupaten_name = collect($regencies[$item->provinsi] ?? [])->firstWhere('id', $item->kabupaten_kota)['name'] ?? 'Unknown';
+            $item->kecamatan_name = collect($districts[$item->kabupaten_kota] ?? [])->firstWhere('id', $item->kecamatan)['name'] ?? 'Unknown';
+            $item->kelurahan_name = collect($villages[$item->kecamatan] ?? [])->firstWhere('id', $item->kelurahan)['name'] ?? 'Unknown';
 
             return $item;
         });
 
-        return view('mobile.frontend.analisis.grafik_suara', compact('data'));
+        // Pisahkan data berdasarkan level geografis dan cakada_id
+        $elektabilitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id']);
+        $popularitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id']);
+
+        return view('mobile.frontend.analisis.grafik_suara', compact('elektabilitasData', 'popularitasData'));
     }
 
     public function tren_suara()

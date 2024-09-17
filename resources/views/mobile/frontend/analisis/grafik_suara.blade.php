@@ -12,25 +12,40 @@
         <div class="card-bg preload-img" data-src="admin/mobile/myhr/images/sikad.png"></div>
     </div>
 
-    <div class="card card-style">
-        <div class="content">
-            <h3 class="text-center">Elektabilitas Calon</h3>
-            <p class="text-center mt-n2 mb-2 font-11 color-highlight">Elektabilitas Berdasarkan Provinsi</p>
-            <div class="chart-container" style="width:100%; height:350px;">
-                <canvas class="chart" id="grafikElektabilitas"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-style">
-        <div class="content">
-            <h3 class="text-center">Popularitas Calon</h3>
-            <p class="text-center mt-n2 mb-2 font-11 color-highlight">Popularitas Berdasarkan Provinsi</p>
-            <div class="chart-container" style="width:100%; height:350px;">
-                <canvas class="chart" id="grafikPopularitas"></canvas>
-            </div>
-        </div>
-    </div>
+    @foreach ($elektabilitasData as $provinsi => $kabupaten)
+        @foreach ($kabupaten as $kabupatenKota => $kecamatan)
+            @foreach ($kecamatan as $kecamatan => $kelurahan)
+                @foreach ($kelurahan as $kelurahan => $cakadaGroup)
+                    @foreach ($cakadaGroup as $cakadaId => $item)
+                        <div class="card card-style">
+                            <div class="content">
+                                <h3 class="text-center">Elektabilitas Calon: {{ $item->first()->cakada_name }} (ID: {{ $cakadaId }})</h3>
+                                <p class="text-center mt-n2 mb-2 font-11 color-highlight">
+                                    Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
+                                    Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
+                                </p>
+                                <div class="chart-container" style="width:100%; height:350px;">
+                                    <canvas class="chart" id="grafikElektabilitas_{{ $cakadaId }}"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-style">
+                            <div class="content">
+                                <h3 class="text-center">Popularitas Calon: {{ $item->first()->cakada_name }} (ID: {{ $cakadaId }})</h3>
+                                <p class="text-center mt-n2 mb-2 font-11 color-highlight">
+                                    Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
+                                    Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
+                                </p>
+                                <div class="chart-container" style="width:100%; height:350px;">
+                                    <canvas class="chart" id="grafikPopularitas_{{ $cakadaId }}"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endforeach
+            @endforeach
+        @endforeach
+    @endforeach
 
     <script>
         if ($('.chart').length > 0) {
@@ -43,125 +58,113 @@
             };
 
             var call_charts_to_page = function() {
-                var ChartElektabilitas = $('#grafikElektabilitas');
-                var ChartPopularitas = $('#grafikPopularitas');
+                @foreach ($elektabilitasData as $provinsi => $kabupaten)
+                    @foreach ($kabupaten as $kabupatenKota => $kecamatan)
+                        @foreach ($kecamatan as $kecamatan => $kelurahan)
+                            @foreach ($kelurahan as $kelurahan => $cakadaGroup)
+                                @foreach ($cakadaGroup as $cakadaId => $items)
+                                    var ChartElektabilitas{{ $cakadaId }} = $('#grafikElektabilitas_{{ $cakadaId }}');
+                                    var ChartPopularitas{{ $cakadaId }} = $('#grafikPopularitas_{{ $cakadaId }}');
 
-                if (ChartElektabilitas.length) {
-                    var elektabilitasChart = new Chart(ChartElektabilitas, {
-                        type: 'bar',
-                        data: {
-                            labels: @json($data->pluck('provinsi_name')->unique()),
-                            datasets: [
-                                {
-                                    label: 'Setuju',
-                                    backgroundColor: '#A0D468',
-                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
-                                        return $group->sum('setuju');
-                                    })->values()),
-                                },
-                                {
-                                    label: 'Tidak Setuju',
-                                    backgroundColor: '#4A89DC',
-                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
-                                        return $group->sum('tidak_setuju');
-                                    })->values()),
-                                },
-                                {
-                                    label: 'Ragu-ragu',
-                                    backgroundColor: '#FFCE56',
-                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
-                                        return $group->sum('ragu_ragu');
-                                    })->values()),
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Jumlah'
+                                    if (ChartElektabilitas{{ $cakadaId }}.length) {
+                                        var elektabilitasChart{{ $cakadaId }} = new Chart(ChartElektabilitas{{ $cakadaId }}, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Setuju', 'Tidak Setuju', 'Ragu-ragu'],
+                                                datasets: [{
+                                                    label: 'Elektabilitas',
+                                                    backgroundColor: ['#A0D468', '#4A89DC', '#FFCE56'],
+                                                    data: [
+                                                        @json($items->sum('setuju')),
+                                                        @json($items->sum('tidak_setuju')),
+                                                        @json($items->sum('ragu_ragu'))
+                                                    ],
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Jumlah'
+                                                        }
+                                                    },
+                                                    x: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Elektabilitas'
+                                                        }
+                                                    }
+                                                },
+                                                plugins: {
+                                                    legend: {
+                                                        display: true,
+                                                        position: 'bottom',
+                                                        labels: {
+                                                            fontSize: 13,
+                                                            padding: 15,
+                                                            boxWidth: 12
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
                                     }
-                                },
-                                x: {
-                                    title: {
-                                        display: true,
-                                        text: 'Provinsi'
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: true,
-                                    position: 'bottom',
-                                    labels: {
-                                        fontSize: 13,
-                                        padding: 15,
-                                        boxWidth: 12
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
 
-                if (ChartPopularitas.length) {
-                    var popularitasChart = new Chart(ChartPopularitas, {
-                        type: 'bar',
-                        data: {
-                            labels: @json($data->pluck('provinsi_name')->unique()),
-                            datasets: [
-                                {
-                                    label: 'Kenal',
-                                    backgroundColor: '#FF6384',
-                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
-                                        return $group->sum('kenal');
-                                    })->values()),
-                                },
-                                {
-                                    label: 'Tidak Kenal',
-                                    backgroundColor: '#36A2EB',
-                                    data: @json($data->groupBy('provinsi_name')->map(function($group) {
-                                        return $group->sum('tidak_kenal');
-                                    })->values()),
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Jumlah'
+                                    if (ChartPopularitas{{ $cakadaId }}.length) {
+                                        var popularitasChart{{ $cakadaId }} = new Chart(ChartPopularitas{{ $cakadaId }}, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Kenal', 'Tidak Kenal'],
+                                                datasets: [{
+                                                    label: 'Popularitas',
+                                                    backgroundColor: ['#FF6384', '#36A2EB'],
+                                                    data: [
+                                                        @json($items->sum('kenal')),
+                                                        @json($items->sum('tidak_kenal'))
+                                                    ],
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Jumlah'
+                                                        }
+                                                    },
+                                                    x: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Popularitas'
+                                                        }
+                                                    }
+                                                },
+                                                plugins: {
+                                                    legend: {
+                                                        display: true,
+                                                        position: 'bottom',
+                                                        labels: {
+                                                            fontSize: 13,
+                                                            padding: 15,
+                                                            boxWidth: 12
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
                                     }
-                                },
-                                x: {
-                                    title: {
-                                        display: true,
-                                        text: 'Provinsi'
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: true,
-                                    position: 'bottom',
-                                    labels: {
-                                        fontSize: 13,
-                                        padding: 15,
-                                        boxWidth: 12
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
+                                @endforeach
+                            @endforeach
+                        @endforeach
+                    @endforeach
+                @endforeach
             };
 
             loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
