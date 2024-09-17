@@ -164,6 +164,7 @@ class AnalisisController extends Controller
             ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan', 'tipe_cakada_id', 'cakada_id')
             ->first();
 
+            dd($query);
 
         if (!$query) {
             return response()->json(['message' => 'Data not found'], 404);
