@@ -340,7 +340,7 @@
                 });
             });
 
-            loadJS('mobile/scriptscharts.js', call_charts_to_page, document.body);
+            loadJS('mobile/scripts/charts.js', call_charts_to_page, document.body);
         }
     });
 
