@@ -63,7 +63,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Daftar Calon Kepala Daerah</span>
+                                <span class="menu-title">Kanvasing</span>
                             </a>
                         </div>
                         <!--end:Menu item-->
