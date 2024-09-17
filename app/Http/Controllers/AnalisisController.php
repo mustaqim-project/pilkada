@@ -84,11 +84,7 @@ class AnalisisController extends Controller
         $popularitasData = $data->groupBy(['provinsi_name', 'kabupaten_name', 'kecamatan_name', 'kelurahan_name', 'cakada_id', 'cakada_name']);
 
 
-        // dd( $elektabilitasData,$popularitasData );
-        // return response()->json([
-        //     'elektabilitasData' => $elektabilitasData,
-        //     'popularitasData' => $popularitasData
-        // ]);
+
         return view('mobile.frontend.analisis.grafik_suara', compact('elektabilitasData', 'popularitasData'));
     }
 
