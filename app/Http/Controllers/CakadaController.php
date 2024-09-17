@@ -29,7 +29,7 @@ class CakadaController extends Controller
 
         $cakadas = Cakada::all();
 
-        return view('cakada.index', compact('cakadas', 'provinsi'));
+        return view('desktop.cakada.index', compact('cakadas', 'provinsi'));
     }
 
     public function getRegencies($provinsiId)
