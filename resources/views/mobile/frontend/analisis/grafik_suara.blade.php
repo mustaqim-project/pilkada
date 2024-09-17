@@ -12,7 +12,7 @@
         <div class="card-bg preload-img" data-src="admin/mobile/myhr/images/sikad.png"></div>
     </div>
 
-    @foreach ($elektabilitasData as $provinsi => $kabupaten)
+    {{-- @foreach ($elektabilitasData as $provinsi => $kabupaten)
         @foreach ($kabupaten as $kabupatenKota => $kecamatan)
             @foreach ($kecamatan as $kecamatan => $kelurahan)
                 @foreach ($kelurahan as $kelurahan => $cakadaGroup)
@@ -169,5 +169,111 @@
 
             loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
         }
-    </script>
+    </script> --}}
+
+    @foreach ($elektabilitasData as $provinsi => $kabupaten)
+    @foreach ($kabupaten as $kabupatenKota => $kecamatan)
+        @foreach ($kecamatan as $kecamatan => $kelurahan)
+            @foreach ($kelurahan as $kelurahan => $cakadaGroup)
+                @foreach ($cakadaGroup as $cakadaId => $items)
+                    <div class="card card-style">
+                        <div class="content">
+                            <h3 class="text-center">Elektabilitas Calon: {{ $items->first()->cakada_name }}</h3>
+                            <p class="text-center mt-n2 mb-2 font-11 color-highlight">
+                                Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
+                                Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
+                            </p>
+                            <div class="chart-container" style="width:100%; height:350px;">
+                                <canvas class="chart" id="grafikElektabilitas_{{ $kelurahan }}"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-style">
+                        <div class="content">
+                            <h3 class="text-center">Popularitas Calon: {{ $items->first()->cakada_name }}</h3>
+                            <p class="text-center mt-n2 mb-2 font-11 color-highlight">
+                                Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
+                                Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
+                            </p>
+                            <div class="chart-container" style="width:100%; height:350px;">
+                                <canvas class="chart" id="grafikPopularitas_{{ $kelurahan }}"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
+        @endforeach
+    @endforeach
+@endforeach
+
+<script>
+    if ($('.chart').length > 0) {
+        var loadJS = function(url, implementationCode, location) {
+            var scriptTag = document.createElement('script');
+            scriptTag.src = url;
+            scriptTag.onload = implementationCode;
+            scriptTag.onreadystatechange = implementationCode;
+            location.appendChild(scriptTag);
+        };
+
+        var call_charts_to_page = function() {
+            @foreach ($elektabilitasData as $provinsi => $kabupaten)
+                @foreach ($kabupaten as $kabupatenKota => $kecamatan)
+                    @foreach ($kecamatan as $kecamatan => $kelurahan)
+                        @foreach ($kelurahan as $kelurahan => $cakadaGroup)
+                            @foreach ($cakadaGroup as $cakadaId => $items)
+                                var ChartElektabilitas{{ $kelurahan }} = $('#grafikElektabilitas_{{ $kelurahan }}');
+                                var ChartPopularitas{{ $kelurahan }} = $('#grafikPopularitas_{{ $kelurahan }}');
+
+                                // Inisialisasi chart untuk Elektabilitas
+                                new Chart(ChartElektabilitas{{ $kelurahan }}, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['Setuju', 'Tidak Setuju', 'Ragu-ragu'],
+                                        datasets: [{
+                                            label: 'Elektabilitas',
+                                            data: [
+                                                {{ $items->sum('setuju') }},
+                                                {{ $items->sum('tidak_setuju') }},
+                                                {{ $items->sum('ragu_ragu') }}
+                                            ],
+                                            backgroundColor: ['#4CAF50', '#FF5722', '#FFC107']
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false
+                                    }
+                                });
+
+                                // Inisialisasi chart untuk Popularitas
+                                new Chart(ChartPopularitas{{ $kelurahan }}, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['Kenal', 'Tidak Kenal'],
+                                        datasets: [{
+                                            label: 'Popularitas',
+                                            data: [
+                                                {{ $items->sum('kenal') }},
+                                                {{ $items->sum('tidak_kenal') }}
+                                            ],
+                                            backgroundColor: ['#2196F3', '#FFC107']
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false
+                                    }
+                                });
+                            @endforeach
+                        @endforeach
+                    @endforeach
+                @endforeach
+            @endforeach
+        };
+
+        loadJS('https://cdn.jsdelivr.net/npm/chart.js', call_charts_to_page, document.body);
+    }
+</script>
+
 @endsection
