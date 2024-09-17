@@ -188,31 +188,16 @@
                         , data: {
                             labels: response.labels
                             , datasets: [{
-                                    label: 'Memilih'
-                                    , data: response.setuju, // Now array format
-                                    backgroundColor: 'green'
-                                }
-                                , {
-                                    label: 'Tidak Memilih'
-                                    , data: response.tidak_setuju
-                                    , backgroundColor: 'red'
-                                }
-                                , {
-                                    label: 'Ragu-ragu'
-                                    , data: response.ragu_ragu
-                                    , backgroundColor: 'yellow'
-                                }
-                                , {
-                                    label: 'Kenal'
-                                    , data: response.kenal
-                                    , backgroundColor: 'blue'
-                                }
-                                , {
-                                    label: 'Tidak Kenal'
-                                    , data: response.tidak_kenal
-                                    , backgroundColor: 'grey'
-                                }
-                            ]
+                                label: 'Suara'
+                                , data: [
+                                    response.setuju
+                                    , response.tidak_setuju
+                                    , response.ragu_ragu
+                                    , response.kenal
+                                    , response.tidak_kenal
+                                ]
+                                , backgroundColor: ['green', 'red', 'yellow', 'blue', 'gray']
+                            }]
                         }
                         , options: {
                             scales: {
@@ -225,7 +210,6 @@
                 }
             });
         });
-
 
     });
 
