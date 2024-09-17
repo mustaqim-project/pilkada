@@ -16,10 +16,11 @@
         @foreach ($kabupaten as $kabupatenKota => $kecamatan)
             @foreach ($kecamatan as $kecamatan => $kelurahan)
                 @foreach ($kelurahan as $kelurahan => $cakadaGroup)
-                    @foreach ($cakadaGroup as $cakada_name => $NamaCakada)
+                    @foreach ($cakadaGroup as $cakadaId => $items)
+                    @foreach ($NamaCakadas as $NamaCakadass => $NamaCakada)
                         <div class="card card-style">
                             <div class="content">
-                                <h3 class="text-center">Elektabilitas Calon: {{ $NamaCakada  }} </h3>
+                                <h3 class="text-center">Elektabilitas Calon: {{ $NamaCakada }}</h3>
                                 <p class="text-center mt-n2 mb-2 font-11 color-highlight">
                                     Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
                                     Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
@@ -31,7 +32,7 @@
                         </div>
                         <div class="card card-style">
                             <div class="content">
-                                <h3 class="text-center">Popularitas Calon: {{ $NamaCakada  }} </h3>
+                                <h3 class="text-center">Popularitas Calon: {{ $NamaCakada }}</h3>
                                 <p class="text-center mt-n2 mb-2 font-11 color-highlight">
                                     Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
                                     Kecamatan: {{ $kecamatan }}, Kelurahan: {{ $kelurahan }}
@@ -41,6 +42,7 @@
                                 </div>
                             </div>
                         </div>
+                    @endforeach
                     @endforeach
                 @endforeach
             @endforeach
