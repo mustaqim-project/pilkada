@@ -19,6 +19,12 @@
                     @foreach ($cakadaGroup as $cakadaId => $items)
                         <div class="card card-style">
                             <div class="content">
+
+                                @php
+                                // Debugging output
+                                $firstItem = $items->first();
+                                dd($firstItem);
+                            @endphp
                                 <h3 class="text-center">Elektabilitas Calon: {{ $items->first()->cakada_name }}</h3>
                                 <p class="text-center mt-n2 mb-2 font-11 color-highlight">
                                     Provinsi: {{ $provinsi }}, Kabupaten/Kota: {{ $kabupatenKota }},
