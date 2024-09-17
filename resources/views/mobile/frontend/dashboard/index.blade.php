@@ -40,19 +40,20 @@
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="rekam-jejak-kandidat.html">
-                        <i class="ml-3 mr-3" data-feather="bar-chart-2" style="color: #33B5FF;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Rekam Jejak
-                            Kandidat</h5>
+                    <a href="analisis-suara.html">
+                        <i class="ml-3 mr-3" data-feather="pie-chart" style="color: #FF6F61;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
+                            Analisis Suara</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="jadwal-kampanye.html">
-                        <i class="ml-3 mr-3" data-feather="calendar" style="color: #33FF57;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Jadwal
-                            Kampanye</h5>
+                    <a href="manajemen-relawan.html">
+                        <i class="ml-3 mr-3" data-feather="users" style="color: #FFC733;"></i>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
+                            Manajemen Relawan</h5>
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
@@ -95,10 +96,10 @@
                         </a>
                     </div>
                     <div class="col-4 text-center">
-                        <a href="manajemen-relawan.html">
-                            <i class="ml-3 mr-3" data-feather="users" style="color: #FFC733;"></i>
-                            <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
-                                Manajemen Relawan</h5>
+                        <a href="jadwal-kampanye.html">
+                            <i class="ml-3 mr-3" data-feather="calendar" style="color: #33FF57;"></i>
+                            <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Jadwal
+                                Kampanye</h5>
                         </a>
                     </div>
                     <div class="col-4 text-center">
@@ -111,13 +112,16 @@
                 </div>
 
                 <div class="row mt-3 pt-1 mb-3">
+
                     <div class="col-4 text-center">
-                        <a href="analisis-suara.html">
-                            <i class="ml-3 mr-3" data-feather="pie-chart" style="color: #FF6F61;"></i>
-                            <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
-                                Analisis Suara</h5>
+                        <a href="rekam-jejak-kandidat.html">
+                            <i class="ml-3 mr-3" data-feather="bar-chart-2" style="color: #33B5FF;"></i>
+                            <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Rekam Jejak
+                                Kandidat</h5>
                         </a>
                     </div>
+
+
                     <div class="col-4 text-center">
                         <a href="sentiment-analysis.html">
                             <i class="ml-3 mr-3" data-feather="activity" style="color: #2ECC71;"></i>
@@ -263,7 +267,7 @@
             document.querySelector('.ios-banner').style.display = 'block';
             // Optional: Hide Android banner if needed
             document.querySelector('.android-banner').style.display = 'none';
-        }else{
+        } else {
             document.querySelector('.android-banner').style.display = 'block';
             // Optional: Hide iOS banner if needed
             document.querySelector('.ios-banner').style.display = 'none';

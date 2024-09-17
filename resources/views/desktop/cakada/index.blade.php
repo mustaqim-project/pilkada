@@ -175,6 +175,17 @@
                         }
                     });
 
+                    $.ajax({
+                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
+                        , method: 'GET'
+                        , success: function(data) {
+                            let tipe_cakadaDropdown = $('#tipe_cakada');
+                            data.forEach(function(tipe_cakada) {
+                                tipe_cakadaDropdown.append('<option value="' + tipe_cakada.id + '">' + tipe_cakada.name + '</option>');
+                            });
+                        }
+                    });
+
                     // Edit button clicked
                     $('.btn-edit').click(function() {
                         let id = $(this).data('id');
