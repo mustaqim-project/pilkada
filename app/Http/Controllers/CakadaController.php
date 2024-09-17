@@ -44,6 +44,7 @@ class CakadaController extends Controller
         $request->validate([
             'provinsi' => 'required|string',
             'kabupaten_kota' => 'required|string',
+            'tipe_cakada_id' => 'required|integer',
             'nama_calon_kepala' => 'required|string',
             'nama_calon_wakil' => 'required|string',
         ]);

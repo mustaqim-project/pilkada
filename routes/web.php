@@ -60,9 +60,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Routes for TipeCakada
     Route::get('/tipe-cakada', [TipeCakadaController::class, 'index'])->middleware('can:tipe_cakada read')->name('tipe_cakada.index');
-    Route::get('/tipe-cakada/create', [TipeCakadaController::class, 'create'])->middleware('can:tipe_cakada create')->name('tipe_cakada.create');
     Route::post('/tipe-cakada', [TipeCakadaController::class, 'store'])->middleware('can:tipe_cakada create')->name('tipe_cakada.store');
-    Route::get('/tipe-cakada/{id}/edit', [TipeCakadaController::class, 'edit'])->middleware('can:tipe_cakada update')->name('tipe_cakada.update');
     Route::put('/tipe-cakada/{id}', [TipeCakadaController::class, 'update'])->middleware('can:tipe_cakada update')->name('tipe_cakada.update');
     Route::delete('/tipe-cakada/{id}', [TipeCakadaController::class, 'destroy'])->middleware('can:tipe_cakada delete')->name('tipe_cakada.destroy');
 
