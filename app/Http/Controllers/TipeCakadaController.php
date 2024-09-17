@@ -22,9 +22,8 @@ class TipeCakadaController extends Controller
     public function index()
     {
         $tipeCakada = TipeCakada::all();
-        return view('tipe_cakada.index', compact('tipeCakada'));
+        return view('desktop.tipe_cakada.index', compact('tipeCakada'));
     }
-
     // Menyimpan tipe cakada baru ke database
     public function store(Request $request)
     {
