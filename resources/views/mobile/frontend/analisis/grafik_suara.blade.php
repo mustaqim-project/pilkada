@@ -273,23 +273,28 @@
                             , data: {
                                 labels: response.labels
                                 , datasets: [{
-                                        backgroundColor: '#A0D468'
+                                        label: 'Setuju'
+                                        , backgroundColor: '#A0D468'
                                         , data: response.setuju
                                     , }
                                     , {
-                                         backgroundColor: '#4A89DC'
+                                        label: 'Tidak Setuju'
+                                        , backgroundColor: '#4A89DC'
                                         , data: response.tidak_setuju
                                     , }
                                     , {
-                                        backgroundColor: '#FFCE56'
+                                        label: 'Ragu-ragu'
+                                        , backgroundColor: '#FFCE56'
                                         , data: response.ragu_ragu
                                     , }
                                     , {
-                                         backgroundColor: '#FF6384'
+                                        label: 'Kenal'
+                                        , backgroundColor: '#FF6384'
                                         , data: response.kenal
                                     , }
                                     , {
-                                        backgroundColor: '#36A2EB'
+                                        label: 'Tidak Kenal'
+                                        , backgroundColor: '#36A2EB'
                                         , data: response.tidak_kenal
                                     , }
                                 ]
