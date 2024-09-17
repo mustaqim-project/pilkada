@@ -53,6 +53,7 @@
             </select>
         </div>
     </div>
+    <button id="filterButton" class="btn btn-primary mt-3">Tampilkan Grafik</button>
 
     <!-- Chart -->
     <div class="row mt-5">
