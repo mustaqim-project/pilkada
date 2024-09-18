@@ -38,7 +38,7 @@ class RolePermisionController extends Controller
         ]);
 
         /** create the role */
-        $role = Role::create(['guard_name' => 'admin', 'name' => $request->role]);
+        $role = Role::create(['guard_name' => 'web', 'name' => $request->role]);
 
         /** assgin permissions to the role */
         $role->syncPermissions($request->permissions);

@@ -10,7 +10,7 @@
             <div class="card-header">
                 <h4>{{ __('admin.Roles and Permission') }}</h4>
                 <div class="card-header-action">
-                    <a href="{{ route('admin.role.create') }}" class="btn btn-primary">
+                    <a href="{{ route('role.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> {{ __('admin.Create new') }}
                     </a>
                 </div>
@@ -40,16 +40,16 @@
                                     @foreach ($role->permissions as $permission)
                                         <span class="badge bg-primary text-light">{{ $permission->name }}</span>
                                     @endforeach
-                                    @if ($role->name === 'Super Admin')
+                                    @if ($role->name === 'Admin')
                                     <span class="badge bg-danger text-light">{{ __('admin.All Permissions') }} *</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($role->name != 'Super Admin')
-                                    <a href="{{ route('admin.role.edit', $role->id) }}"
+                                    @if ($role->name != 'Admin')
+                                    <a href="{{ route('role.edit', $role->id) }}"
                                         class="btn btn-primary"><i class="fas fa-edit"></i></a>
 
-                                    <a href="{{ route('admin.role.destory', $role->id) }}"
+                                    <a href="{{ route('role.destory', $role->id) }}"
                                         class="btn btn-danger delete-item"><i
                                             class="fas fa-trash-alt"></i></a>
                                     @endif
