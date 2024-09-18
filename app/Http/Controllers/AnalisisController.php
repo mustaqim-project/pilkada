@@ -9,7 +9,6 @@ use App\Models\Cakada;
 use App\Models\TipeCakada;
 use Illuminate\Support\Facades\DB;
 
-
 class AnalisisController extends Controller
 {
     public function __construct()

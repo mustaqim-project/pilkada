@@ -22,6 +22,14 @@
         </div>
     </div>
 
+    @php
+    use App\Models\CountData;
+
+        $totals = CountData::getTotalTimsesUsers();
+        $totalTimsesUsers = $totals['total_timses_users'];
+        $totalKanvasing = $totals['total_kanvasing'][0]->total_kanvasing;
+    @endphp
+
 
     <!--begin::Content-->
     <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -42,10 +50,10 @@
                             <!--begin::Title-->
                             <div class="card-title d-flex flex-column">
                                 <!--begin::Amount-->
-                                <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">69</span>
+                                <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalTimsesUsers }}</span>
                                 <!--end::Amount-->
                                 <!--begin::Subtitle-->
-                                <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Jumlah Pasangan Calon</span>
+                                <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Jumlah Timses</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->
@@ -63,10 +71,10 @@
                             <!--begin::Title-->
                             <div class="card-title d-flex flex-column">
                                 <!--begin::Amount-->
-                                <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">69</span>
+                                <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalKanvasing }}</span>
                                 <!--end::Amount-->
                                 <!--begin::Subtitle-->
-                                <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Jumlah Timses</span>
+                                <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Total Kanvasing</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->
