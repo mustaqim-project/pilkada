@@ -65,7 +65,7 @@ class RolePermisionController extends Controller
 
         /** create the role */
         $role = Role::findOrFail($id);
-        $role->update(['guard_name' => 'admin', 'name' => $request->role]);
+        $role->update(['guard_name' => 'web', 'name' => $request->role]);
 
         /** assgin permissions to the role */
         $role->syncPermissions($request->permissions);

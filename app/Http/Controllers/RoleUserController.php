@@ -45,8 +45,7 @@ class RoleUserController extends Controller
     {
 
         try {
-            $user = new Admin();
-            $user->image = '';
+            $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
@@ -117,7 +116,7 @@ class RoleUserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-        if($user->getRoleNames()->first() === 'Super Admin'){
+        if($user->getRoleNames()->first() === 'Admin'){
             return response(['status' => 'error', 'message' => __('Can\'t Delete the Super User')]);
         }
         $user->delete();
