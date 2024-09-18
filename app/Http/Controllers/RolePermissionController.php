@@ -11,9 +11,6 @@ class RolePermissionController extends Controller
     public function __construct()
     {
         $this->middleware('can:role_permission read')->only('index');
-        $this->middleware('can:role_permission create')->only(['storeRole', 'storePermission']);
-        $this->middleware('can:role_permission update')->only('assignPermissionToRole');
-        $this->middleware('can:role_permission delete')->only('destroy');
     }
 
     public function index()
