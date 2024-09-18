@@ -1,7 +1,9 @@
 <?php
-namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Http;
 
+namespace App\Http\Controllers;
+
+use Detection\MobileDetect;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Cakada;
 use App\Models\TipeCakada;
@@ -17,8 +19,13 @@ class CakadaController extends Controller
         $this->middleware('can:cakada delete')->only('destroy');
     }
 
-    public function index()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
     {
+        $detect = new MobileDetect;
+
         $provinsiResponse = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
         $provinsiData = $provinsiResponse->json();
 
@@ -31,15 +38,26 @@ class CakadaController extends Controller
         $cakadas = Cakada::all();
         $tipe_cakada = TipeCakada::all();
 
-        return view('desktop.cakada.index', compact('cakadas','tipe_cakada', 'provinsi'));
+        // Tentukan path view berdasarkan perangkat
+        $viewPath = $detect->isMobile() || $detect->isTablet()
+            ? 'mobile.cakada.index'
+            : 'desktop.cakada.index';
+
+        return view($viewPath, compact('cakadas', 'tipe_cakada', 'provinsi'));
     }
 
+    /**
+     * Get regencies based on province ID.
+     */
     public function getRegencies($provinsiId)
     {
         $regenciesResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/{$provinsiId}.json");
         return $regenciesResponse->json();
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         // Validasi input
@@ -58,6 +76,9 @@ class CakadaController extends Controller
         return redirect()->route('cakada.index')->with('success', 'Cakada berhasil ditambahkan!');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit($id)
     {
         // Mengambil data cakada berdasarkan ID
@@ -67,6 +88,9 @@ class CakadaController extends Controller
         return response()->json($cakada);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, $id)
     {
         // Validasi input
@@ -86,6 +110,9 @@ class CakadaController extends Controller
         return redirect()->route('cakada.index')->with('success', 'Cakada berhasil diperbarui!');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy($id)
     {
         // Menghapus data cakada berdasarkan ID

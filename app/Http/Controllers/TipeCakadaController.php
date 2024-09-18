@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Detection\MobileDetect;
 use Illuminate\Http\Request;
 use App\Models\TipeCakada;
 
 class TipeCakadaController extends Controller
 {
-
-
     public function __construct()
     {
         // Membatasi akses dengan permission
@@ -18,13 +17,23 @@ class TipeCakadaController extends Controller
         $this->middleware('can:tipe_cakada delete')->only('destroy');
     }
 
-    // Menampilkan daftar tipe cakada dan form tambah/edit dalam satu halaman
-    public function index()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
     {
+        $detect = new MobileDetect;
         $tipeCakada = TipeCakada::all();
-        return view('desktop.tipe_cakada.index', compact('tipeCakada'));
+        $viewPath = $detect->isMobile() || $detect->isTablet()
+            ? 'mobile.tipe_cakada.index'
+            : 'desktop.tipe_cakada.index';
+
+        return view($viewPath, compact('tipeCakada'));
     }
-    // Menyimpan tipe cakada baru ke database
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -38,7 +47,9 @@ class TipeCakadaController extends Controller
         return redirect()->route('tipe_cakada.index')->with('success', 'Tipe Cakada berhasil ditambahkan!');
     }
 
-    // Mengupdate tipe cakada di database
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -53,7 +64,9 @@ class TipeCakadaController extends Controller
         return redirect()->route('tipe_cakada.index')->with('success', 'Tipe Cakada berhasil diupdate!');
     }
 
-    // Menghapus tipe cakada dari database
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy($id)
     {
         $tipeCakada = TipeCakada::findOrFail($id);
