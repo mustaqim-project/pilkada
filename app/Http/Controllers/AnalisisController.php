@@ -234,14 +234,14 @@ class AnalisisController extends Controller
         ]);
     }
 
+    // public function weakness()
+    // {
+
+    //     return view('mobile.frontend.analisis.weakness');
+    // }
+
+
     public function weakness()
-    {
-
-        return view('mobile.frontend.analisis.weakness');
-    }
-
-
-    public function get_weakness()
     {
         // Query untuk mencari kabupaten/kota dan kecamatan dengan tidak setuju tertinggi berdasarkan elektabilitas
         $kabupatenKecamatanElektabilitas = DB::table(DB::raw('(
