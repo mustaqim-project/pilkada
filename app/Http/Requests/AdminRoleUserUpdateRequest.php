@@ -21,11 +21,11 @@ class AdminRoleUserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('role_user');
+        $id = $this->route('role_user'); // Assuming this retrieves the user ID
 
         return [
             'name' => ['required', 'max:255'],
-            'email' => ['required', 'max:255', 'email', 'unique:email'],
+            'email' => ['required', 'max:255', 'email', 'unique:users,email,' . $id],
             'role' => ['required']
         ];
     }
