@@ -74,7 +74,6 @@ class AnalisisController extends Controller
             'kenal' => $query->kenal, // No array wrapping
             'tidak_kenal' => $query->tidak_kenal, // No array wrapping
         ]);
-
     }
 
 
@@ -95,9 +94,9 @@ class AnalisisController extends Controller
             FROM kanvasings
             GROUP BY kabupaten_kota, kecamatan
         ) AS subquery'))
-        ->orderBy('setuju', 'DESC')
-        ->limit(3)
-        ->get();
+            ->orderBy('setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Mencari daerah dengan elektabilitas ragu-ragu tertinggi berdasarkan kabupaten dan kecamatan
         $topKabupatenKotaKecamatanRaguRagu = DB::table(DB::raw('(
@@ -106,9 +105,9 @@ class AnalisisController extends Controller
             FROM kanvasings
             GROUP BY kabupaten_kota, kecamatan
         ) AS subquery'))
-        ->orderBy('ragu_ragu', 'DESC')
-        ->limit(3)
-        ->get();
+            ->orderBy('ragu_ragu', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Mencari daerah dengan elektabilitas setuju tertinggi berdasarkan kecamatan dan kelurahan
         $topKecamatanKelurahanSetuju = DB::table(DB::raw('(
@@ -117,9 +116,9 @@ class AnalisisController extends Controller
             FROM kanvasings
             GROUP BY kecamatan, kelurahan
         ) AS subquery'))
-        ->orderBy('setuju', 'DESC')
-        ->limit(3)
-        ->get();
+            ->orderBy('setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Mencari daerah dengan elektabilitas ragu-ragu tertinggi berdasarkan kecamatan dan kelurahan
         $topKecamatanKelurahanRaguRagu = DB::table(DB::raw('(
@@ -128,9 +127,9 @@ class AnalisisController extends Controller
             FROM kanvasings
             GROUP BY kecamatan, kelurahan
         ) AS subquery'))
-        ->orderBy('ragu_ragu', 'DESC')
-        ->limit(3)
-        ->get();
+            ->orderBy('ragu_ragu', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Mencari daerah dengan popularitas setuju tertinggi berdasarkan kabupaten dan kecamatan
         $topKabupatenKotaKecamatanPopularitasSetuju = DB::table(DB::raw('(
@@ -139,9 +138,9 @@ class AnalisisController extends Controller
             FROM kanvasings
             GROUP BY kabupaten_kota, kecamatan
         ) AS subquery'))
-        ->orderBy('setuju', 'DESC')
-        ->limit(3)
-        ->get();
+            ->orderBy('setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Mencari daerah dengan popularitas setuju tertinggi berdasarkan kecamatan dan kelurahan
         $topKecamatanKelurahanPopularitasSetuju = DB::table(DB::raw('(
@@ -150,9 +149,9 @@ class AnalisisController extends Controller
             FROM kanvasings
             GROUP BY kecamatan, kelurahan
         ) AS subquery'))
-        ->orderBy('setuju', 'DESC')
-        ->limit(3)
-        ->get();
+            ->orderBy('setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Cache untuk kecamatan dan kelurahan
         $districtsCache = [];
@@ -244,48 +243,48 @@ class AnalisisController extends Controller
     public function weakness()
     {
         // Query untuk mencari kabupaten/kota dan kecamatan dengan tidak setuju tertinggi berdasarkan elektabilitas
-        $kabupatenKecamatanElektabilitas = DB::table(DB::raw('(
-            SELECT kabupaten_kota, kecamatan,
-                   COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) AS tidak_setuju
-            FROM kanvasings
-            GROUP BY kabupaten_kota, kecamatan
-        ) AS subquery'))
-        ->orderBy('tidak_setuju', 'DESC')
-        ->limit(3)
-        ->get();
+        $topKabupatenKotaKecamatanTidakSetuju = DB::table(DB::raw('(
+        SELECT kabupaten_kota, kecamatan,
+               COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) AS tidak_setuju
+        FROM kanvasings
+        GROUP BY kabupaten_kota, kecamatan
+    ) AS subquery'))
+            ->orderBy('tidak_setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Query untuk mencari kecamatan dan kelurahan dengan tidak setuju tertinggi berdasarkan elektabilitas
-        $kecamatanKelurahanElektabilitas = DB::table(DB::raw('(
-            SELECT kecamatan, kelurahan,
-                   COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) AS tidak_setuju
-            FROM kanvasings
-            GROUP BY kecamatan, kelurahan
-        ) AS subquery'))
-        ->orderBy('tidak_setuju', 'DESC')
-        ->limit(3)
-        ->get();
+        $topKecamatanKelurahanTidakSetuju = DB::table(DB::raw('(
+        SELECT kecamatan, kelurahan,
+               COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) AS tidak_setuju
+        FROM kanvasings
+        GROUP BY kecamatan, kelurahan
+    ) AS subquery'))
+            ->orderBy('tidak_setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Query untuk mencari kabupaten/kota dan kecamatan dengan tidak setuju tertinggi berdasarkan popularitas
-        $kabupatenKecamatanPopularitas = DB::table(DB::raw('(
-            SELECT kabupaten_kota, kecamatan,
-                   COUNT(CASE WHEN popularitas = 2 THEN 1 END) AS tidak_setuju
-            FROM kanvasings
-            GROUP BY kabupaten_kota, kecamatan
-        ) AS subquery'))
-        ->orderBy('tidak_setuju', 'DESC')
-        ->limit(3)
-        ->get();
+        $topKabupatenKotaKecamatanPopularitasTidakSetuju = DB::table(DB::raw('(
+        SELECT kabupaten_kota, kecamatan,
+               COUNT(CASE WHEN popularitas = 2 THEN 1 END) AS tidak_setuju
+        FROM kanvasings
+        GROUP BY kabupaten_kota, kecamatan
+    ) AS subquery'))
+            ->orderBy('tidak_setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Query untuk mencari kecamatan dan kelurahan dengan tidak setuju tertinggi berdasarkan popularitas
-        $kecamatanKelurahanPopularitas = DB::table(DB::raw('(
-            SELECT kecamatan, kelurahan,
-                   COUNT(CASE WHEN popularitas = 2 THEN 1 END) AS tidak_setuju
-            FROM kanvasings
-            GROUP BY kecamatan, kelurahan
-        ) AS subquery'))
-        ->orderBy('tidak_setuju', 'DESC')
-        ->limit(3)
-        ->get();
+        $topKecamatanKelurahanPopularitasTidakSetuju = DB::table(DB::raw('(
+        SELECT kecamatan, kelurahan,
+               COUNT(CASE WHEN popularitas = 2 THEN 1 END) AS tidak_setuju
+        FROM kanvasings
+        GROUP BY kecamatan, kelurahan
+    ) AS subquery'))
+            ->orderBy('tidak_setuju', 'DESC')
+            ->limit(3)
+            ->get();
 
         // Cache untuk kecamatan dan kelurahan
         $districtsCache = [];
@@ -321,34 +320,33 @@ class AnalisisController extends Controller
             return $village ? $village['name'] : 'Unknown';
         };
 
-        // Tambahkan nama kecamatan dan kelurahan dari API ke hasil query
-        $kabupatenKecamatanElektabilitas = $kabupatenKecamatanElektabilitas->map(function ($item) use ($getDistrictName) {
+        // Menambahkan nama kecamatan dan kelurahan dari API ke hasil query
+        $topKabupatenKotaKecamatanTidakSetuju = $topKabupatenKotaKecamatanTidakSetuju->map(function ($item) use ($getDistrictName) {
             $item->kecamatan_name = $getDistrictName($item->kabupaten_kota, $item->kecamatan);
             return $item;
         });
 
-        $kecamatanKelurahanElektabilitas = $kecamatanKelurahanElektabilitas->map(function ($item) use ($getVillageName) {
+        $topKecamatanKelurahanTidakSetuju = $topKecamatanKelurahanTidakSetuju->map(function ($item) use ($getVillageName) {
             $item->kelurahan_name = $getVillageName($item->kecamatan, $item->kelurahan);
             return $item;
         });
 
-        $kabupatenKecamatanPopularitas = $kabupatenKecamatanPopularitas->map(function ($item) use ($getDistrictName) {
+        $topKabupatenKotaKecamatanPopularitasTidakSetuju = $topKabupatenKotaKecamatanPopularitasTidakSetuju->map(function ($item) use ($getDistrictName) {
             $item->kecamatan_name = $getDistrictName($item->kabupaten_kota, $item->kecamatan);
             return $item;
         });
 
-        $kecamatanKelurahanPopularitas = $kecamatanKelurahanPopularitas->map(function ($item) use ($getVillageName) {
+        $topKecamatanKelurahanPopularitasTidakSetuju = $topKecamatanKelurahanPopularitasTidakSetuju->map(function ($item) use ($getVillageName) {
             $item->kelurahan_name = $getVillageName($item->kecamatan, $item->kelurahan);
             return $item;
         });
 
-        // Kirimkan semua hasil query ke dalam view
-        return view('mobile.frontend.analisis.weakness', compact(
-            'kabupatenKecamatanElektabilitas',
-            'kecamatanKelurahanElektabilitas',
-            'kabupatenKecamatanPopularitas',
-            'kecamatanKelurahanPopularitas'
-        ));
+        // Mengirimkan data dalam format JSON
+        return response()->json([
+            'topKabupatenKotaKecamatanTidakSetuju' => $topKabupatenKotaKecamatanTidakSetuju,
+            'topKecamatanKelurahanTidakSetuju' => $topKecamatanKelurahanTidakSetuju,
+            'topKabupatenKotaKecamatanPopularitasTidakSetuju' => $topKabupatenKotaKecamatanPopularitasTidakSetuju,
+            'topKecamatanKelurahanPopularitasTidakSetuju' => $topKecamatanKelurahanPopularitasTidakSetuju
+        ]);
     }
-
 }
