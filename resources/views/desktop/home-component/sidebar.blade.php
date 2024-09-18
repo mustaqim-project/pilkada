@@ -126,37 +126,30 @@
                         </div>
                         <!--end:Menu item-->
 
+                        @if (canAccess(['access management index']))
                         <!--begin:Menu item-->
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link" href="{{ route('role-users.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Permission</span>
+                                <span class="menu-title">{{ __('Role Users') }}</span>
                             </a>
                         </div>
                         <!--end:Menu item-->
 
                         <!--begin:Menu item-->
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link" href="{{ route('role.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Role Permission</span>
+                                <span class="menu-title">{{ __('admin.Roles and Permissions') }}</span>
                             </a>
                         </div>
                         <!--end:Menu item-->
+                        @endif
 
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">User Role</span>
-                            </a>
-                        </div>
                         <!--end:Menu item-->
                     </div>
                 </div>

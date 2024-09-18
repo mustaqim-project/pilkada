@@ -10,7 +10,9 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\KanvasingController;
 use App\Http\Controllers\ManajementController;
 use App\Http\Controllers\TipeCakadaController;
+use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\Admin\RolePermisionController;
 
 
 Route::get('/', function () {
@@ -92,13 +94,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/weakness', [AnalisisController::class, 'weakness'])->middleware('can:analisis read')->name('analisis.weakness');
     Route::get('/get-weakness', [AnalisisController::class, 'get_weakness'])->name('get-weakness');
 
-
-
-
-
-
-
     Route::get('/manajement', [ManajementController::class, 'index'])->middleware('can:manajement read')->name('manajement.read');
+
+
+
+    Route::put('profile-password-update/{id}', [ProfileController::class, 'passwordUpdate'])->name('profile-password.update');
+    Route::resource('profile', ProfileController::class);
+
+
+    /** Role and Permissions Routes */
+    Route::get('role', [RolePermisionController::class, 'index'])->name('role.index');
+    Route::get('role/create', [RolePermisionController::class, 'create'])->name('role.create');
+    Route::post('role/create', [RolePermisionController::class, 'store'])->name('role.store');
+    Route::get('role/{id}/edit', [RolePermisionController::class, 'edit'])->name('role.edit');
+    Route::put('role/{id}/edit', [RolePermisionController::class, 'update'])->name('role.update');
+    Route::delete('role/{id}/destory', [RolePermisionController::class, 'destory'])->name('role.destory');
+
+    /** Admin User Routes */
+    Route::resource('role-users', RoleUserController::class);
 });
 
 
