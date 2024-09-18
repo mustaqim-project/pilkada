@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRoleUserStoreRequest;
 use App\Http\Requests\AdminRoleUserUpdateRequest;
 use App\Mail\RoleUserCreateMail;
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,8 +25,8 @@ class RoleUserController extends Controller
      */
     public function index() : View
     {
-        $admins = Admin::all();
-        return view('admin.role-user.index', compact('admins'));
+        $admins = User::all();
+        return view('desktop.role-user.index', compact('admins'));
     }
 
     /**
@@ -35,7 +35,7 @@ class RoleUserController extends Controller
     public function create() : View
     {
         $roles = Role::all();
-        return view('admin.role-user.create', compact('roles'));
+        return view('desktop.role-user.create', compact('roles'));
     }
 
     /**
@@ -75,9 +75,9 @@ class RoleUserController extends Controller
      */
     public function edit(string $id) : View
     {
-        $user = Admin::findOrFail($id);
+        $user = User::findOrFail($id);
         $roles = Role::all();
-        return view('admin.role-user.edit', compact('user', 'roles'));
+        return view('desktop.role-user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -92,7 +92,7 @@ class RoleUserController extends Controller
             ]);
         }
 
-        $user = Admin::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -116,7 +116,7 @@ class RoleUserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = Admin::findOrFail($id);
+        $user = User::findOrFail($id);
         if($user->getRoleNames()->first() === 'Super Admin'){
             return response(['status' => 'error', 'message' => __('admin.Can\'t Delete the Super User')]);
         }
