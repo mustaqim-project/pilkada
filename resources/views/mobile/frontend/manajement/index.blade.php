@@ -44,7 +44,7 @@
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="{{ route('role_user.index') }}">
+                    <a href="{{ route('role-users.index') }}">
                         <i class="ml-3 mr-3" data-feather="lock" style="color: #dc3545;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Akses User</h5>
                     </a>
