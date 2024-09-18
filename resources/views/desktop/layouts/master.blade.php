@@ -29,6 +29,7 @@
             }
             document.documentElement.setAttribute("data-theme", themeMode);
         }
+
     </script>
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
@@ -52,6 +53,7 @@
     </div>
     <script>
         var hostUrl = "{{ asset('admin/desktop/assets/') }}";
+
     </script>
     <script src="{{ asset('admin/desktop/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('admin/desktop/assets/js/scripts.bundle.js') }}"></script>
