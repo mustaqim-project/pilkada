@@ -10,9 +10,9 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\KanvasingController;
 use App\Http\Controllers\ManajementController;
 use App\Http\Controllers\TipeCakadaController;
-use App\Http\Controllers\Admin\RoleUserController;
+use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\RolePermissionController;
-use App\Http\Controllers\Admin\RolePermisionController;
+use App\Http\Controllers\RolePermisionController;
 
 
 Route::get('/', function () {
