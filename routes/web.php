@@ -112,7 +112,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('role/{id}/destory', [RolePermisionController::class, 'destory'])->name('role.destory');
 
     /** Admin User Routes */
-    Route::resource('role-users', RoleUserController::class);
+    Route::resource('role-users', RoleUserController::class)->middleware('can:cakada create');
 });
 
 

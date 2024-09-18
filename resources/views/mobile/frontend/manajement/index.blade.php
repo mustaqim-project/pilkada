@@ -32,19 +32,19 @@
             </div>
             <div class="row mt-3 pt-1 mb-3">
                 <div class="col-4 text-center">
-                    <a href="#">
+                    <a href="{{ route('tipe_cakada.index') }}">
                         <i class="ml-3 mr-3" data-feather="flag" style="color: #FF5733;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Jenis Pilkada</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="#">
+                    <a href="{{ route('cakada.index') }}">
                         <i class="ml-3 mr-3" data-feather="user-check" style="color: #33B5FF;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Calon Kepala Daerah</h5>
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="#">
+                    <a href="{{ route('role_user.index') }}">
                         <i class="ml-3 mr-3" data-feather="lock" style="color: #dc3545;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Akses User</h5>
                     </a>
