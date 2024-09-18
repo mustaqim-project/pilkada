@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Detection\MobileDetect;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('desktop.profile.index', [
+        $detect = new MobileDetect;
+        $viewPath = $detect->isMobile() || $detect->isTablet()
+            ? 'mobile.profile.index'
+            : 'desktop.profile.index';
+
+        return view($viewPath, [
             'user' => $request->user(),
         ]);
     }
@@ -26,13 +32,14 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

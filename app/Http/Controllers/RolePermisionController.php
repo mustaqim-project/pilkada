@@ -2,88 +2,122 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Detection\MobileDetect;
 
-class RolePermisionController extends Controller
+class RolePermissionController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:role_permission read')->only('index');
     }
 
-    function index() : View
+    /**
+     * Display a listing of the roles.
+     */
+    public function index(): View
     {
+        $detect = new MobileDetect;
         $roles = Role::all();
-        return view('desktop.role.index', compact('roles'));
+
+        if ($detect->isMobile() || $detect->isTablet()) {
+            return view('mobile.role.index', compact('roles'));
+        } else {
+            return view('desktop.role.index', compact('roles'));
+        }
     }
 
-    function create() : View
+    /**
+     * Show the form for creating a new role.
+     */
+    public function create(): View
     {
-        $premissions = Permission::all()->groupBy('group_name');
+        $detect = new MobileDetect;
+        $permissions = Permission::all()->groupBy('group_name');
 
-        return view('desktop.role.create', compact('premissions'));
+        if ($detect->isMobile() || $detect->isTablet()) {
+            return view('mobile.role.create', compact('permissions'));
+        } else {
+            return view('desktop.role.create', compact('permissions'));
+        }
     }
 
-    function store(Request $request) : RedirectResponse
+    /**
+     * Store a newly created role in storage.
+     */
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'role' => ['required', 'max:50', 'unique:permissions,name']
+            'role' => ['required', 'max:50', 'unique:roles,name'],
+            'permissions' => ['nullable', 'array']
         ]);
 
-        /** create the role */
+        // Create the role
         $role = Role::create(['guard_name' => 'web', 'name' => $request->role]);
 
-        /** assgin permissions to the role */
+        // Assign permissions to the role
         $role->syncPermissions($request->permissions);
 
-        toast(__('Created Successfully'), 'success');
-
-        return redirect()->route('role.index');
-
+        // Use session flash message instead of toast
+        return redirect()->route('role.index')->with('success', 'Created Successfully');
     }
 
-    function edit(string $id) : View
+    /**
+     * Show the form for editing the specified role.
+     */
+    public function edit(string $id): View
     {
-        $premissions = Permission::all()->groupBy('group_name');
+        $detect = new MobileDetect;
+        $permissions = Permission::all()->groupBy('group_name');
         $role = Role::findOrFail($id);
-        $rolesPermissions = $role->permissions;
-        $rolesPermissions = $rolesPermissions->pluck('name')->toArray();
-        return view('desktop.role.edit', compact('premissions', 'role', 'rolesPermissions'));
+        $rolesPermissions = $role->permissions->pluck('name')->toArray();
+
+        if ($detect->isMobile() || $detect->isTablet()) {
+            return view('mobile.role.edit', compact('permissions', 'role', 'rolesPermissions'));
+        } else {
+            return view('desktop.role.edit', compact('permissions', 'role', 'rolesPermissions'));
+        }
     }
 
-    function update(Request $request, string $id) : RedirectResponse {
+    /**
+     * Update the specified role in storage.
+     */
+    public function update(Request $request, string $id): RedirectResponse
+    {
         $request->validate([
-            'role' => ['required', 'max:50', 'unique:permissions,name']
+            'role' => ['required', 'max:50', 'unique:roles,name,' . $id],
+            'permissions' => ['nullable', 'array']
         ]);
 
-        /** create the role */
+        // Update the role
         $role = Role::findOrFail($id);
         $role->update(['guard_name' => 'web', 'name' => $request->role]);
 
-        /** assgin permissions to the role */
+        // Assign permissions to the role
         $role->syncPermissions($request->permissions);
 
-        toast(__('Update Successfully'), 'success');
-
-        return redirect()->route('role.index');
+        // Use session flash message instead of toast
+        return redirect()->route('role.index')->with('success', 'Updated Successfully');
     }
 
-    function destory(string $id) : Response {
+    /**
+     * Remove the specified role from storage.
+     */
+    public function destroy(string $id): RedirectResponse
+    {
         $role = Role::findOrFail($id);
-        if($role->name === 'Admin'){
-            return response(['status' => 'error', 'message' => __('Can\'t Delete the Super Admin')]);
+        if ($role->name === 'Admin') {
+            // Use session flash message instead of JSON response
+            return redirect()->route('role.index')->with('error', 'Can\'t Delete the Super Admin');
         }
 
         $role->delete();
 
-        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+        // Use session flash message instead of JSON response
+        return redirect()->route('role.index')->with('success', 'Deleted Successfully');
     }
-
 }

@@ -1,4 +1,4 @@
-@extends('mobile.frontend.layouts.master')
+@extends('mobile.frontend.layout.master')
 
 @section('content')
     <section class="section">
