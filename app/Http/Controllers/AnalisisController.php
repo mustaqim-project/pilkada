@@ -234,24 +234,121 @@ class AnalisisController extends Controller
         ]);
     }
 
-
-
-
-    // Menampilkan daerah weakness (elektabilitas terendah)
     public function weakness()
     {
-        // Mencari daerah dengan elektabilitas terendah (kabupaten, kecamatan, kelurahan)
-        $weaknessDaerah = Kanvasing::select(
-            'provinsi',
-            'kabupaten_kota',
-            'kecamatan',
-            'kelurahan',
-            DB::raw('COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) as setuju')
-        )
-            ->groupBy('provinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan')
-            ->orderBy('setuju', 'ASC') // Urutkan berdasarkan jumlah "setuju"
-            ->first(); // Ambil daerah terendah
 
-        return view('mobile.frontend.analisis.weakness', compact('weaknessDaerah'));
+        return view('mobile.frontend.analisis.weakness');
     }
+
+
+    public function get_weakness()
+    {
+        // Query untuk mencari kabupaten/kota dan kecamatan dengan tidak setuju tertinggi berdasarkan elektabilitas
+        $kabupatenKecamatanElektabilitas = DB::table(DB::raw('(
+            SELECT kabupaten_kota, kecamatan,
+                   COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) AS tidak_setuju
+            FROM kanvasings
+            GROUP BY kabupaten_kota, kecamatan
+        ) AS subquery'))
+        ->orderBy('tidak_setuju', 'DESC')
+        ->limit(3)
+        ->get();
+
+        // Query untuk mencari kecamatan dan kelurahan dengan tidak setuju tertinggi berdasarkan elektabilitas
+        $kecamatanKelurahanElektabilitas = DB::table(DB::raw('(
+            SELECT kecamatan, kelurahan,
+                   COUNT(CASE WHEN elektabilitas = 2 THEN 1 END) AS tidak_setuju
+            FROM kanvasings
+            GROUP BY kecamatan, kelurahan
+        ) AS subquery'))
+        ->orderBy('tidak_setuju', 'DESC')
+        ->limit(3)
+        ->get();
+
+        // Query untuk mencari kabupaten/kota dan kecamatan dengan tidak setuju tertinggi berdasarkan popularitas
+        $kabupatenKecamatanPopularitas = DB::table(DB::raw('(
+            SELECT kabupaten_kota, kecamatan,
+                   COUNT(CASE WHEN popularitas = 2 THEN 1 END) AS tidak_setuju
+            FROM kanvasings
+            GROUP BY kabupaten_kota, kecamatan
+        ) AS subquery'))
+        ->orderBy('tidak_setuju', 'DESC')
+        ->limit(3)
+        ->get();
+
+        // Query untuk mencari kecamatan dan kelurahan dengan tidak setuju tertinggi berdasarkan popularitas
+        $kecamatanKelurahanPopularitas = DB::table(DB::raw('(
+            SELECT kecamatan, kelurahan,
+                   COUNT(CASE WHEN popularitas = 2 THEN 1 END) AS tidak_setuju
+            FROM kanvasings
+            GROUP BY kecamatan, kelurahan
+        ) AS subquery'))
+        ->orderBy('tidak_setuju', 'DESC')
+        ->limit(3)
+        ->get();
+
+        // Cache untuk kecamatan dan kelurahan
+        $districtsCache = [];
+        $villagesCache = [];
+
+        // Fungsi untuk mengambil nama kecamatan berdasarkan ID kecamatan
+        $getDistrictName = function ($regencyId, $districtId) use (&$districtsCache) {
+            if (!isset($districtsCache[$regencyId])) {
+                $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/$regencyId.json");
+                if ($response->successful()) {
+                    $districtsCache[$regencyId] = collect($response->json());
+                } else {
+                    $districtsCache[$regencyId] = collect([]);
+                }
+            }
+
+            $district = $districtsCache[$regencyId]->firstWhere('id', $districtId);
+            return $district ? $district['name'] : 'Unknown';
+        };
+
+        // Fungsi untuk mengambil nama kelurahan berdasarkan ID kelurahan
+        $getVillageName = function ($districtId, $villageId) use (&$villagesCache) {
+            if (!isset($villagesCache[$districtId])) {
+                $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/$districtId.json");
+                if ($response->successful()) {
+                    $villagesCache[$districtId] = collect($response->json());
+                } else {
+                    $villagesCache[$districtId] = collect([]);
+                }
+            }
+
+            $village = $villagesCache[$districtId]->firstWhere('id', $villageId);
+            return $village ? $village['name'] : 'Unknown';
+        };
+
+        // Tambahkan nama kecamatan dan kelurahan dari API ke hasil query
+        $kabupatenKecamatanElektabilitas = $kabupatenKecamatanElektabilitas->map(function ($item) use ($getDistrictName) {
+            $item->kecamatan_name = $getDistrictName($item->kabupaten_kota, $item->kecamatan);
+            return $item;
+        });
+
+        $kecamatanKelurahanElektabilitas = $kecamatanKelurahanElektabilitas->map(function ($item) use ($getVillageName) {
+            $item->kelurahan_name = $getVillageName($item->kecamatan, $item->kelurahan);
+            return $item;
+        });
+
+        $kabupatenKecamatanPopularitas = $kabupatenKecamatanPopularitas->map(function ($item) use ($getDistrictName) {
+            $item->kecamatan_name = $getDistrictName($item->kabupaten_kota, $item->kecamatan);
+            return $item;
+        });
+
+        $kecamatanKelurahanPopularitas = $kecamatanKelurahanPopularitas->map(function ($item) use ($getVillageName) {
+            $item->kelurahan_name = $getVillageName($item->kecamatan, $item->kelurahan);
+            return $item;
+        });
+
+        // Kirimkan semua hasil query ke dalam view
+        return view('mobile.frontend.analisis.weakness', compact(
+            'kabupatenKecamatanElektabilitas',
+            'kecamatanKelurahanElektabilitas',
+            'kabupatenKecamatanPopularitas',
+            'kecamatanKelurahanPopularitas'
+        ));
+    }
+
 }

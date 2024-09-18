@@ -89,11 +89,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/get-strength', [AnalisisController::class, 'get_strength'])->name('get-strength');
 
-
-    Route::get('/segmen-pemilih', [AnalisisController::class, 'segmen_pemilih'])->middleware('can:analisis read')->name('analisis.segmen-pemilih');
-    Route::get('/tren-suara', [AnalisisController::class, 'tren_suara'])->middleware('can:analisis read')->name('analisis.tren-suara');
     Route::get('/weakness', [AnalisisController::class, 'weakness'])->middleware('can:analisis read')->name('analisis.weakness');
-    Route::get('/satisfaction', [AnalisisController::class, 'satisfaction'])->middleware('can:analisis read')->name('analisis.satisfaction');
+    Route::get('/get-weakness', [AnalisisController::class, 'get_weakness'])->name('get-weakness');
+
+
 
 
 
