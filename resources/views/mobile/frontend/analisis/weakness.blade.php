@@ -13,7 +13,6 @@
         <div class="card-bg preload-img" data-src="admin/mobile/myhr/images/sikad.png"></div>
     </div>
 
-
     <!-- Chart -->
     <div class="card card-style">
         <div class="content">
@@ -47,8 +46,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 <script>
@@ -66,37 +63,37 @@
         function createChart(chartId, labels, datasetLabel, data, backgroundColor) {
             let ctx = document.getElementById(chartId).getContext('2d');
             let chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: datasetLabel,
-                        backgroundColor: backgroundColor,
-                        data: data
+                type: 'bar'
+                , data: {
+                    labels: labels
+                    , datasets: [{
+                        label: datasetLabel
+                        , backgroundColor: backgroundColor
+                        , data: data
                     }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
+                }
+                , options: {
+                    responsive: true
+                    , maintainAspectRatio: false
+                    , scales: {
                         y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Jumlah'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Wilayah'
+                            beginAtZero: true
+                            , title: {
+                                display: true
+                                , text: 'Jumlah'
                             }
                         }
-                    },
-                    plugins: {
+                        , x: {
+                            title: {
+                                display: true
+                                , text: 'Wilayah'
+                            }
+                        }
+                    }
+                    , plugins: {
                         legend: {
-                            display: true,
-                            position: 'bottom'
+                            display: true
+                            , position: 'bottom'
                         }
                     }
                 }
@@ -105,45 +102,45 @@
         }
 
         $.ajax({
-            url: "{{ route('get-weakness') }}",
-            method: 'GET',
-            success: function(response) {
-                console.log(response);  // Add this to check the structure of the response
+            url: "{{ route('get-weakness') }}"
+            , method: 'GET'
+            , success: function(response) {
+                console.log(response); // To check the structure of the response
 
                 // Destroy previous charts if they exist
                 charts.forEach(chart => chart.destroy());
 
                 // Prepare data for each chart
                 createChart(
-                    'chartKabupatenSetuju',
-                    response.kabupatenKecamatanElektabilitas.map(item => item.kecamatan_name),
-                    'Tidak Setuju',
-                    response.kabupatenKecamatanElektabilitas.map(item => item.tidak_setuju),
-                    '#A0D468'
+                    'chartKabupatenSetuju'
+                    , response.kabupatenKecamatanElektabilitas.map(item => item.kecamatan_name)
+                    , 'Tidak Setuju'
+                    , response.kabupatenKecamatanElektabilitas.map(item => item.tidak_setuju)
+                    , '#A0D468'
                 );
 
                 createChart(
-                    'chartKecamatanSetuju',
-                    response.kecamatanKelurahanElektabilitas.map(item => item.kelurahan_name),
-                    'Tidak Setuju',
-                    response.kecamatanKelurahanElektabilitas.map(item => item.tidak_setuju),
-                    '#4A89DC'
+                    'chartKecamatanSetuju'
+                    , response.kecamatanKelurahanElektabilitas.map(item => item.kelurahan_name)
+                    , 'Tidak Setuju'
+                    , response.kecamatanKelurahanElektabilitas.map(item => item.tidak_setuju)
+                    , '#4A89DC'
                 );
 
                 createChart(
-                    'chartPopularitasKabupaten',
-                    response.kabupatenKecamatanPopularitas.map(item => item.kecamatan_name),
-                    'Popularitas Tidak Setuju',
-                    response.kabupatenKecamatanPopularitas.map(item => item.tidak_setuju),
-                    '#FF6384'
+                    'chartPopularitasKabupaten'
+                    , response.kabupatenKecamatanPopularitas.map(item => item.kecamatan_name)
+                    , 'Popularitas Tidak Setuju'
+                    , response.kabupatenKecamatanPopularitas.map(item => item.tidak_setuju)
+                    , '#FF6384'
                 );
 
                 createChart(
-                    'chartPopularitasKecamatan',
-                    response.kecamatanKelurahanPopularitas.map(item => item.kelurahan_name),
-                    'Popularitas Tidak Setuju',
-                    response.kecamatanKelurahanPopularitas.map(item => item.tidak_setuju),
-                    '#36A2EB'
+                    'chartPopularitasKecamatan'
+                    , response.kecamatanKelurahanPopularitas.map(item => item.kelurahan_name)
+                    , 'Popularitas Tidak Setuju'
+                    , response.kecamatanKelurahanPopularitas.map(item => item.tidak_setuju)
+                    , '#36A2EB'
                 );
             }
         });
@@ -151,6 +148,7 @@
         // Load chart.js script if needed
         loadJS('mobile/scripts/charts.js', function() {});
     });
+
 </script>
 
 
