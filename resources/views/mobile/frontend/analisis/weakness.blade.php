@@ -108,6 +108,8 @@
             url: "{{ route('get-weakness') }}",
             method: 'GET',
             success: function(response) {
+                console.log(response);  // Add this to check the structure of the response
+
                 // Destroy previous charts if they exist
                 charts.forEach(chart => chart.destroy());
 
