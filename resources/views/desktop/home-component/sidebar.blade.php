@@ -126,7 +126,6 @@
                         </div>
                         <!--end:Menu item-->
 
-                        @if (canAccess(['access management index']))
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('role-users.index') }}">
@@ -144,11 +143,10 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">{{ __('admin.Roles and Permissions') }}</span>
+                                <span class="menu-title">{{ __('Roles and Permissions') }}</span>
                             </a>
                         </div>
                         <!--end:Menu item-->
-                        @endif
 
                         <!--end:Menu item-->
                     </div>
