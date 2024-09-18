@@ -35,57 +35,66 @@
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
-
-            <!--begin::Row-->
             <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-                <!--begin::Col-->
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-                    <!--begin::Card widget 20-->
-                    <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-50 mb-5 mb-xl-10" style="
-                            background-color: #f1416c;
-                            background-image: url('assets/media/patterns/vector-1.png');
-                            ">
-                        <!--begin::Header-->
-                        <div class="card-header pt-5">
-                            <!--begin::Title-->
-                            <div class="card-title d-flex flex-column">
-                                <!--begin::Amount-->
-                                <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalTimsesUsers }}</span>
-                                <!--end::Amount-->
-                                <!--begin::Subtitle-->
-                                <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Jumlah Timses</span>
-                                <!--end::Subtitle-->
-                            </div>
-                            <!--end::Title-->
+                <div class="card mx-6 col-xxl-2 mt-10" style="
+                    background-color: #f1416c;
+                    background-image: url('admin/desktop/assets/media/patterns/vector-1.png');
+                ">
+                    <div class="card-header pt-10">
+                        <div class="card-title d-flex flex-column">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalTimsesUsers }}</span>
+                            <span class="text-white fw-semibold fs-6">Jumlah Timses</span>
                         </div>
-                        <!--end::Header-->
                     </div>
-                    <!--end::Card widget 20-->
-                    <!--begin::Card widget 20-->
-                    <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-50 mb-5 mb-xl-10" style="
-                            background-color: #f1416c;
-                            background-image: url('assets/media/patterns/vector-1.png');
-                            ">
-                        <!--begin::Header-->
-                        <div class="card-header pt-5">
-                            <!--begin::Title-->
-                            <div class="card-title d-flex flex-column">
-                                <!--begin::Amount-->
-                                <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalKanvasing }}</span>
-                                <!--end::Amount-->
-                                <!--begin::Subtitle-->
-                                <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Total Kanvasing</span>
-                                <!--end::Subtitle-->
-                            </div>
-                            <!--end::Title-->
-                        </div>
-                        <!--end::Header-->
-                    </div>
-                    <!--end::Card widget 20-->
                 </div>
-                <!--end::Col-->
+                <div class="card mx-6 col-xxl-2 mt-10" style="
+                    background-color: #f1416c;
+                    background-image: url('admin/desktop/assets/media/patterns/vector-1.png');
+                ">
+                    <div class="card-header pt-10">
+                        <div class="card-title d-flex flex-column">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalTimsesUsers }}</span>
+                            <span class="text-white fw-semibold fs-6">Jumlah Timses</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mx-6 col-xxl-2 mt-10" style="
+                    background-color: #f1416c;
+                    background-image: url('admin/desktop/assets/media/patterns/vector-1.png');
+                ">
+                    <div class="card-header pt-10">
+                        <div class="card-title d-flex flex-column">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalTimsesUsers }}</span>
+                            <span class="text-white fw-semibold fs-6">Elektabilitas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mx-6 col-xxl-2 mt-10" style="
+                    background-color: #f1416c;
+                    background-image: url('admin/desktop/assets/media/patterns/vector-1.png');
+                ">
+                    <div class="card-header pt-10">
+                        <div class="card-title d-flex flex-column">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalTimsesUsers }}</span>
+                            <span class="text-white fw-semibold fs-6">Popularitas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mx-6 col-xxl-2 mt-10" style="
+                    background-color: #f1416c;
+                    background-image: url('admin/desktop/assets/media/patterns/vector-1.png');
+                ">
+                    <div class="card-header pt-10">
+                        <div class="card-title d-flex flex-column">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $totalTimsesUsers }}</span>
+                            <span class="text-white fw-semibold fs-6">Popularitas</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--end::Row-->
+
+
+
 
 
 
