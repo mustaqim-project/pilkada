@@ -62,11 +62,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/permissions/store', [RolePermissionController::class, 'storePermission'])->middleware('can:role_permission create')->name('permissions.store');
     Route::post('/roles/assign-permissions', [RolePermissionController::class, 'assignPermissionToRole'])->middleware('can:role_permission update')->name('roles.assign-permissions');
 
-    // Routes for TipeCakada
-    Route::get('/tipe-cakada', [TipeCakadaController::class, 'index'])->middleware('can:tipe_cakada read')->name('tipe_cakada.index');
-    Route::post('/tipe-cakada', [TipeCakadaController::class, 'store'])->middleware('can:tipe_cakada create')->name('tipe_cakada.store');
-    Route::put('/tipe-cakada/{id}', [TipeCakadaController::class, 'update'])->middleware('can:tipe_cakada update')->name('tipe_cakada.update');
-    Route::delete('/tipe-cakada/{id}', [TipeCakadaController::class, 'destroy'])->middleware('can:tipe_cakada delete')->name('tipe_cakada.destroy');
+    Route::get('/tipe-cakada', [TipeCakadaController::class, 'index'])->name('tipe_cakada.index');
+    Route::post('/tipe-cakada', [TipeCakadaController::class, 'store'])->name('tipe_cakada.store');
+    Route::put('/tipe-cakada/{id}', [TipeCakadaController::class, 'update'])->name('tipe_cakada.update');
+    Route::delete('/tipe-cakada/{id}', [TipeCakadaController::class, 'destroy'])->name('tipe_cakada.destroy');
 
     Route::get('/cakada', [CakadaController::class, 'index'])->middleware('can:cakada read')->name('cakada.index');
     Route::post('/cakada', [CakadaController::class, 'store'])->middleware('can:cakada create')->name('cakada.store');

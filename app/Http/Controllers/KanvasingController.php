@@ -105,6 +105,6 @@ class KanvasingController extends Controller
         $kanvasing->save();
 
         // Redirect ke dashboard dengan pesan sukses
-        return redirect()->route('dashboard')->with('success', 'Kanvasing entry created successfully.');
+        return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Disimpan.');
     }
 }

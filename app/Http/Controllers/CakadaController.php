@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
 use App\Models\Cakada;
+use App\Models\TipeCakada;
 
 class CakadaController extends Controller
 {
@@ -28,8 +29,9 @@ class CakadaController extends Controller
         $provinsi = cache('provinsi');
 
         $cakadas = Cakada::all();
+        $tipe_cakada = TipeCakada::all();
 
-        return view('desktop.cakada.index', compact('cakadas', 'provinsi'));
+        return view('desktop.cakada.index', compact('cakadas','tipe_cakada', 'provinsi'));
     }
 
     public function getRegencies($provinsiId)
@@ -53,7 +55,7 @@ class CakadaController extends Controller
         Cakada::create($request->all());
 
         // Redirect kembali dengan pesan sukses
-        return response()->json(['success' => 'Cakada berhasil dibuat.']);
+        return redirect()->route('cakada.index')->with('success', 'Cakada berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -81,7 +83,7 @@ class CakadaController extends Controller
         $cakada->update($request->all());
 
         // Redirect kembali dengan pesan sukses
-        return response()->json(['success' => 'Cakada berhasil diperbarui.']);
+        return redirect()->route('cakada.index')->with('success', 'Cakada berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -91,6 +93,6 @@ class CakadaController extends Controller
         $cakada->delete();
 
         // Redirect kembali dengan pesan sukses
-        return response()->json(['success' => 'Cakada berhasil dihapus.']);
+        return redirect()->route('cakada.index')->with('success', 'Cakada berhasil dihapus!');
     }
 }

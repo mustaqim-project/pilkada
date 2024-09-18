@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Flatpickr Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -36,7 +37,20 @@
         @include('mobile.components.header')
         @include('mobile.components.footer-bar')
 
+        <!-- SweetAlert Success -->
+        @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success'
+                , title: 'Success'
+                , text: '{{ session('
+                success ') }}'
+                , timer: 2000
+                , showConfirmButton: false
+            });
 
+        </script>
+        @endif
         @yield('content')
 
 

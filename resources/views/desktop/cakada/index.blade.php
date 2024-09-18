@@ -33,12 +33,10 @@
                 Swal.fire({
                     icon: 'success'
                     , title: 'Success'
-                    , text: '{{ session('
-                    success ') }}'
+                    , text: '{{ session('success') }}'
                     , timer: 2000
                     , showConfirmButton: false
                 });
-
             </script>
             @endif
 
@@ -69,6 +67,16 @@
                                         <option value="">Pilih Kabupaten/Kota</option>
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="tipe_cakada_id" class="form-label">Tipe Pilkada</label>
+                                    <select name="tipe_cakada_id" id="tipe_cakada_id" class="form-control" required>
+                                        <option value="">Pilih Pilkada</option>
+                                        @foreach($tipe_cakada as $tipe)
+                                        <option value="{{ $tipe->id }}">{{ $tipe->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="mb-3">
                                     <label for="nama_calon_kepala" class="form-label">Nama Calon Kepala</label>
                                     <input type="text" name="nama_calon_kepala" id="nama_calon_kepala" class="form-control" required>
@@ -175,17 +183,6 @@
                         }
                     });
 
-                    $.ajax({
-                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
-                        , method: 'GET'
-                        , success: function(data) {
-                            let tipe_cakadaDropdown = $('#tipe_cakada');
-                            data.forEach(function(tipe_cakada) {
-                                tipe_cakadaDropdown.append('<option value="' + tipe_cakada.id + '">' + tipe_cakada.name + '</option>');
-                            });
-                        }
-                    });
-
                     // Edit button clicked
                     $('.btn-edit').click(function() {
                         let id = $(this).data('id');
@@ -196,11 +193,19 @@
                                 $('#modalCakada').modal('show');
                                 $('#cakada_id').val(data.id);
                                 $('#provinsi').val(data.provinsi);
-                                $('#kabupaten_kota').val(data.kabupaten_kota);
+                                $('#tipe_cakada_id').val(data.tipe_cakada_id);
                                 $('#nama_calon_kepala').val(data.nama_calon_kepala);
                                 $('#nama_calon_wakil').val(data.nama_calon_wakil);
                                 $('#formCakada').attr('action', `/cakada/${id}`);
                                 $('#formCakada').append('<input type="hidden" name="_method" value="PUT">');
+
+                                // Trigger change event for the 'provinsi' dropdown
+                                $('#provinsi').trigger('change');
+
+                                // Set timeout to ensure the regencies are populated before setting kabupaten_kota value
+                                setTimeout(function() {
+                                    $('#kabupaten_kota').val(data.kabupaten_kota);
+                                }, 500); // Adjust timeout as needed
                             }
                         });
                     });
@@ -209,10 +214,6 @@
             </script>
 
         </div>
-        <!--end::Content container-->
     </div>
-    <!--end::Content-->
-
 </div>
-<!--end::Content wrapper-->
 @endsection

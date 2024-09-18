@@ -13,5 +13,5 @@ class TipeCakada extends Model
     protected $table = 'tipe_cakadas';
 
     // Specify which attributes can be mass assigned
-    protected $fillable = ['id,name'];
+    protected $fillable = ['name'];
 }
