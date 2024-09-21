@@ -113,6 +113,9 @@ Route::middleware(['auth'])->group(function () {
 
     /** Admin User Routes */
     Route::resource('role-users', RoleUserController::class)->middleware('can:cakada create');
+
+    Route::resource('pekerjaan', PekerjaanController::class);
+
 });
 
 
