@@ -15,15 +15,15 @@ class CreateKanvasingsTable extends Migration
     {
         Schema::create('kanvasings', function (Blueprint $table) {
             $table->id(); // Primary key ID untuk tabel ini
-            $table->foreignId('user_id')->constrained(); // Foreign key ke tabel users
+            $table->foreignId('user_id'); // Foreign key ke tabel users
             $table->string('provinsi')->nullable();
             $table->string('kabupaten_kota')->nullable();
             $table->string('kecamatan')->nullable();
             $table->string('kelurahan')->nullable();
             $table->string('rw')->nullable();
             $table->string('rt')->nullable();
-            $table->foreignId('tipe_cakada_id')->constrained(); // Foreign key ke tabel cakada
-            $table->foreignId('cakada_id')->constrained(); // Foreign key ke tabel cakada
+            $table->foreignId('tipe_cakada_id'); // Foreign key ke tabel cakada
+            $table->foreignId('cakada_id'); // Foreign key ke tabel cakada
             $table->string('foto')->nullable();
             $table->string('lang')->nullable(); // Koordinat longitude
             $table->string('lat')->nullable(); // Koordinat latitude
@@ -36,7 +36,7 @@ class CreateKanvasingsTable extends Migration
             $table->string('alamat')->nullable(); // Alamat
             $table->string('nama_kk')->nullable(); // Nama kepala keluarga
             $table->integer('usia')->nullable(); // Nama kepala keluarga
-            $table->foreignId('pekerjaan_id')->constrained(); // Foreign key ke tabel cakada
+            $table->foreignId('pekerjaan_id'); // Foreign key ke tabel cakada
             $table->string('nomor_hp')->nullable(); // Nomor handphone
             $table->integer('jum_pemilih')->nullable(); // Jumlah pemilih
             $table->timestamps(); // Kolom created_at dan updated_at
