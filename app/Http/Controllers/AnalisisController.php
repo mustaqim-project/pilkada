@@ -16,7 +16,6 @@ class AnalisisController extends Controller
         $this->middleware('can:analisis read')->only(['index', 'grafik_suara', 'segmen_pemilih', 'tren_suara', 'strength', 'weakness', 'satisfaction']);
     }
 
-    // Menampilkan halaman utama analisis
     public function index()
     {
         return view('mobile.frontend.analisis.index');
@@ -25,11 +24,9 @@ class AnalisisController extends Controller
     public function grafik_suara()
     {
 
-        // Fetch the data from the API
         $tipe_cakada = TipeCakada::all();
         $cakada = Cakada::all();
 
-        // Pass the data to the view
         return view('mobile.frontend.analisis.grafik_suara', [
             'tipe_cakada' => $tipe_cakada,
             'cakada' => $cakada
@@ -67,11 +64,11 @@ class AnalisisController extends Controller
         }
 
         return response()->json([
-            'setuju' => $query->setuju, // No array wrapping
-            'tidak_setuju' => $query->tidak_setuju, // No array wrapping
-            'ragu_ragu' => $query->ragu_ragu, // No array wrapping
-            'kenal' => $query->kenal, // No array wrapping
-            'tidak_kenal' => $query->tidak_kenal, // No array wrapping
+            'setuju' => $query->setuju,
+            'tidak_setuju' => $query->tidak_setuju,
+            'ragu_ragu' => $query->ragu_ragu,
+            'kenal' => $query->kenal,
+            'tidak_kenal' => $query->tidak_kenal,
         ]);
     }
 
@@ -86,7 +83,6 @@ class AnalisisController extends Controller
 
     public function get_strength()
     {
-        // Mencari daerah dengan elektabilitas setuju tertinggi berdasarkan kabupaten dan kecamatan
         $topKabupatenKotaKecamatanSetuju = DB::table(DB::raw('(
             SELECT kabupaten_kota, kecamatan,
                    COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) AS setuju
@@ -97,7 +93,6 @@ class AnalisisController extends Controller
             ->limit(3)
             ->get();
 
-        // Mencari daerah dengan elektabilitas ragu-ragu tertinggi berdasarkan kabupaten dan kecamatan
         $topKabupatenKotaKecamatanRaguRagu = DB::table(DB::raw('(
             SELECT kabupaten_kota, kecamatan,
                    COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) AS ragu_ragu
@@ -108,7 +103,6 @@ class AnalisisController extends Controller
             ->limit(3)
             ->get();
 
-        // Mencari daerah dengan elektabilitas setuju tertinggi berdasarkan kecamatan dan kelurahan
         $topKecamatanKelurahanSetuju = DB::table(DB::raw('(
             SELECT kecamatan, kelurahan,
                    COUNT(CASE WHEN elektabilitas = 1 THEN 1 END) AS setuju
@@ -119,7 +113,6 @@ class AnalisisController extends Controller
             ->limit(3)
             ->get();
 
-        // Mencari daerah dengan elektabilitas ragu-ragu tertinggi berdasarkan kecamatan dan kelurahan
         $topKecamatanKelurahanRaguRagu = DB::table(DB::raw('(
             SELECT kecamatan, kelurahan,
                    COUNT(CASE WHEN elektabilitas = 3 THEN 1 END) AS ragu_ragu
@@ -130,7 +123,6 @@ class AnalisisController extends Controller
             ->limit(3)
             ->get();
 
-        // Mencari daerah dengan popularitas setuju tertinggi berdasarkan kabupaten dan kecamatan
         $topKabupatenKotaKecamatanPopularitasSetuju = DB::table(DB::raw('(
             SELECT kabupaten_kota, kecamatan,
                    COUNT(CASE WHEN popularitas = 1 THEN 1 END) AS setuju
@@ -141,7 +133,6 @@ class AnalisisController extends Controller
             ->limit(3)
             ->get();
 
-        // Mencari daerah dengan popularitas setuju tertinggi berdasarkan kecamatan dan kelurahan
         $topKecamatanKelurahanPopularitasSetuju = DB::table(DB::raw('(
             SELECT kecamatan, kelurahan,
                    COUNT(CASE WHEN popularitas = 1 THEN 1 END) AS setuju
@@ -152,14 +143,11 @@ class AnalisisController extends Controller
             ->limit(3)
             ->get();
 
-        // Cache untuk kecamatan dan kelurahan
         $districtsCache = [];
         $villagesCache = [];
 
-        // Fungsi untuk mengambil semua kecamatan dalam kabupaten_kota dan mencocokkan nama kecamatan berdasarkan ID kecamatan
         $getDistrictName = function ($regencyId, $districtId) use (&$districtsCache) {
             if (!isset($districtsCache[$regencyId])) {
-                // Mengambil semua kecamatan berdasarkan kabupaten/kota
                 $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/$regencyId.json");
                 if ($response->successful()) {
                     $districtsCache[$regencyId] = collect($response->json());
@@ -168,15 +156,12 @@ class AnalisisController extends Controller
                 }
             }
 
-            // Mencari kecamatan yang sesuai berdasarkan districtId
             $district = $districtsCache[$regencyId]->firstWhere('id', $districtId);
             return $district ? $district['name'] : 'Unknown';
         };
 
-        // Fungsi untuk mengambil semua kelurahan dalam kecamatan dan mencocokkan nama kelurahan berdasarkan ID kelurahan
         $getVillageName = function ($districtId, $villageId) use (&$villagesCache) {
             if (!isset($villagesCache[$districtId])) {
-                // Mengambil semua kelurahan berdasarkan kecamatan
                 $response = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/$districtId.json");
                 if ($response->successful()) {
                     $villagesCache[$districtId] = collect($response->json());
@@ -184,13 +169,10 @@ class AnalisisController extends Controller
                     $villagesCache[$districtId] = collect([]);
                 }
             }
-
-            // Mencari kelurahan yang sesuai berdasarkan villageId
             $village = $villagesCache[$districtId]->firstWhere('id', $villageId);
             return $village ? $village['name'] : 'Unknown';
         };
 
-        // Tambahkan nama kecamatan dan kelurahan dari API ke hasil query
         $topKabupatenKotaKecamatanSetuju = $topKabupatenKotaKecamatanSetuju->map(function ($item) use ($getDistrictName) {
             $item->kecamatan_name = $getDistrictName($item->kabupaten_kota, $item->kecamatan);
             return $item;
@@ -221,7 +203,6 @@ class AnalisisController extends Controller
             return $item;
         });
 
-        // Mengirimkan data dalam format JSON
         return response()->json([
             'topKabupatenKotaKecamatanSetuju' => $topKabupatenKotaKecamatanSetuju,
             'topKabupatenKotaKecamatanRaguRagu' => $topKabupatenKotaKecamatanRaguRagu,

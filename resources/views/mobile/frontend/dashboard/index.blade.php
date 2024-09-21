@@ -78,10 +78,6 @@
         </div>
     </div>
 
-
-
-
-
     <div class="card mt-4 preload-img" data-src="admin/mobile/myhr/images/sikad.png">
         <div class="card-body">
             <h5 class="color-white font-16 font-500" style="font-size: 1rem;">Fitur Lainnya</h5>
@@ -89,21 +85,21 @@
             <div class="card card-style ml-0 mr-0 bg-white">
                 <div class="row mt-3 pt-1 mb-3">
                     <div class="col-4 text-center">
-                        <a href="peta-wilayah-kampanye.html">
+                        <a href="#">
                             <i class="ml-3 mr-3" data-feather="map-pin" style="color: #FF33A8;"></i>
                             <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Peta
                                 Wilayah Kampanye</h5>
                         </a>
                     </div>
                     <div class="col-4 text-center">
-                        <a href="jadwal-kampanye.html">
+                        <a href="#">
                             <i class="ml-3 mr-3" data-feather="calendar" style="color: #33FF57;"></i>
                             <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Jadwal
                                 Kampanye</h5>
                         </a>
                     </div>
                     <div class="col-4 text-center">
-                        <a href="laporan-aktivitas-kampanye.html">
+                        <a href="#">
                             <i class="ml-3 mr-3" data-feather="file-text" style="color: #8E44AD;"></i>
                             <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Laporan
                                 Aktivitas Kampanye</h5>
@@ -114,7 +110,7 @@
                 <div class="row mt-3 pt-1 mb-3">
 
                     <div class="col-4 text-center">
-                        <a href="rekam-jejak-kandidat.html">
+                        <a href="#">
                             <i class="ml-3 mr-3" data-feather="bar-chart-2" style="color: #33B5FF;"></i>
                             <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Rekam Jejak
                                 Kandidat</h5>
@@ -123,14 +119,14 @@
 
 
                     <div class="col-4 text-center">
-                        <a href="sentiment-analysis.html">
+                        <a href="#">
                             <i class="ml-3 mr-3" data-feather="activity" style="color: #2ECC71;"></i>
                             <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
                                 Sentiment Analysis</h5>
                         </a>
                     </div>
                     <div class="col-4 text-center">
-                        <a href="keuangan.html">
+                        <a href="#">
                             <i class="ml-3 mr-3" data-feather="dollar-sign" style="color: #3498DB;"></i>
                             <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">
                                 Keuangan</h5>
@@ -249,8 +245,7 @@
         });
     });
 
-    // For iOS, we provide instructions instead of using the native prompt
-    // Ensure that iOS prompt instructions are shown
+
     if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
         document.getElementById('menu-install-pwa-ios').style.display = 'block';
     }
@@ -261,15 +256,12 @@
 
         if (/android/i.test(userAgent)) {
             document.querySelector('.android-banner').style.display = 'block';
-            // Optional: Hide iOS banner if needed
             document.querySelector('.ios-banner').style.display = 'none';
         } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
             document.querySelector('.ios-banner').style.display = 'block';
-            // Optional: Hide Android banner if needed
             document.querySelector('.android-banner').style.display = 'none';
         } else {
             document.querySelector('.android-banner').style.display = 'block';
-            // Optional: Hide iOS banner if needed
             document.querySelector('.ios-banner').style.display = 'none';
         }
     }

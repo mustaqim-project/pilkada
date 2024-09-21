@@ -12,16 +12,12 @@ class CakadaController extends Controller
 {
     public function __construct()
     {
-        // Membatasi akses dengan permission
         $this->middleware('can:cakada read')->only('index');
         $this->middleware('can:cakada create')->only(['store']);
         $this->middleware('can:cakada update')->only(['update']);
         $this->middleware('can:cakada delete')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $detect = new MobileDetect;
@@ -29,16 +25,13 @@ class CakadaController extends Controller
         $provinsiResponse = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
         $provinsiData = $provinsiResponse->json();
 
-        // Simpan provinsi dalam cache
-        cache(['provinsi' => $provinsiData], 60); // Simpan selama 60 menit
+        cache(['provinsi' => $provinsiData], 60);
 
-        // Ambil data provinsi yang sudah disimpan
         $provinsi = cache('provinsi');
 
         $cakadas = Cakada::all();
         $tipe_cakada = TipeCakada::all();
 
-        // Tentukan path view berdasarkan perangkat
         $viewPath = $detect->isMobile() || $detect->isTablet()
             ? 'mobile.cakada.index'
             : 'desktop.cakada.index';
@@ -46,21 +39,16 @@ class CakadaController extends Controller
         return view($viewPath, compact('cakadas', 'tipe_cakada', 'provinsi'));
     }
 
-    /**
-     * Get regencies based on province ID.
-     */
+
     public function getRegencies($provinsiId)
     {
         $regenciesResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/{$provinsiId}.json");
         return $regenciesResponse->json();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
             'provinsi' => 'required|string',
             'kabupaten_kota' => 'required|string',
@@ -69,31 +57,22 @@ class CakadaController extends Controller
             'nama_calon_wakil' => 'required|string',
         ]);
 
-        // Simpan data cakada baru
         Cakada::create($request->all());
 
-        // Redirect kembali dengan pesan sukses
         return redirect()->route('cakada.index')->with('success', 'Cakada berhasil ditambahkan!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit($id)
     {
-        // Mengambil data cakada berdasarkan ID
         $cakada = Cakada::find($id);
 
-        // Mengirim data cakada untuk modal edit
         return response()->json($cakada);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, $id)
     {
-        // Validasi input
         $request->validate([
             'provinsi' => 'required|string',
             'kabupaten_kota' => 'required|string',
@@ -102,24 +81,18 @@ class CakadaController extends Controller
             'nama_calon_wakil' => 'required|string',
         ]);
 
-        // Mengambil data cakada berdasarkan ID dan memperbarui
         $cakada = Cakada::findOrFail($id);
         $cakada->update($request->all());
 
-        // Redirect kembali dengan pesan sukses
         return redirect()->route('cakada.index')->with('success', 'Cakada berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy($id)
     {
-        // Menghapus data cakada berdasarkan ID
         $cakada = Cakada::findOrFail($id);
         $cakada->delete();
 
-        // Redirect kembali dengan pesan sukses
         return redirect()->route('cakada.index')->with('success', 'Cakada berhasil dihapus!');
     }
 }
