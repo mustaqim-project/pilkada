@@ -35,6 +35,8 @@ class CreateKanvasingsTable extends Migration
             $table->text('deskripsi')->nullable(); // Teks deskripsi tanpa batasan karakter
             $table->string('alamat')->nullable(); // Alamat
             $table->string('nama_kk')->nullable(); // Nama kepala keluarga
+            $table->integer('usia')->nullable(); // Nama kepala keluarga
+            $table->foreignId('pekerjaan_id')->constrained(); // Foreign key ke tabel cakada
             $table->string('nomor_hp')->nullable(); // Nomor handphone
             $table->integer('jum_pemilih')->nullable(); // Jumlah pemilih
             $table->timestamps(); // Kolom created_at dan updated_at

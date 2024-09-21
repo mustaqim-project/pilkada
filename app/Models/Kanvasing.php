@@ -32,6 +32,8 @@ class Kanvasing extends Model
         'alamat',
         'nama_kk',
         'nomor_hp',
+        'pekerjaan_id',
+        'usia',
         'jum_pemilih',
         'foto',
         'lang',
@@ -54,6 +56,11 @@ class Kanvasing extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function pekerjaan()
+    {
+        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
     }
 
 }

@@ -71,6 +71,8 @@ class KanvasingController extends Controller
             'cakada_id' => 'required|integer',
             'nama_kk' => 'required|string|max:255',
             'nomor_hp' => 'required|string|max:20',
+            'usia' => 'required|integer',
+            'pekerjaan_id' => 'required|integer',
             'jum_pemilih' => 'required|integer',
             'elektabilitas' => 'required|in:1,2,3',
             'popularitas' => 'required|in:1,2',
