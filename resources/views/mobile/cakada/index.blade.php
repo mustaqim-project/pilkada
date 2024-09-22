@@ -30,62 +30,60 @@
             <a href="{{ route('role.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> {{ __('Create new') }}
             </a>
-            <table class="table table-responsive text-center rounded-sm shadow-l" style="overflow: hidden;">
-                <thead>
-                    <tr class="bg-gray1-dark">
-                        <th scope="col" class="color-theme">#</th>
-                        <th scope="col" class="color-theme">Provinsi</th>
-                        <th scope="col" class="color-theme">Kabupaten/Kota</th>
-                        <th scope="col" class="color-theme">Nama Calon Kepala</th>
-                        <th scope="col" class="color-theme">Nama Calon Wakil</th>
-                        <th scope="col" class="color-theme">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        // Ensure `$provinsi` is treated as an array or collection
-                        $provinsiMap = collect($provinsi)->pluck('name', 'id')->toArray();
-                    @endphp
-
-                    @forelse ($cakadas as $cakada)
+            <!-- Add table-responsive to make table scrollable on small screens -->
+            <div class="table-responsive">
+                <table class="table text-center rounded-sm shadow-l">
+                    <thead>
+                        <tr class="bg-gray1-dark">
+                            <th scope="col" class="color-theme">#</th>
+                            <th scope="col" class="color-theme">Provinsi</th>
+                            <th scope="col" class="color-theme">Kabupaten/Kota</th>
+                            <th scope="col" class="color-theme">Nama Calon Kepala</th>
+                            <th scope="col" class="color-theme">Nama Calon Wakil</th>
+                            <th scope="col" class="color-theme">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @php
-                            // Get the province name using the map
-                            $provinsiName = $provinsiMap[$cakada->provinsi] ?? 'Unknown';
-
-                            // Get regencies for the selected province
-                            $regencies = app('App\Http\Controllers\CakadaController')->getRegencies($cakada->provinsi);
-                            $regenciesMap = collect($regencies)->pluck('name', 'id')->toArray();
-                            $kabupatenKotaName = $regenciesMap[$cakada->kabupaten_kota] ?? 'Unknown';
+                            $provinsiMap = collect($provinsi)->pluck('name', 'id')->toArray();
                         @endphp
-                        <tr>
-                            <td scope="row">{{ $cakada->id }}</td>
-                            <td class="color-dark">{{ $provinsiName }}</td>
-                            <td class="color-dark">{{ $kabupatenKotaName }}</td>
-                            <td class="color-dark">{{ $cakada->nama_calon_kepala }}</td>
-                            <td class="color-dark">{{ $cakada->nama_calon_wakil }}</td>
-                            <td class="color-dark">
-                                <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
-                                <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center">Tidak ada data.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+
+                        @forelse ($cakadas as $cakada)
+                            @php
+                                $provinsiName = $provinsiMap[$cakada->provinsi] ?? 'Unknown';
+                                $regencies = app('App\Http\Controllers\CakadaController')->getRegencies($cakada->provinsi);
+                                $regenciesMap = collect($regencies)->pluck('name', 'id')->toArray();
+                                $kabupatenKotaName = $regenciesMap[$cakada->kabupaten_kota] ?? 'Unknown';
+                            @endphp
+                            <tr>
+                                <td scope="row">{{ $cakada->id }}</td>
+                                <td class="color-dark">{{ $provinsiName }}</td>
+                                <td class="color-dark">{{ $kabupatenKotaName }}</td>
+                                <td class="color-dark">{{ $cakada->nama_calon_kepala }}</td>
+                                <td class="color-dark">{{ $cakada->nama_calon_wakil }}</td>
+                                <td class="color-dark">
+                                    <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
+                                    <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada data.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
-        // Load data for provinces
         $.ajax({
             url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
             method: 'GET',
@@ -97,7 +95,6 @@
             }
         });
 
-        // Load regencies based on selected province
         $('#provinsi').change(function() {
             let provinsiId = $(this).val();
             $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
@@ -114,7 +111,6 @@
             }
         });
 
-        // Edit button clicked
         $('.btn-edit').click(function() {
             let id = $(this).data('id');
             $.ajax({
@@ -130,10 +126,8 @@
                     $('#formCakada').attr('action', `/cakada/${id}`);
                     $('#formCakada').append('<input type="hidden" name="_method" value="PUT">');
 
-                    // Trigger change event for the 'provinsi' dropdown
                     $('#provinsi').trigger('change');
 
-                    // Delay to ensure regencies are populated before setting kabupaten_kota value
                     setTimeout(function() {
                         $('#kabupaten_kota').val(data.kabupaten_kota);
                     }, 500);
