@@ -70,15 +70,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/tipe-cakada/{id}', [TipeCakadaController::class, 'update'])->name('tipe_cakada.update');
     Route::delete('/tipe-cakada/{id}', [TipeCakadaController::class, 'destroy'])->name('tipe_cakada.destroy');
 
-    // Combine the route definitions for cakada
-    Route::prefix('cakada')->group(function () {
-        Route::get('/', [CakadaController::class, 'index'])->middleware('can:cakada read')->name('cakada.index');
-        Route::get('/create', [CakadaController::class, 'create'])->middleware('can:cakada create')->name('cakada.create');
-        Route::post('/', [CakadaController::class, 'store'])->middleware('can:cakada create')->name('cakada.store');
-        Route::get('/{cakada}/edit', [CakadaController::class, 'edit'])->middleware('can:cakada update')->name('cakada.edit');
-        Route::put('/{cakada}', [CakadaController::class, 'update'])->middleware('can:cakada update')->name('cakada.update');
-        Route::delete('/{cakada}', [CakadaController::class, 'destroy'])->middleware('can:cakada delete')->name('cakada.destroy');
-    });
+    Route::get('/', [CakadaController::class, 'index'])->middleware('can:cakada read')->name('cakada.index');
+    Route::get('/create', [CakadaController::class, 'create'])->middleware('can:cakada create')->name('cakada.create');
+    Route::post('/', [CakadaController::class, 'store'])->middleware('can:cakada create')->name('cakada.store');
+    Route::get('/{cakada}/edit', [CakadaController::class, 'edit'])->middleware('can:cakada update')->name('cakada.edit');
+    Route::put('/{cakada}', [CakadaController::class, 'update'])->middleware('can:cakada update')->name('cakada.update');
+    Route::delete('/{cakada}', [CakadaController::class, 'destroy'])->middleware('can:cakada delete')->name('cakada.destroy');
+
 
     Route::get('/kanvasing/create', [KanvasingController::class, 'create'])->middleware('can:kanvasing create')->name('kanvasing.create');
     Route::post('/kanvasing', [KanvasingController::class, 'store'])->middleware('can:kanvasing create')->name('kanvasing.store');
