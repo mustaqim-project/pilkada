@@ -87,7 +87,6 @@
             }
         });
 
-        // Trigger change event to set initial kabupaten_kota based on selected provinsi
         $('#provinsi').val({{ $cakada->provinsi }}).trigger('change');
     });
 </script>
