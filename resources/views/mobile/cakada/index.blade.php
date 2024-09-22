@@ -19,14 +19,14 @@
     /* Untuk layar sangat kecil, kita bisa mengurangi lagi ukuran teks */
     @media (max-width: 480px) {
         table {
-            font-size: 0.65em;
+            font-size: 0.75em; /* Set font-size relatif terhadap ukuran font default */
         }
         table th, table td {
-            padding: 0.4em;
+            padding: 0.5em; /* Padding diatur menggunakan em */
         }
         .btn {
-            font-size: 0.65em;
-            padding: 0.4em 0.8em;
+            font-size: 0.75em;
+            padding: 0.5em 1em;
         }
     }
 </style>
