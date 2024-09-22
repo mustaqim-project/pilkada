@@ -85,9 +85,18 @@ class CakadaController extends Controller
 
     public function edit($id)
     {
-        $cakada = Cakada::find($id);
+        $detect = new MobileDetect;
 
-        return response()->json($cakada);
+        $cakada = Cakada::findOrFail($id);
+        $provinsiResponse = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
+        $provinsiData = $provinsiResponse->json();
+        $tipe_cakada = TipeCakada::all();
+
+        $viewPath = $detect->isMobile() || $detect->isTablet()
+            ? 'mobile.cakada.edit'
+            : 'desktop.cakada.edit';
+
+        return view($viewPath, compact('cakadas', 'tipe_cakada', 'provinsi'));
     }
 
 
