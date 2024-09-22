@@ -1,4 +1,4 @@
-@extends('desktop.frontend.layout.master') <!-- Change this according to your layout -->
+@extends('mobile.frontend.layout.master')
 
 @section('content')
 <div class="page-content" style="min-height:60vh!important">
