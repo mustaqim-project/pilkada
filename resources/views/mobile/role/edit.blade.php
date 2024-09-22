@@ -24,11 +24,11 @@
                     </div>
 
                     <hr>
-                    @foreach ($premissions as $groupName => $premission)
+                    @foreach ($permisions as $groupName => $permision)
                     <div class="form-group">
                         <h6 class="text-primary">{{ $groupName }}</h6>
                         <div class="row">
-                            @foreach ($premission as $item)
+                            @foreach ($permision as $item)
                             <div class="col-md-2">
                                 <label class="custom-switch mt-2">
                                     <input
