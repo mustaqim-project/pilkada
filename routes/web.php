@@ -55,25 +55,30 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 
-// Routes with middleware
 Route::middleware(['auth'])->group(function () {
-    Route::get('/role-permission', [RolePermissionController::class, 'index'])->middleware('can:role_permission read')->name('role_permission.index');
-    Route::post('/roles/store', [RolePermissionController::class, 'storeRole'])->middleware('can:role_permission create')->name('roles.store');
-    Route::post('/permissions/store', [RolePermissionController::class, 'storePermission'])->middleware('can:role_permission create')->name('permissions.store');
-    Route::post('/roles/assign-permissions', [RolePermissionController::class, 'assignPermissionToRole'])->middleware('can:role_permission update')->name('roles.assign-permissions');
+    Route::get('/role-permission', [RolePermissionController::class, 'index'])
+        ->middleware('can:role_permission read')->name('role_permission.index');
+    Route::post('/roles/store', [RolePermissionController::class, 'storeRole'])
+        ->middleware('can:role_permission create')->name('roles.store');
+    Route::post('/permissions/store', [RolePermissionController::class, 'storePermission'])
+        ->middleware('can:role_permission create')->name('permissions.store');
+    Route::post('/roles/assign-permissions', [RolePermissionController::class, 'assignPermissionToRole'])
+        ->middleware('can:role_permission update')->name('roles.assign-permissions');
 
     Route::get('/tipe-cakada', [TipeCakadaController::class, 'index'])->name('tipe_cakada.index');
     Route::post('/tipe-cakada', [TipeCakadaController::class, 'store'])->name('tipe_cakada.store');
     Route::put('/tipe-cakada/{id}', [TipeCakadaController::class, 'update'])->name('tipe_cakada.update');
     Route::delete('/tipe-cakada/{id}', [TipeCakadaController::class, 'destroy'])->name('tipe_cakada.destroy');
 
-    Route::get('/cakada', [CakadaController::class, 'index'])->middleware('can:cakada read')->name('cakada.index');
-    Route::get('/cakada', [CakadaController::class, 'create'])->middleware('can:cakada create')->name('cakada.create');
-    Route::post('/cakada', [CakadaController::class, 'store'])->middleware('can:cakada create')->name('cakada.store');
-    Route::get('/cakada/{cakada}/edit', [CakadaController::class, 'edit'])->middleware('can:cakada update')->name('cakada.edit');
-    Route::put('/cakada/{cakada}', [CakadaController::class, 'update'])->middleware('can:cakada update')->name('cakada.update');
-    Route::delete('/cakada/{cakada}', [CakadaController::class, 'destroy'])->middleware('can:cakada delete')->name('cakada.destroy');
-
+    // Combine the route definitions for cakada
+    Route::prefix('cakada')->group(function () {
+        Route::get('/', [CakadaController::class, 'index'])->middleware('can:cakada read')->name('cakada.index');
+        Route::get('/create', [CakadaController::class, 'create'])->middleware('can:cakada create')->name('cakada.create');
+        Route::post('/', [CakadaController::class, 'store'])->middleware('can:cakada create')->name('cakada.store');
+        Route::get('/{cakada}/edit', [CakadaController::class, 'edit'])->middleware('can:cakada update')->name('cakada.edit');
+        Route::put('/{cakada}', [CakadaController::class, 'update'])->middleware('can:cakada update')->name('cakada.update');
+        Route::delete('/{cakada}', [CakadaController::class, 'destroy'])->middleware('can:cakada delete')->name('cakada.destroy');
+    });
 
     Route::get('/kanvasing/create', [KanvasingController::class, 'create'])->middleware('can:kanvasing create')->name('kanvasing.create');
     Route::post('/kanvasing', [KanvasingController::class, 'store'])->middleware('can:kanvasing create')->name('kanvasing.store');
@@ -99,7 +104,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::put('profile-password-update/{id}', [ProfileController::class, 'passwordUpdate'])->name('profile-password.update');
-       Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -116,7 +121,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('role-users', RoleUserController::class)->middleware('can:cakada create');
 
     Route::resource('pekerjaan', PekerjaanController::class);
-
 });
 
 
