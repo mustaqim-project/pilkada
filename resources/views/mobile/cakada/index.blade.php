@@ -91,7 +91,7 @@
                                 <td class="color-dark">{{ $cakada->nama_calon_kepala }}</td>
                                 <td class="color-dark">{{ $cakada->nama_calon_wakil }}</td>
                                 <td class="color-dark">
-                                    <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
+                                    <button class="btn btn-warning btn-sm btn-edit" action="{{ route('cakada.edit', $cakada->id) }}">Edit</button>
                                     <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
