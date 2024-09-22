@@ -55,7 +55,7 @@ class CakadaController extends Controller
 
         $viewPath = $detect->isMobile() || $detect->isTablet()
             ? 'mobile.cakada.create'
-            : 'desktop.cakada.index';
+            : 'desktop.cakada.create';
 
         return view($viewPath, compact('cakadas', 'tipe_cakada', 'provinsi'));
     }
