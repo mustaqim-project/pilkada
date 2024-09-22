@@ -31,15 +31,14 @@
 
                 <div class="form-group">
                     <label for="kabupaten_kota">Kabupaten/Kota</label>
-                    <select name="kabupaten_kota" id="kabupaten_kota" class="form-control">
+                    <select name="kabupaten_kota" id="kabupaten_kota" class="form-control" required>
                         <option value="">Pilih Kabupaten/Kota</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="tipe_cakada_id">Tipe Pilkada</label>
-                    <select id="tipe_cakada_id" name="tipe_cakada_id" class="input" required>
-                        <option value="" disabled selected>Pilih Tipe Pilkada</option>
+                    <select id="tipe_cakada_id" name="tipe_cakada_id" class="form-control" required>
                         @foreach ($tipe_cakada as $item)
                             <option value="{{ $item->id }}" {{ old('tipe_cakada_id') == $item->id ? 'selected' : '' }}>
                                 {{ $item->name }}
