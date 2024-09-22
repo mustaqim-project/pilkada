@@ -15,8 +15,8 @@
 
     <!-- Homepage Slider -->
     <div class="content text-center">
-        <div class="card card-style ml-0 mr-0 bg-white">
-            <div class="row justify-content-center mt-3 pt-1 mb-3">
+        <div class="row mt-3 pt-1 mb-3">
+            <div class="col-4 text-center">
                 <div class="col-6 text-center">
                     <a href="#">
                         <i class="ml-3 mr-3" data-feather="users" style="color: #28a745;"></i>
