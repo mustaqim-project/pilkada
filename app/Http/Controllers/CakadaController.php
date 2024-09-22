@@ -96,7 +96,7 @@ class CakadaController extends Controller
             ? 'mobile.cakada.edit'
             : 'desktop.cakada.edit';
 
-        return view($viewPath, compact('cakadas', 'tipe_cakada', 'provinsi'));
+        return view($viewPath, compact('cakada', 'tipe_cakada', 'provinsi'));
     }
 
 
