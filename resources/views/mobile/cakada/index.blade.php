@@ -26,9 +26,9 @@
 
     <div class="card card-style">
         <div class="content mb-2">
-            <h3>Role Permission</h3>
+            <h3>Calon Kelapa Daerah</h3>
             <a href="{{ route('role.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> {{ __('Create new') }}
+                <i class="fas fa-plus"></i> {{ __('Tambah Data') }}
             </a>
             <!-- Add table-responsive to make table scrollable on small screens -->
             <div class="table-responsive">
