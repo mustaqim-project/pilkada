@@ -30,7 +30,7 @@
             <a href="{{ route('role.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> {{ __('Create new') }}
             </a>
-            <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
+            <table class="table table-responsive text-center rounded-sm shadow-l" style="overflow: hidden;">
                 <thead>
                     <tr class="bg-gray1-dark">
                         <th scope="col" class="color-theme">#</th>
@@ -59,11 +59,11 @@
                         @endphp
                         <tr>
                             <td scope="row">{{ $cakada->id }}</td>
-                            <td class="color-green1-dark">{{ $provinsiName }}</td>
-                            <td class="color-green1-dark">{{ $kabupatenKotaName }}</td>
-                            <td class="color-green1-dark">{{ $cakada->nama_calon_kepala }}</td>
-                            <td class="color-green1-dark">{{ $cakada->nama_calon_wakil }}</td>
-                            <td class="color-green1-dark">
+                            <td class="color-dark">{{ $provinsiName }}</td>
+                            <td class="color-dark">{{ $kabupatenKotaName }}</td>
+                            <td class="color-dark">{{ $cakada->nama_calon_kepala }}</td>
+                            <td class="color-dark">{{ $cakada->nama_calon_wakil }}</td>
+                            <td class="color-dark">
                                 <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
                                 <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
                                     @csrf
