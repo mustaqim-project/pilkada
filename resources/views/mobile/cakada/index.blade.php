@@ -1,177 +1,86 @@
 @extends('mobile.frontend.layout.master')
 
 @section('content')
+
 <div class="page-content" style="min-height:60vh!important">
     <div class="page-title page-title-small">
-        <h2><a href="#" data-back-button><i class="fa fa-arrow-left"></i></a>Tables</h2>
-        <a href="#" data-menu="menu-main" class="bg-fade-gray1-dark shadow-xl preload-img" data-src="images/avatars/5s.png"></a>
+        <h2><a href="{{ route('dashboard') }}" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
     </div>
-    <div class="card header-card shape-rounded" data-card-height="150">
+    <div class="card header-card shape-rounded" data-card-height="210">
         <div class="card-overlay bg-highlight opacity-95"></div>
         <div class="card-overlay dark-mode-tint"></div>
-        <div class="card-bg preload-img" data-src="images/pictures/20s.jpg"></div>
+        <div class="card-bg preload-img" data-src="admin/mobile/myhr/images/sikad.png"></div>
     </div>
 
-
-    <div class="card card-style">
-        <p class="content">
-            Classic tabs, these are not a special element but sometimes a very needed one to have. Styled to
-            match the current highlight.
-        </p>
-    </div>
-
-    <div class="card card-style">
-        <div class="content mb-2">
-            <h3>Highlight Table</h3>
-            <p>
-                Match the page color scheme.
-            </p>
-            <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
-                <thead>
-                    <tr>
-                        <th scope="col" class="bg-highlight color-white">Brand</th>
-                        <th scope="col" class="bg-highlight color-white">Device</th>
-                        <th scope="col" class="bg-highlight color-white">OS</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                        <th scope="col" class="bg-highlight color-white">Works</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-highlight color-gray1-dark">
-                        <th scope="row">Apple</th>
-                        <td>iPhone</td>
-                        <td>iOS</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr class="bg-highlight color-gray1-dark">
-                        <th scope="row">Android</th>
-                        <td>Pixel</td>
-                        <td>Android</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr class="bg-highlight color-gray1-dark">
-                        <th scope="row">Nope</th>
-                        <td>Nope</td>
-                        <td>nOS</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    </script>
+    @endif
 
     <div class="card card-style">
         <div class="content mb-2">
-            <h3>Dark Table</h3>
-            <p>
-                Dark tables are always gorgeous.
-            </p>
-            <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
-                <thead>
-                    <tr>
-                        <th scope="col" class="bg-dark2-dark border-dark1-dark color-white">Brand</th>
-                        <th scope="col" class="bg-dark2-dark border-dark1-dark color-white">Device</th>
-                        <th scope="col" class="bg-dark2-dark border-dark1-dark color-white">OS</th>
-                        <th scope="col" class="bg-dark2-dark border-dark1-dark color-white">Works</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-dark1-light">
-                        <th scope="row">Apple</th>
-                        <td>iPhone</td>
-                        <td>iOS</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr class="bg-dark1-light">
-                        <th scope="row">Android</th>
-                        <td>Pixel</td>
-                        <td>Android</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr class="bg-dark1-light">
-                        <th scope="row">Nope</th>
-                        <td>Nope</td>
-                        <td>nOS</td>
-                        <td>Yees</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h3>Calon Kelapa Daerah</h3>
+            <a href="{{ route('role.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> {{ __('Tambah Data') }}
+            </a>
+            <!-- Add table-responsive to make table scrollable on small screens -->
+            <div class="table-responsive">
+                <table class="table text-center rounded-sm shadow-l">
+                    <thead>
+                        <tr class="bg-gray1-dark">
+                            <th scope="col" class="color-theme">#</th>
+                            <th scope="col" class="color-theme">Provinsi</th>
+                            <th scope="col" class="color-theme">Kabupaten/Kota</th>
+                            <th scope="col" class="color-theme">Nama Calon Kepala</th>
+                            <th scope="col" class="color-theme">Nama Calon Wakil</th>
+                            <th scope="col" class="color-theme">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $provinsiMap = collect($provinsi)->pluck('name', 'id')->toArray();
+                        @endphp
+
+                        @forelse ($cakadas as $cakada)
+                            @php
+                                $provinsiName = $provinsiMap[$cakada->provinsi] ?? 'Unknown';
+                                $regencies = app('App\Http\Controllers\CakadaController')->getRegencies($cakada->provinsi);
+                                $regenciesMap = collect($regencies)->pluck('name', 'id')->toArray();
+                                $kabupatenKotaName = $regenciesMap[$cakada->kabupaten_kota] ?? 'Unknown';
+                            @endphp
+                            <tr>
+                                <td scope="row">{{ $cakada->id }}</td>
+                                <td class="color-dark">{{ $provinsiName }}</td>
+                                <td class="color-dark">{{ $kabupatenKotaName }}</td>
+                                <td class="color-dark">{{ $cakada->nama_calon_kepala }}</td>
+                                <td class="color-dark">{{ $cakada->nama_calon_wakil }}</td>
+                                <td class="color-dark">
+                                    <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
+                                    <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada data.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
-
-    <div class="card card-style">
-        <div class="content mb-2">
-            <h3>Light Colorful Values</h3>
-            <p>
-                Light table with colorful values and FontAwesome Icons.
-            </p>
-            <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
-                <thead>
-                    <tr class="bg-gray1-dark">
-                        <th scope="col" class="color-theme">Brand</th>
-                        <th scope="col" class="color-theme">Device</th>
-                        <th scope="col" class="color-theme">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">Apple</th>
-                        <td class="color-green1-dark">$500</td>
-                        <td><i class="fa fa-arrow-up rotate-45 color-green1-dark"></i></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Android</th>
-                        <td class="color-yellow1-dark">$400</td>
-                        <td><i class="fa fa-arrow-right rotate-45 color-yellow1-dark"></i></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Nope</th>
-                        <td class="color-red2-dark">$300</td>
-                        <td><i class="fa fa-arrow-right rotate-90 color-red2-dark"></i></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- footer and footer card-->
-    <div class="footer" data-menu-load="menu-footer.html"></div>
 </div>
-<!-- end of page content-->
-
-
 
 <script>
     $(document).ready(function() {
