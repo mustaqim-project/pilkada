@@ -179,9 +179,9 @@
             </div>
 
             <div class="input-style has-icon input-style-1 input-required mt-4">
-                <i class="input-icon fa fa-phone color-theme"></i>
+                <i class="input-icon fa fa-calendar color-theme"></i>
                 <span>Usia</span>
-                <x-text-input id="usia" class="input" type="text" name="usia" :value="old('usia')" required placeholder="Nomor HP" />
+                <x-text-input id="usia" class="input" type="number" name="usia" :value="old('usia')" required placeholder="Masukkan Usia" min="17" />
                 <x-input-error :messages="$errors->get('usia')" class="mt-2" />
             </div>
 
