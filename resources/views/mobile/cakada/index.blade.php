@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="page-content">
+<div class="page-content" style="min-height:60vh!important">
     <div class="page-title page-title-small">
         <h2><a href="{{ route('dashboard') }}" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
     </div>
