@@ -90,6 +90,10 @@ class CakadaController extends Controller
         $cakada = Cakada::findOrFail($id);
         $provinsiResponse = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
         $provinsiData = $provinsiResponse->json();
+
+        cache(['provinsi' => $provinsiData], 60);
+
+        $provinsi = cache('provinsi');
         $tipe_cakada = TipeCakada::all();
 
         $viewPath = $detect->isMobile() || $detect->isTablet()
