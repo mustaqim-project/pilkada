@@ -1,6 +1,35 @@
 @extends('mobile.frontend.layout.master')
 
 @section('content')
+<style>
+    /* Menyesuaikan font-size dan padding untuk layar kecil */
+    @media (max-width: 768px) {
+        table {
+            font-size: 0.75em; /* Set font-size relatif terhadap ukuran font default */
+        }
+        table th, table td {
+            padding: 0.5em; /* Padding diatur menggunakan em */
+        }
+        .btn {
+            font-size: 0.75em;
+            padding: 0.5em 1em;
+        }
+    }
+
+    /* Untuk layar sangat kecil, kita bisa mengurangi lagi ukuran teks */
+    @media (max-width: 480px) {
+        table {
+            font-size: 0.65em;
+        }
+        table th, table td {
+            padding: 0.4em;
+        }
+        .btn {
+            font-size: 0.65em;
+            padding: 0.4em 0.8em;
+        }
+    }
+</style>
 
 <div class="page-content" style="min-height:60vh!important">
     <div class="page-title page-title-small">
