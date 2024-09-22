@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="page-content">
     <div class="page-title page-title-small">
         <h2><a href="{{ route('dashboard') }}" data-back-button><i class="fa fa-arrow-left"></i></a>Beranda</h2>
@@ -16,20 +15,18 @@
     @if(session('success'))
     <script>
         Swal.fire({
-            icon: 'success'
-            , title: 'Success'
-            , text: '{{ session('
-            success ') }}'
-            , timer: 2000
-            , showConfirmButton: false
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            timer: 2000,
+            showConfirmButton: false
         });
-
     </script>
     @endif
 
     <div class="card card-style">
         <div class="content mb-2">
-            <h3>Role Permision</h3>
+            <h3>Role Permission</h3>
             <a href="{{ route('role.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> {{ __('Create new') }}
             </a>
@@ -40,41 +37,45 @@
                         <th scope="col" class="color-theme">Provinsi</th>
                         <th scope="col" class="color-theme">Kabupaten/Kota</th>
                         <th scope="col" class="color-theme">Nama Calon Kepala</th>
-                        <th scope="col" class="color-theme">NNama Calon Wakil</th>
+                        <th scope="col" class="color-theme">Nama Calon Wakil</th>
                         <th scope="col" class="color-theme">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php
-                    $provinsiMap = $provinsi->pluck('name', 'id')->toArray();
+                        // Ensure `$provinsi` is treated as an array or collection
+                        $provinsiMap = collect($provinsi)->pluck('name', 'id')->toArray();
                     @endphp
 
                     @forelse ($cakadas as $cakada)
-                    @php
-                    $provinsiName = $provinsiMap[$cakada->provinsi] ?? 'Unknown';
-                    $regencies = app('App\Http\Controllers\CakadaController')->getRegencies($cakada->provinsi);
-                    $regenciesMap = collect($regencies)->pluck('name', 'id')->toArray();
-                    $kabupatenKotaName = $regenciesMap[$cakada->kabupaten_kota] ?? 'Unknown';
-                    @endphp
-                    <tr>
-                        <td scope="row">{{ $cakada->id }}</td>
-                        <td class="color-green1-dark">{{ $provinsiName }}</td>
-                        <td class="color-green1-dark">{{ $kabupatenKotaName }}</td>
-                        <td class="color-green1-dark">{{ $cakada->nama_calon_kepala }}</td>
-                        <td class="color-green1-dark">{{ $cakada->nama_calon_wakil }}</td>
-                        <td class="color-green1-dark">
-                            <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
-                            <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
+                        @php
+                            // Get the province name using the map
+                            $provinsiName = $provinsiMap[$cakada->provinsi] ?? 'Unknown';
+
+                            // Get regencies for the selected province
+                            $regencies = app('App\Http\Controllers\CakadaController')->getRegencies($cakada->provinsi);
+                            $regenciesMap = collect($regencies)->pluck('name', 'id')->toArray();
+                            $kabupatenKotaName = $regenciesMap[$cakada->kabupaten_kota] ?? 'Unknown';
+                        @endphp
+                        <tr>
+                            <td scope="row">{{ $cakada->id }}</td>
+                            <td class="color-green1-dark">{{ $provinsiName }}</td>
+                            <td class="color-green1-dark">{{ $kabupatenKotaName }}</td>
+                            <td class="color-green1-dark">{{ $cakada->nama_calon_kepala }}</td>
+                            <td class="color-green1-dark">{{ $cakada->nama_calon_wakil }}</td>
+                            <td class="color-green1-dark">
+                                <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
+                                <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="6" class="text-center">Tidak ada data.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="6" class="text-center">Tidak ada data.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -82,16 +83,13 @@
     </div>
 </div>
 
-
-
-
 <script>
     $(document).ready(function() {
         // Load data for provinces
         $.ajax({
-            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
-            , method: 'GET'
-            , success: function(data) {
+            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
+            method: 'GET',
+            success: function(data) {
                 let provinsiDropdown = $('#provinsi');
                 data.forEach(function(provinsi) {
                     provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
@@ -105,9 +103,9 @@
             $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
             if (provinsiId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
-                    , method: 'GET'
-                    , success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
+                    method: 'GET',
+                    success: function(data) {
                         data.forEach(function(kabupaten) {
                             $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
                         });
@@ -120,9 +118,9 @@
         $('.btn-edit').click(function() {
             let id = $(this).data('id');
             $.ajax({
-                url: `/cakada/${id}/edit`
-                , method: 'GET'
-                , success: function(data) {
+                url: `/cakada/${id}/edit`,
+                method: 'GET',
+                success: function(data) {
                     $('#modalCakada').modal('show');
                     $('#cakada_id').val(data.id);
                     $('#provinsi').val(data.provinsi);
@@ -143,8 +141,6 @@
             });
         });
     });
-
 </script>
-
 
 @endsection
