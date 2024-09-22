@@ -17,13 +17,13 @@
     <div class="content text-center">
         <div class="card card-style ml-0 mr-0 bg-white">
             <div class="row mt-3 pt-1 mb-3">
-                <div class="col-6 text-center">
+                <div class="col-4 text-center">
                     <a href="#">
                         <i class="ml-3 mr-3" data-feather="users" style="color: #28a745;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Manajemen Timses</h5>
                     </a>
                 </div>
-                <div class="col-6 text-center">
+                <div class="col-4 text-center">
                     <a href="#">
                         <i class="ml-3 mr-3" data-feather="clipboard" style="color: #FFC733;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Manajemen Kanvasing</h5>
@@ -36,6 +36,7 @@
                     </a>
                 </div>
             </div>
+
             <div class="row mt-3 pt-1 mb-3">
                 <div class="col-4 text-center">
                     <a href="{{ route('cakada.index') }}">
@@ -52,12 +53,13 @@
                 <div class="col-4 text-center">
                     <a href="{{ route('role.index') }}">
                         <i class="ml-3 mr-3" data-feather="lock" style="color: #dc3545;"></i>
-                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Role Permision</h5>
+                        <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Role Permission</h5>
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
 
 
 @endsection
