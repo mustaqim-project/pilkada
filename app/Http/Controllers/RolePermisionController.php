@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Detection\MobileDetect;
 
-class RolePermissionController extends Controller
+class RolePermisionController extends Controller
 {
     public function __construct()
     {
