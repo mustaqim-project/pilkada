@@ -39,6 +39,26 @@ class CakadaController extends Controller
         return view($viewPath, compact('cakadas', 'tipe_cakada', 'provinsi'));
     }
 
+    public function create(Request $request)
+    {
+        $detect = new MobileDetect;
+
+        $provinsiResponse = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
+        $provinsiData = $provinsiResponse->json();
+
+        cache(['provinsi' => $provinsiData], 60);
+
+        $provinsi = cache('provinsi');
+
+        $cakadas = Cakada::all();
+        $tipe_cakada = TipeCakada::all();
+
+        $viewPath = $detect->isMobile() || $detect->isTablet()
+            ? 'mobile.cakada.create'
+            : 'desktop.cakada.index';
+
+        return view($viewPath, compact('cakadas', 'tipe_cakada', 'provinsi'));
+    }
 
     public function getRegencies($provinsiId)
     {
