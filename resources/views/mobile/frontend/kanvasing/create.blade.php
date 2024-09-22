@@ -165,6 +165,26 @@
                 <x-input-error :messages="$errors->get('nama_kk')" class="mt-2" />
             </div>
 
+            <label class="mt-4">Pekerjaan</label>
+            <div class="input-style has-icon input-style-1 input-required mt-4">
+                <select id="tipe_cakada_id" name="tipe_cakada_id" class="input" required>
+                    <option value="" disabled selected>Pilih Pekerjaan</option>
+                    @foreach ($pekerjaan as $item)
+                    <option value="{{ $item->id }}" {{ old('pekerjaan_id') == $item->id ? 'selected' : '' }}>
+                        {{ $item->name }}
+                    </option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('pekerjaan_id')" class="mt-2" />
+            </div>
+
+            <div class="input-style has-icon input-style-1 input-required mt-4">
+                <i class="input-icon fa fa-phone color-theme"></i>
+                <span>Usia</span>
+                <x-text-input id="usia" class="input" type="text" name="usia" :value="old('usia')" required placeholder="Nomor HP" />
+                <x-input-error :messages="$errors->get('usia')" class="mt-2" />
+            </div>
+
             <!-- Nomor HP -->
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-phone color-theme"></i>

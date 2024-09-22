@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kanvasing;
 use App\Models\Cakada;
+use App\Models\Pekerjaan;
 use App\Models\TipeCakada;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
@@ -33,12 +34,14 @@ class KanvasingController extends Controller
         $provinsi = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')->json();
         $tipe_cakada = TipeCakada::all();
         $cakada = Cakada::all();
+        $pekerjaan = Pekerjaan::all();
 
         // Pass the data to the view
         return view('mobile.frontend.kanvasing.create', [
             'provinsi' => $provinsi,
             'tipe_cakada' => $tipe_cakada,
-            'cakada' => $cakada
+            'cakada' => $cakada,
+            'pekerjaan' => $pekerjaan
         ]);
     }
 
