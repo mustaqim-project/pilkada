@@ -58,7 +58,7 @@
 
     <div class="card card-style">
         <div class="content mb-2">
-            <h3>Calon Kelapa Daerah</h3>
+            <h3>Calon Kepala Daerah</h3>
             <a href="{{ route('cakada.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> {{ __('Tambah Data') }}
             </a>
