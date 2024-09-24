@@ -185,6 +185,16 @@
                 <x-input-error :messages="$errors->get('usia')" class="mt-2" />
             </div>
 
+            <label class="mt-4">Jenis Kelamin</label>
+            <div class="input-style has-icon input-style-1 input-required mt-2">
+                <select id="jenis_kelamin" name="jenis_kelamin" class="input" required>
+                    <option value="">Pilih</option>
+                    <option value="1" {{ old('jenis_kelamin') == '1' ? 'selected' : '' }}>Laki-Laki</option>
+                    <option value="2" {{ old('jenis_kelamin') == '2' ? 'selected' : '' }}>Perempuan</option>
+                </select>
+                <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2" />
+            </div>
+
             <!-- Nomor HP -->
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-phone color-theme"></i>

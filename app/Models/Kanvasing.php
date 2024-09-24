@@ -33,6 +33,7 @@ class Kanvasing extends Model
         'nama_kk',
         'nomor_hp',
         'pekerjaan_id',
+        'jenis_kelamin',
         'usia',
         'jum_pemilih',
         'foto',

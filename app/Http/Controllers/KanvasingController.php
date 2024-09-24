@@ -80,6 +80,7 @@ class KanvasingController extends Controller
             'elektabilitas' => 'required|in:1,2,3',
             'popularitas' => 'required|in:1,2',
             'stiker' => 'required|in:1,2',
+            'jenis_kelamin' => 'required|in:1,2',
             'alasan' => 'nullable|string',
             'pesan' => 'nullable|string',
             'deskripsi' => 'nullable|string',
