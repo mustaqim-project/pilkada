@@ -372,6 +372,9 @@
 <script>
     $(document).ready(function() {
 
+        checkLocationPermission();
+
+
         $('.get-location').on('click', function(e) {
             e.preventDefault(); // Prevent the default anchor click behavior
 
@@ -436,6 +439,27 @@
                     console.log("An unknown error occurred.");
                     break;
             }
+        }
+
+         // Cek izin lokasi dan set cookie
+         function checkLocationPermission() {
+            const permission = getCookie('location_permission');
+
+            if (permission !== 'granted') {
+                alert('Silakan izinkan akses lokasi untuk menggunakan fitur ini.');
+                setCookie('location_permission', 'granted', 30); // Simpan izin dalam cookie selama 30 hari
+            }
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function setCookie(name, value, days) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
         }
 
         // Profile picture preview
