@@ -345,7 +345,7 @@
                  <div class="mt-4">
                     <label for="accessChoice" class="color-white">Pilih Akses:</label>
                     <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
-                        <option value="gallery">Pilih Upload Dari Kamera / Galery</option>
+                        <option value="">Pilih Upload Dari Kamera / Galery</option>
                         <option value="gallery">Dari Galeri</option>
                         <option value="camera">Dari Kamera</option>
                     </select>
