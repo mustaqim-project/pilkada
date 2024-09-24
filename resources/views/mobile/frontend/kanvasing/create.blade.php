@@ -167,7 +167,7 @@
 
             <label class="mt-4">Pekerjaan</label>
             <div class="input-style has-icon input-style-1 input-required mt-4">
-                <select id="tipe_cakada_id" name="tipe_cakada_id" class="input" required>
+                <select id="pekerjaan_id" name="pekerjaan_id" class="input" required>
                     <option value="" disabled selected>Pilih Pekerjaan</option>
                     @foreach ($pekerjaan as $item)
                     <option value="{{ $item->id }}" {{ old('pekerjaan_id') == $item->id ? 'selected' : '' }}>
