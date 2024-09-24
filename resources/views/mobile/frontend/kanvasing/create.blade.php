@@ -293,23 +293,36 @@
 
 
                 <!-- Upload Foto -->
+                <label class="mt-5">Upload Foto Kegiatan</label>
+
                 <div class="mt-4">
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
                 <div class="file-data">
                     <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera">
-                    <p class="upload-file-text color-white">Upload Foto Kegiatan</p>
+                    <p class="upload-file-text color-white">Kamera</p>
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
 
                 <!-- Pilihan Akses -->
                 <div class="mt-4">
-                    <label for="accessChoice" class="color-white">Pilih Akses:</label>
-                    <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
+                    <label hidden for="accessChoice" class="color-white">Pilih Akses:</label>
+                    <select hidden ="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
                         <option value="gallery">Dari Galeri</option>
                         <option value="camera">Dari Kamera</option>
                     </select>
                 </div>
+
+
+                <div class="mt-4">
+                    <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
+                </div>
+                <div class="file-data">
+                    <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
+                    <p class="upload-file-text color-white">Galeri</p>
+                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+                </div>
+
 
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
