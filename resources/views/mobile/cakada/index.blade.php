@@ -143,29 +143,6 @@
             }
         });
 
-        $('.btn-edit').click(function() {
-            let id = $(this).data('id');
-            $.ajax({
-                url: `/cakada/${id}/edit`,
-                method: 'GET',
-                success: function(data) {
-                    $('#modalCakada').modal('show');
-                    $('#cakada_id').val(data.id);
-                    $('#provinsi').val(data.provinsi);
-                    $('#tipe_cakada_id').val(data.tipe_cakada_id);
-                    $('#nama_calon_kepala').val(data.nama_calon_kepala);
-                    $('#nama_calon_wakil').val(data.nama_calon_wakil);
-                    $('#formCakada').attr('action', `/cakada/${id}`);
-                    $('#formCakada').append('<input type="hidden" name="_method" value="PUT">');
-
-                    $('#provinsi').trigger('change');
-
-                    setTimeout(function() {
-                        $('#kabupaten_kota').val(data.kabupaten_kota);
-                    }, 500);
-                }
-            });
-        });
     });
 </script>
 
