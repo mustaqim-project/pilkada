@@ -97,18 +97,20 @@
                         <td>{{ $tipe->id }}</td>
                         <td>{{ $tipe->name }}</td>
                         <td>
-                            <button class="btn btn-warning btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalCakada"
-                                data-id="{{ $tipe->id }}"
-                                data-name="{{ $tipe->name }}">
-                                Edit
-                            </button>
-                            <form action="{{ route('tipe_cakada.destroy', $tipe->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus tipe ini?')">Hapus</button>
-                            </form>
+                            <div class="btn-group" role="group" aria-label="Tipe Cakada actions">
+                                <button class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalCakada"
+                                    data-id="{{ $tipe->id }}"
+                                    data-name="{{ $tipe->name }}">
+                                    Edit
+                                </button>
+                                <form action="{{ route('tipe_cakada.destroy', $tipe->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus tipe ini?')">Hapus</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

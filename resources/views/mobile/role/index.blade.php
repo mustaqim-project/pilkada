@@ -44,11 +44,13 @@
                         </td>
                         <td class="color-green1-dark">
                             @if ($role->name != 'Admin')
-                            <a href="{{ route('role.edit', $role->id) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-
-                            <a href="{{ route('role.destory', $role->id) }}" class="btn btn-danger delete-item"><i class="fas fa-trash-alt"></i></a>
+                            <div class="btn-group" role="group" aria-label="Role actions">
+                                <a href="{{ route('role.edit', $role->id) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('role.destroy', $role->id) }}" class="btn btn-danger delete-item"><i class="fas fa-trash-alt"></i></a>
+                            </div>
                             @endif
                         </td>
+
                     </tr>
                     @endforeach
                 </tbody>

@@ -42,16 +42,18 @@
                                 <td><span class="badge bg-primary text-light">{{ $admin->getRoleNames()->first() }}</span></td>
 
                                 <td>
-                                    @if ($admin->getRoleNames()->first() != 'Super Admin')
-
-                                    <a href="{{ route('role-users.edit', $admin->id) }}"
-                                        class="btn btn-primary"><i class="fas fa-edit"></i></a>
-
-                                    <a href="{{ route('role-users.destroy', $admin->id) }}"
-                                        class="btn btn-danger delete-item"><i
-                                            class="fas fa-trash-alt"></i></a>
+                                    @if ($admin->getRoleNames()->first() != 'Admin')
+                                    <div class="btn-group" role="group" aria-label="Admin actions">
+                                        <a href="{{ route('role-users.edit', $admin->id) }}" class="btn btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('role-users.destroy', $admin->id) }}" class="btn btn-danger delete-item">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
                                     @endif
                                 </td>
+
                             </tr>
                             @endforeach
 
