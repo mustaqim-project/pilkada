@@ -338,20 +338,18 @@
                 <!-- Upload Foto -->
                 <label class="mt-5">Upload Foto Kegiatan</label>
                 <em>(*Wajib Diisi)</em>
-
                 <div class="mt-4">
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
                  <!-- Pilihan Akses -->
                  <div class="mt-4">
-                    <label for="accessChoice" class="color-white">Pilih Akses:</label>
                     <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
                         <option value="">Pilih Upload Dari Kamera / Galery</option>
                         <option value="gallery">Dari Galeri</option>
                         <option value="camera">Dari Kamera</option>
                     </select>
                 </div>
-                <div class="file-data">
+                <div class="file-data" hidden>
                     <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera">
                     <p class="upload-file-text color-white">Upload Foto Kegiatan</p>
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
