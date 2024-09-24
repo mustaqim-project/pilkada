@@ -84,7 +84,7 @@
         border: 1px solid #ced4da;
         border-radius: 0.375rem;
         background-color: #f8f9fa;
-        color: #495057;
+        color: #ffff;
         font-size: 1rem;
         font-weight: 400;
         cursor: pointer;
