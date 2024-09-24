@@ -84,7 +84,7 @@ class KanvasingController extends Controller
             'alasan' => 'nullable|string',
             'pesan' => 'nullable|string',
             'deskripsi' => 'nullable|string',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:9000',
             'alamat' => 'required|string|max:255',
             'lat' => 'nullable|string',
             'lang' => 'nullable|string',
