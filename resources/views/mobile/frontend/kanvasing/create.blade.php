@@ -337,6 +337,7 @@
 
                 <!-- Upload Foto -->
                 <label class="mt-5">Upload Foto Kegiatan</label>
+                <em>(*Wajib Diisi)</em>
 
                 <div class="mt-4">
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
@@ -622,6 +623,7 @@
             fotoInput.click(); // Membuka kamera
         } else {
             fotoInput.removeAttribute('capture');
+            fotoInput.click(); // Membuka kamera
         }
     }
 
