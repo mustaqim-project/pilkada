@@ -301,6 +301,8 @@
                 <div class="file-data">
                     <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera">
                     <p class="upload-file-text color-white">Kamera</p>
+                    <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
+                    <p class="upload-file-text color-white">Galeri</p>
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
 
