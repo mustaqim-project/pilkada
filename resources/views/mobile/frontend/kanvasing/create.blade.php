@@ -84,6 +84,7 @@
             <!-- Provinsi -->
             <div class="input-style has-icon input-style-1 input-required">
                 <span>Provinsi</span>
+                <em>(*Wajib Diisi)</em>
                 <select name="provinsi" id="provinsi" class="input" required>
                     <option value="">Pilih Provinsi</option>
                 </select>
@@ -93,6 +94,7 @@
             <!-- Kabupaten/Kota -->
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <span>Kabupaten/Kota</span>
+                <em>(*Wajib Diisi)</em>
                 <select name="kabupaten_kota" id="kabupaten_kota" class="input" required>
                     <option value="">Pilih Kabupaten/Kota</option>
                 </select>
@@ -103,6 +105,7 @@
             <!-- Kecamatan -->
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <span>Kecamatan</span>
+                <em>(*Wajib Diisi)</em>
                 <select name="kecamatan" id="kecamatan" class="input" required>
                     <option value="">Pilih Kecamatan</option>
                 </select>
@@ -112,6 +115,7 @@
             <!-- Kelurahan -->
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <span>Kelurahan</span>
+                <em>(*Wajib Diisi)</em>
                 <select name="kelurahan" id="kelurahan" class="input" required>
                     <option value="">Pilih Kelurahan</option>
                 </select>
@@ -122,6 +126,7 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-ruler color-theme"></i>
                 <span>RW</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="rw" class="input" type="text" name="rw" :value="old('rw')" required placeholder="RW" />
                 <x-input-error :messages="$errors->get('rw')" class="mt-2" />
             </div>
@@ -130,12 +135,14 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-ruler color-theme"></i>
                 <span>RT</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="rt" class="input" type="text" name="rt" :value="old('rt')" required placeholder="RT" />
                 <x-input-error :messages="$errors->get('rt')" class="mt-2" />
             </div>
 
             <!-- Tipe Cakada ID -->
             <label class="mt-4">Pilkada</label>
+            <em>(*Wajib Diisi)</em>
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <select id="tipe_cakada_id" name="tipe_cakada_id" class="input" required>
                     <option value="" disabled selected>Pilih Tipe Pilkada</option>
@@ -150,6 +157,7 @@
 
             <!-- Cakada ID -->
             <label class="mt-4">Nama Kandidat</label>
+            <em>(*Wajib Diisi)</em>
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <select id="cakada_id" name="cakada_id" class="input" required>
                     <option value="">Pilih Nama Kandidat</option>
@@ -161,11 +169,13 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-user color-theme"></i>
                 <span>Nama KK</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="nama_kk" class="input" type="text" name="nama_kk" :value="old('nama_kk')" required placeholder="Nama KK" />
                 <x-input-error :messages="$errors->get('nama_kk')" class="mt-2" />
             </div>
 
             <label class="mt-4">Pekerjaan</label>
+            <em>(*Wajib Diisi)</em>
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <select id="pekerjaan_id" name="pekerjaan_id" class="input" required>
                     <option value="" disabled selected>Pilih Pekerjaan</option>
@@ -181,11 +191,13 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-calendar color-theme"></i>
                 <span>Usia</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="usia" class="input" type="number" name="usia" :value="old('usia')" required placeholder="Masukkan Usia" min="17" />
                 <x-input-error :messages="$errors->get('usia')" class="mt-2" />
             </div>
 
             <label class="mt-4">Jenis Kelamin</label>
+            <em>(*Wajib Diisi)</em>
             <div class="input-style has-icon input-style-1 input-required mt-2">
                 <select id="jenis_kelamin" name="jenis_kelamin" class="input" required>
                     <option value="">Pilih</option>
@@ -199,6 +211,7 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-phone color-theme"></i>
                 <span>Nomor HP</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="nomor_hp" class="input" type="text" name="nomor_hp" :value="old('nomor_hp')" required placeholder="Nomor HP" />
                 <x-input-error :messages="$errors->get('nomor_hp')" class="mt-2" />
             </div>
@@ -207,6 +220,7 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-users color-theme"></i>
                 <span>Jumlah Pemilih</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="jum_pemilih" class="input" type="number" name="jum_pemilih" :value="old('jum_pemilih')" required placeholder="Jumlah Pemilih" />
                 <x-input-error :messages="$errors->get('jum_pemilih')" class="mt-2" />
             </div>
@@ -215,6 +229,7 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-address-card color-theme"></i>
                 <span>Alamat</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="alamat" class="input" type="text" name="alamat" :value="old('alamat')" required placeholder="Alamat" />
                 <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
             </div>
@@ -223,6 +238,7 @@
 
             <!-- Popularitas -->
             <label class="mt-4">Apakah kenal dengan calon ?</label>
+            <em>(*Wajib Diisi)</em>
             <div class="input-style has-icon input-style-1 input-required mt-2">
                 <select id="popularitas" name="popularitas" class="input" required>
                     <option value="">Pilih</option>
@@ -234,6 +250,7 @@
 
             <!-- Elektabilitas -->
             <label class="mt-4">Apakah anda akan memilih calon tersebut?</label>
+            <em>(*Wajib Diisi)</em>
             <div class="input-style has-icon input-style-1 input-required mt-2">
                 <select id="elektabilitas" name="elektabilitas" class="input" required>
                     <option value="">Pilih</option>
@@ -247,6 +264,7 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-address-card color-theme"></i>
                 <span>Alasan memilih calon tersebut ?</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="alasan" class="input" type="text" name="alasan" :value="old('alasan')" required placeholder="alasan memilih kandidat" />
                 <x-input-error :messages="$errors->get('alasan')" class="mt-2" />
             </div>
@@ -254,12 +272,14 @@
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-address-card color-theme"></i>
                 <span>Pesan untuk calon kepala daerah jika terpilih?</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="pesan" class="input" type="text" name="pesan" :value="old('pesan')" required placeholder="pesan untuk kandidat" />
                 <x-input-error :messages="$errors->get('pesan')" class="mt-2" />
             </div>
 
             <!-- Stiker -->
             <label class="mt-4">Apakah boleh memasang atribut kampanye berupa stiker/pamflet/brosur dll?</label>
+            <em>(*Wajib Diisi)</em>
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <select id="stiker" name="stiker" class="input" required>
                     <option value="">Pilih</option>
@@ -297,11 +317,13 @@
             <!-- Lokasi Saya -->
             <div class="input-style has-icon input-style-1 mt-4">
                 <span>Longitude</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="lang" class="input" type="text" name="lang" readonly :value="old('lang')" />
                 <x-input-error :messages="$errors->get('lang')" class="mt-2" />
             </div>
             <div class="input-style has-icon input-style-1 mt-4">
                 <span>Latitude</span>
+                <em>(*Wajib Diisi)</em>
                 <x-text-input id="lat" class="input" type="text" name="lat" readonly :value="old('lat')" />
                 <x-input-error :messages="$errors->get('lat')" class="mt-2" />
             </div>
