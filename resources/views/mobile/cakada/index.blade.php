@@ -94,12 +94,14 @@
                                 <td class="color-dark">{{ $cakada->nama_calon_kepala }}</td>
                                 <td class="color-dark">{{ $cakada->nama_calon_wakil }}</td>
                                 <td class="color-dark">
-                                    <a class="btn btn-warning btn-sm btn-edit" href="{{ route('cakada.edit', $cakada->id) }}">Edit</a>
-                                    <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                    </form>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a class="btn btn-warning btn-sm" href="{{ route('cakada.edit', $cakada->id) }}">Edit</a>
+                                        <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
