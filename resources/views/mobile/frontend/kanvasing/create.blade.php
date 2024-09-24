@@ -321,9 +321,9 @@
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
                 <div class="file-data">
-                    <input type="file" id="camera_input" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera" style="display:none;">
+                    <input type="file" id="camera_input" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera">
                     <p class="upload-file-text color-white" onclick="document.getElementById('camera_input').click();">Kamera</p>
-                    <input type="file" id="gallery_input" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" style="display:none;">
+                    <input type="file" id="gallery_input" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
                     <p class="upload-file-text color-white" onclick="document.getElementById('gallery_input').click();">Galeri</p>
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
