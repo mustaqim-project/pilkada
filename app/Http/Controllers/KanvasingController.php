@@ -90,6 +90,8 @@ class KanvasingController extends Controller
             'lang' => 'nullable|string',
         ]);
 
+
+
         // Buat instance Kanvasing baru
         $kanvasing = new Kanvasing();
 
