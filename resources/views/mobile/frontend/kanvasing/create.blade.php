@@ -3,58 +3,100 @@
 @section('content')
 
 <style>
+    /* Styling untuk gambar pratinjau */
     #image_preview {
         max-width: 100%;
-        /* Atur lebar maksimal gambar */
         height: auto;
-        /* Jaga agar proporsi gambar tetap */
         display: block;
-        /* Tampilkan gambar secara blok */
         margin-top: 10px;
-        /* Jarak atas */
+        border-radius: 0.375rem; /* Menambahkan radius sudut untuk pratinjau gambar */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan pada gambar */
     }
 
+    /* Styling umum untuk kontainer */
     .container {
         margin-top: 20px;
     }
 
+    /* Styling tombol umum */
     .btn-full {
         display: inline-block;
         width: 100%;
         padding: 0.75rem 1.5rem;
-        /* Padding atas/bawah dan kiri/kanan */
         border: none;
         border-radius: 0.375rem;
-        /* Radius sudut */
         font-size: 1rem;
         font-weight: bold;
         color: #fff;
-        /* Warna teks putih */
         background-color: #007bff;
-        /* Ganti dengan warna latar belakang sesuai kebutuhan */
         text-align: center;
         cursor: pointer;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
+    /* Gaya khusus untuk tombol sorot (highlight) */
     .btn-highlight {
         background-color: #28a745;
-        /* Ganti dengan warna latar belakang highlight */
     }
 
+    /* Gaya hover untuk tombol */
     .btn-full:hover {
         background-color: #0056b3;
-        /* Ganti dengan warna latar belakang saat hover */
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        /* Bayangan saat hover */
     }
 
+    /* Gaya fokus untuk tombol */
     .btn-full:focus {
         outline: none;
         box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-        /* Bayangan fokus */
     }
 
+    /* Styling untuk input file */
+    .upload-file {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px dashed #007bff;
+        border-radius: 0.375rem;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        text-align: center;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Gaya saat file input di-hover */
+    .upload-file:hover {
+        border-color: #0056b3;
+        background-color: #e2e6ea;
+    }
+
+    /* Styling teks pada file input */
+    .upload-file-text {
+        font-weight: bold;
+        color: #333;
+        margin-top: 10px;
+    }
+
+    /* Styling untuk dropdown pilihan akses */
+    select#accessChoice {
+        width: 100%;
+        padding: 0.75rem 1.25rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        background-color: #f8f9fa;
+        color: #495057;
+        font-size: 1rem;
+        font-weight: 400;
+        cursor: pointer;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Gaya dropdown saat difokuskan */
+    select#accessChoice:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
 </style>
 <div class="page-content">
     <div class="page-title page-title-small">
@@ -76,7 +118,8 @@
                 <div class="input-style has-icon input-style-1 input-required">
                     <select name="user_id" id="user_id" class="input" required>
                         <option id="user_id" name="user_id" value="{{ Auth::user()->id }}">
-                            {{ Auth::user()->name }}</option>
+                            {{ Auth::user()->name }}
+                        </option>
                     </select>
                     <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
                 </div>
@@ -363,6 +406,12 @@
 
 <script>
     $(document).ready(function() {
+        checkLocationPermission();
+
+
+
+
+
 
         $('.get-location').on('click', function(e) {
             e.preventDefault(); // Prevent the default anchor click behavior
@@ -430,6 +479,30 @@
             }
         }
 
+
+
+        // Cek izin lokasi dan set cookie
+        function checkLocationPermission() {
+            const permission = getCookie('location_permission');
+
+            if (permission !== 'granted') {
+                alert('Silakan izinkan akses lokasi untuk menggunakan fitur ini.');
+                setCookie('location_permission', 'granted', 30); // Simpan izin dalam cookie selama 30 hari
+            }
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function setCookie(name, value, days) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+        }
+
+
         // Profile picture preview
         const profilePictureInput = $('#foto');
         const imagePreview = $('#image_preview');
@@ -449,9 +522,9 @@
 
 
         $.ajax({
-            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
-            , method: 'GET'
-            , success: function(data) {
+            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
+            method: 'GET',
+            success: function(data) {
                 let provinsiDropdown = $('#provinsi');
                 data.forEach(function(provinsi) {
                     provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
@@ -465,9 +538,9 @@
             $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
             if (provinsiId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
-                    , method: 'GET'
-                    , success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
+                    method: 'GET',
+                    success: function(data) {
                         data.forEach(function(kabupaten) {
                             $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
                         });
@@ -482,9 +555,9 @@
             $('#kecamatan').html('<option value="">Pilih Kecamatan</option>');
             if (kabupatenId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`
-                    , method: 'GET'
-                    , success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`,
+                    method: 'GET',
+                    success: function(data) {
                         data.forEach(function(kecamatan) {
                             $('#kecamatan').append('<option value="' + kecamatan.id + '">' + kecamatan.name + '</option>');
                         });
@@ -499,9 +572,9 @@
             $('#kelurahan').html('<option value="">Pilih Kelurahan</option>');
             if (kecamatanId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`
-                    , method: 'GET'
-                    , success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`,
+                    method: 'GET',
+                    success: function(data) {
                         data.forEach(function(kelurahan) {
                             $('#kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.name + '</option>');
                         });
@@ -516,14 +589,14 @@
             let tipeCakada = $('#tipe_cakada_id').val();
 
             $.ajax({
-                url: "{{ route('getCakadaByFilters') }}"
-                , method: 'GET'
-                , data: {
-                    provinsi: provinsi
-                    , kabupaten_kota: kabupatenKota
-                    , tipe_cakada_id: tipeCakada
-                }
-                , success: function(response) {
+                url: "{{ route('getCakadaByFilters') }}",
+                method: 'GET',
+                data: {
+                    provinsi: provinsi,
+                    kabupaten_kota: kabupatenKota,
+                    tipe_cakada_id: tipeCakada
+                },
+                success: function(response) {
                     let options = '<option value="">Pilih Nama Kandidat</option>';
                     $.each(response, function(index, cakada) {
                         options += `<option value="${cakada.id}">${cakada.nama_calon_kepala}-${cakada.nama_calon_wakil}</option>`;
@@ -588,6 +661,5 @@
 
     // Cek izin kamera saat halaman dimuat
     window.onload = checkCameraPermission;
-
 </script>
 @endsection
