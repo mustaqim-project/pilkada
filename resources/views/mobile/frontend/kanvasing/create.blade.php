@@ -292,43 +292,24 @@
 
 
 
-                {{-- <!-- Upload Foto -->
-                <label class="mt-5">Upload Foto Kegiatan</label>
-
+                <!-- Upload Foto -->
                 <div class="mt-4">
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
                 <div class="file-data">
                     <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera">
-                    <p class="upload-file-text color-white">Kamera</p>
-                    <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
-                    <p class="upload-file-text color-white">Galeri</p>
+                    <p class="upload-file-text color-white">Upload Foto Kegiatan</p>
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
 
                 <!-- Pilihan Akses -->
                 <div class="mt-4">
-                    <label hidden for="accessChoice" class="color-white">Pilih Akses:</label>
-                    <select hidden ="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
+                    <label for="accessChoice" class="color-white">Pilih Akses:</label>
+                    <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
                         <option value="gallery">Dari Galeri</option>
                         <option value="camera">Dari Kamera</option>
                     </select>
-                </div> --}}
-
-                <label class="mt-5">Upload Foto Kegiatan</label>
-
-                <div class="mt-4">
-                    <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
-                <div class="file-data">
-                    <input type="file" id="camera_input" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera">
-                    <p class="upload-file-text color-white" onclick="document.getElementById('camera_input').click();">Kamera</p>
-                    <input type="file" id="gallery_input" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
-                    <p class="upload-file-text color-white" onclick="document.getElementById('gallery_input').click();">Galeri</p>
-                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
-                </div>
-
-
 
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
@@ -382,9 +363,6 @@
 
 <script>
     $(document).ready(function() {
-
-        checkLocationPermission();
-
 
         $('.get-location').on('click', function(e) {
             e.preventDefault(); // Prevent the default anchor click behavior
@@ -452,28 +430,22 @@
             }
         }
 
-        // Cek izin lokasi dan set cookie
-        function checkLocationPermission() {
-            const permission = getCookie('location_permission');
+        // Profile picture preview
+        const profilePictureInput = $('#foto');
+        const imagePreview = $('#image_preview');
 
-            if (permission !== 'granted') {
-                alert('Silakan izinkan akses lokasi untuk menggunakan fitur ini.');
-                setCookie('location_permission', 'granted', 30); // Simpan izin dalam cookie selama 30 hari
+        profilePictureInput.on('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.attr('src', '#').hide();
             }
-        }
-
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-        function setCookie(name, value, days) {
-            const expires = new Date(Date.now() + days * 864e5).toUTCString();
-            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-        }
-
-
+        });
 
 
         $.ajax({
@@ -564,33 +536,32 @@
     });
 
 
-    const imagePreview = document.getElementById('image_preview');
+    function handleAccessChoice() {
+        const accessChoice = document.getElementById('accessChoice').value;
+        const fotoInput = document.getElementById('foto');
 
-    // Event listener untuk input kamera
-    document.getElementById('camera_input').addEventListener('change', function(event) {
-        handleFileChange(event);
-    });
-
-    // Event listener untuk input galeri
-    document.getElementById('gallery_input').addEventListener('change', function(event) {
-        handleFileChange(event);
-    });
-
-    // Fungsi untuk menangani perubahan file dan menampilkan preview
-    function handleFileChange(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
+        if (accessChoice === 'camera') {
+            fotoInput.setAttribute('capture', 'camera');
+            fotoInput.click(); // Membuka kamera
         } else {
-            imagePreview.src = '#';
-            imagePreview.style.display = 'none';
+            fotoInput.removeAttribute('capture');
         }
     }
+
+    document.getElementById('foto').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const imagePreview = document.getElementById('image_preview');
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = 'block';
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
 
     // Cookie Permission untuk Kamera
     function checkCameraPermission() {
