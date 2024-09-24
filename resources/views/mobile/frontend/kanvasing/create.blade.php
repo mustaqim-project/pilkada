@@ -304,7 +304,7 @@
             <label class="mt-5">Kendala dilapangan jika ada!</label>
             <div class="input-style has-icon input-style-1 input-required mt-4">
                 <i class="input-icon fa fa-address-card color-theme"></i>
-                <x-text-input id="deskripsi" class="input" type="text" name="deskripsi" :value="old('deskripsi')" required placeholder="Kendala dilapangan jika ada!" />
+                <x-text-input id="deskripsi" class="input" type="text" name="deskripsi" :value="old('deskripsi')" placeholder="Kendala dilapangan jika ada!" />
                 <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
             </div>
             <!-- Lokasi Saya -->
