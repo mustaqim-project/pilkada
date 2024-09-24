@@ -316,14 +316,7 @@
                 </div>
 
 
-                <div class="mt-4">
-                    <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
-                </div>
-                <div class="file-data">
-                    <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
-                    <p class="upload-file-text color-white">Galeri</p>
-                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
-                </div>
+
 
 
                 <!-- deskripsi -->
