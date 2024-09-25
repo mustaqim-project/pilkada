@@ -4,15 +4,17 @@ use Detection\MobileDetect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CakadaController;
+use App\Http\Controllers\TimsesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\KanvasingController;
+use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ManajementController;
 use App\Http\Controllers\TipeCakadaController;
-use App\Http\Controllers\RoleUserController;
-use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\RolePermisionController;
+use App\Http\Controllers\RolePermissionController;
 
 
 Route::get('/', function () {
