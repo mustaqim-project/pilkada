@@ -130,9 +130,9 @@
                                                                             <td>{{ $kanvasing->nama_kk ?? 'Tidak Diketahui' }}</td>
                                                                             <td>{{ $kanvasing->nomor_hp ?? 'Tidak Diketahui' }}</td>
                                                                             <td>{{ $kanvasing->alamat ?? 'Tidak Diketahui' }}</td>
-                                                                            <td>{{ $kanvasing->elektabilitas ?? 'Tidak Diketahui' }}</td>
-                                                                            <td>{{ $kanvasing->popularitas ?? 'Tidak Diketahui' }}</td>
-                                                                            <td>{{ $kanvasing->jenis_kelamin ?? 'Tidak Diketahui' }}</td>
+                                                                            <td>{{ $kanvasing->elektabilitas == 1 ? 'Memilih' : ($kanvasing->elektabilitas == 2 ? 'Tidak Memilih' : 'Tidak Diketahui') }}</td>
+                                                                            <td>{{ $kanvasing->popularitas == 1 ? 'Kenal' : ($kanvasing->popularitas == 2 ? 'Tidak Kenal' : 'Tidak Diketahui') }}</td>
+                                                                            <td>{{ $kanvasing->jenis_kelamin == 1 ? 'Laki-laki' : ($kanvasing->jenis_kelamin == 2 ? 'Perempuan' : 'Tidak Diketahui') }}</td>
                                                                         </tr>
                                                                     @endforeach
                                                                 </tbody>
