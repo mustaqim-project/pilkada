@@ -49,6 +49,21 @@
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
                 @include("desktop.home-component.sidebar")
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+
+                    <!-- SweetAlert Success -->
+                    @if(session('success'))
+                    <script>
+                        Swal.fire({
+                            icon: 'success'
+                            , title: 'Success'
+                            , text: '{{ session('
+                            success ') }}'
+                            , timer: 2000
+                            , showConfirmButton: false
+                        });
+
+                    </script>
+                    @endif
                     @yield("content")
                     @include("desktop.home-component.footer")
                 </div>
