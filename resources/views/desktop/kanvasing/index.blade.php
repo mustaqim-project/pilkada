@@ -128,11 +128,14 @@
 
 <script>
     $(document).ready(function() {
-        // Extract latitude and longitude from the kanvasings data
-        var locations = @json($kanvasings - > map(function($kanvasing) {
-            return ['lat' => $kanvasing - > lat, 'lng' => $kanvasing - > lang, 'nama_kk' => $kanvasing - > nama_kk];
+        // Extract latitude, longitude, and nama_kk from the kanvasings data
+        var locations = @json($kanvasings->map(function($kanvasing) {
+            return [
+                'lat' => $kanvasing->lat, 
+                'lng' => $kanvasing->lang, 
+                'nama_kk' => $kanvasing->nama_kk
+            ];
         }));
-
 
         // Initialize the map
         var map = L.map('map').setView([locations[0].lat, locations[0].lng], 13); // Start at the first location
@@ -147,7 +150,7 @@
             L.marker([location.lat, location.lng]).addTo(map)
                 .bindPopup('Nama KK: ' + location.nama_kk + '<br>Lat: ' + location.lat + ', Lng: ' + location.lng)
                 .openPopup();
-        })
+        });
 
         // Optionally, handle user location
         if (navigator.geolocation) {
@@ -165,7 +168,7 @@
             console.log("Geolocation is not supported by this browser.");
         }
     });
-
 </script>
+
 
 @endsection
