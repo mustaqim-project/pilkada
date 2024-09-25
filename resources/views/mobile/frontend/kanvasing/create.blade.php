@@ -358,6 +358,7 @@
                 <input type="file" id="foto" accept="image/*" style="display:none;">
 
 
+
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
                 <div class="input-style has-icon input-style-1 input-required mt-4">
@@ -414,10 +415,7 @@
 
         $('.get-location').on('click', function(e) {
             e.preventDefault(); // Prevent the default anchor click behavior
-
-            // Jalankan fungsi pertama: getLocation()
             getLocation();
-
         });
 
         // Initialize the map
@@ -478,15 +476,13 @@
             }
         }
 
-
-
-        // Cek izin lokasi dan set cookie
+        // Check location permission and set cookie
         function checkLocationPermission() {
             const permission = getCookie('location_permission');
 
             if (permission !== 'granted') {
                 alert('Silakan izinkan akses lokasi untuk menggunakan fitur ini.');
-                setCookie('location_permission', 'granted', 30); // Simpan izin dalam cookie selama 30 hari
+                setCookie('location_permission', 'granted', 30); // Save permission in cookie for 30 days
             }
         }
 
@@ -500,7 +496,6 @@
             const expires = new Date(Date.now() + days * 864e5).toUTCString();
             document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
         }
-
 
         // Profile picture preview
         const profilePictureInput = $('#foto');
@@ -518,7 +513,6 @@
                 imagePreview.attr('src', '#').hide();
             }
         });
-
 
         $.ajax({
             url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
@@ -605,6 +599,7 @@
             });
         });
 
+        // Function to handle the access choice
         function handleAccessChoice() {
             const accessChoice = document.getElementById('accessChoice').value;
             const fotoInput = document.getElementById('foto');
@@ -640,34 +635,21 @@
         });
 
         // Cookie Permission for Camera Access (Optional)
-        function checkCameraPermission() {
-            const permission = getCookie('camera_permission');
-
-            if (permission !== 'granted') {
-                alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
-                setCookie('camera_permission', 'granted', 30);
-            }
+        if (getCookie('camera_permission') !== 'granted') {
+            // If permission is not granted, show a dialog or message to the user
+            alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
         }
 
         function getCookie(name) {
-            const value = ;
-            $ {
-                document.cookie
-            };
-            const parts = value.split(; $ {
-                name
-            } = );
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
         function setCookie(name, value, days) {
             const expires = new Date(Date.now() + days * 864e5).toUTCString();
-            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+            document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
         }
-
-        // Check camera permission on page load
-        window.onload = checkCameraPermission;
-
     });
 
 </script>
