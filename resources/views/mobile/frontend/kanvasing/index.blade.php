@@ -8,7 +8,7 @@
     }
 
     .table th {
-        background-color: #007bff; /* Bootstrap primary color */
+        background-color: #03836d; /* Bootstrap primary color */
         color: white; /* White text for table header */
         text-align: center; /* Center align header text */
     }
