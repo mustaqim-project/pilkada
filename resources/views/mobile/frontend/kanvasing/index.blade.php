@@ -7,6 +7,13 @@
         vertical-align: middle;
     }
 
+    .table th {
+        background-color: #007bff; /* Bootstrap primary color */
+        color: white; /* White text for table header */
+        text-align: center; /* Center align header text */
+    }
+
+
     .table img {
         border-radius: 5px;
     }
