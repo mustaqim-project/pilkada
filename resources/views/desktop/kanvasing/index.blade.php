@@ -33,10 +33,12 @@
                 Swal.fire({
                     icon: 'success'
                     , title: 'Success'
-                    , text: '{{ session('success') }}'
+                    , text: '{{ session('
+                    success ') }}'
                     , timer: 2000
                     , showConfirmButton: false
                 });
+
             </script>
             @endif
 
@@ -45,26 +47,34 @@
             <!-- Tabel Daftar Cakada -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Provinsi</th>
-                                <th>Kabupaten/Kota</th>
-                                <th>Kecamatan</th>
-                                <th>Kelurahan</th>
-                                <th>Nama KK</th>
-                                <th>Nomor HP</th>
-                                <th>Alamat</th>
-                                <th>Elektabilitas</th>
-                                <th>Popularitas</th>
-                                <th>Alasan</th>
-                                <th>Pesan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($kanvasings as $kanvasing)
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Provinsi</th>
+                                    <th>Kabupaten/Kota</th>
+                                    <th>Kecamatan</th>
+                                    <th>Kelurahan</th>
+                                    <th>Nama KK</th>
+                                    <th>Nomor HP</th>
+                                    <th>Alamat</th>
+                                    <th>Elektabilitas</th>
+                                    <th>Popularitas</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Usia</th>
+                                    <th>Jumlah Pemilih</th>
+                                    <th>Alasan</th>
+                                    <th>Pesan</th>
+                                    <th>Deskripsi</th>
+                                    <th>Foto</th>
+                                    <th>Lang</th>
+                                    <th>Lat</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($kanvasings as $kanvasing)
                                 <tr>
                                     <td>{{ $kanvasing->id }}</td>
                                     <td>{{ $kanvasing->provinsi_name }}</td>
@@ -74,10 +84,60 @@
                                     <td>{{ $kanvasing->nama_kk }}</td>
                                     <td>{{ $kanvasing->nomor_hp }}</td>
                                     <td>{{ $kanvasing->alamat }}</td>
-                                    <td>{{ $kanvasing->elektabilitas }}</td>
-                                    <td>{{ $kanvasing->popularitas }}</td>
+                                    <!-- Translating elektabilitas -->
+                                    <td>
+                                        @switch($kanvasing->elektabilitas)
+                                        @case(1)
+                                        Memilih
+                                        @break
+                                        @case(2)
+                                        Tidak Memilih
+                                        @break
+                                        @case(3)
+                                        Ragu-Ragu
+                                        @break
+                                        @default
+                                        Tidak Diketahui
+                                        @endswitch
+                                    </td>
+
+                                    <!-- Translating popularitas -->
+                                    <td>
+                                        @switch($kanvasing->popularitas)
+                                        @case(1)
+                                        Kenal
+                                        @break
+                                        @case(2)
+                                        Tidak Kenal
+                                        @break
+                                        @default
+                                        Tidak Diketahui
+                                        @endswitch
+                                    </td>
+
+                                    <!-- Translating jenis_kelamin -->
+                                    <td>
+                                        @switch($kanvasing->jenis_kelamin)
+                                        @case(1)
+                                        Laki-laki
+                                        @break
+                                        @case(2)
+                                        Perempuan
+                                        @break
+                                        @default
+                                        Tidak Diketahui
+                                        @endswitch
+                                    </td>
+                                    <td>{{ $kanvasing->usia }}</td>
+                                    <td>{{ $kanvasing->jum_pemilih }}</td>
                                     <td>{{ $kanvasing->alasan }}</td>
                                     <td>{{ $kanvasing->pesan }}</td>
+                                    <td>{{ $kanvasing->deskripsi }}</td>
+                                    <td>
+                                        <img src="{{ asset($kanvasing->foto) }}" alt="Foto" style="width: 50px; height: auto;">
+                                    </td>
+                                    <td>{{ $kanvasing->lang }}</td>
+                                    <td>{{ $kanvasing->lat }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{ route('kanvasing.edit', $kanvasing->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -89,15 +149,17 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
+                                @empty
                                 <tr>
-                                    <td colspan="13" class="text-center">Tidak ada data.</td>
+                                    <td colspan="20" class="text-center">Tidak ada data.</td>
                                 </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

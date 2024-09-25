@@ -7,6 +7,7 @@ use App\Models\Kanvasing;
 use App\Models\Cakada;
 use App\Models\Pekerjaan;
 use App\Models\TipeCakada;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
