@@ -95,7 +95,7 @@
                                 @foreach ($dataForView as $userName => $dates)
                                     <tr>
                                         <td>{{ $userName }}</td>
-                                        <td>{{ $dates['total'] }}</td>
+                                        <td style="text-align: center">{{ $dates['total'] }}</td>
                                         <td>
                                             <ul>
                                                 @foreach ($dates['dates'] as $date => $data)
