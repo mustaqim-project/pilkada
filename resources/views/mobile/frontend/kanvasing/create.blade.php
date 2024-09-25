@@ -599,7 +599,6 @@
             });
         });
 
-        // Function to handle the access choice
         function handleAccessChoice() {
             const accessChoice = document.getElementById('accessChoice').value;
             const fotoInput = document.getElementById('foto');
@@ -635,21 +634,35 @@
         });
 
         // Cookie Permission for Camera Access (Optional)
-        if (getCookie('camera_permission') !== 'granted') {
-            // If permission is not granted, show a dialog or message to the user
-            alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
+        function checkCameraPermission() {
+            const permission = getCookie('camera_permission');
+
+            if (permission !== 'granted') {
+                alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
+                setCookie('camera_permission', 'granted', 30);
+            }
         }
 
         function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
+            const value = ;
+            $ {
+                document.cookie
+            };
+            const parts = value.split(; $ {
+                name
+            } = );
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
         function setCookie(name, value, days) {
             const expires = new Date(Date.now() + days * 864e5).toUTCString();
-            document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
         }
+
+        // Check camera permission on page load
+        window.onload = checkCameraPermission;
+
+
     });
 
 </script>
