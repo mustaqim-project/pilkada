@@ -1,8 +1,28 @@
 @extends('desktop.layouts.master')
 
 @section('content')
+
+<style>
+    .table th,
+    .table td {
+        vertical-align: middle;
+        /* Center align cell contents */
+    }
+
+    .table img {
+        border-radius: 5px;
+        /* Optional: Round image corners */
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        /* Ensure scrolling on smaller screens */
+    }
+
+</style>
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
+
 
     {{-- BREADCRUMBS --}}
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -49,8 +69,8 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
-                            <thead>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead class="table-light">
                                 <tr>
                                     <th>#</th>
                                     <th>Provinsi</th>
@@ -121,6 +141,7 @@
             </div>
 
 
+
         </div>
     </div>
 </div>
@@ -129,11 +150,11 @@
 <script>
     $(document).ready(function() {
         // Extract latitude, longitude, and nama_kk from the kanvasings data
-        var locations = @json($kanvasings->map(function($kanvasing) {
+        var locations = @json($kanvasings - > map(function($kanvasing) {
             return [
-                'lat' => $kanvasing->lat, 
-                'lng' => $kanvasing->lang, 
-                'nama_kk' => $kanvasing->nama_kk
+                'lat' => $kanvasing - > lat
+                , 'lng' => $kanvasing - > lang
+                , 'nama_kk' => $kanvasing - > nama_kk
             ];
         }));
 
@@ -168,6 +189,7 @@
             console.log("Geolocation is not supported by this browser.");
         }
     });
+
 </script>
 
 

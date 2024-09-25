@@ -341,20 +341,21 @@
                 <div class="mt-4">
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
-                 <!-- Pilihan Akses -->
-                 <div class="mt-4">
+                
+                <!-- Pilihan Akses -->
+                <div class="mt-4">
                     <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
-                        <option value="">Pilih Upload Dari Kamera / Galery</option>
+                        <option value="">Pilih Upload Dari Kamera / Galeri</option>
                         <option value="gallery">Dari Galeri</option>
                         <option value="camera">Dari Kamera</option>
                     </select>
                 </div>
+                
                 <div class="file-data" hidden>
-                    <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture="camera">
+                    <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture>
                     <p class="upload-file-text color-white">Upload Foto Kegiatan</p>
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
-
 
 
                 <!-- deskripsi -->
@@ -616,12 +617,18 @@
         const accessChoice = document.getElementById('accessChoice').value;
         const fotoInput = document.getElementById('foto');
 
+        // Show the file input
+        const fileData = document.querySelector('.file-data');
+        fileData.hidden = false;
+
+        // Open the file input dialog
+        fotoInput.click();
+
+        // If the accessChoice is 'camera', ensure that we set the capture attribute
         if (accessChoice === 'camera') {
             fotoInput.setAttribute('capture', 'camera');
-            fotoInput.click(); // Membuka kamera
         } else {
             fotoInput.removeAttribute('capture');
-            fotoInput.click(); // Membuka kamera
         }
     }
 
@@ -642,13 +649,11 @@
 
     // Cookie Permission untuk Kamera
     function checkCameraPermission() {
-        // Cek cookie izin kamera
         const permission = getCookie('camera_permission');
 
         if (permission !== 'granted') {
-            // Tampilkan dialog untuk meminta izin
             alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
-            setCookie('camera_permission', 'granted', 30); // Simpan izin dalam cookie selama 30 hari
+            setCookie('camera_permission', 'granted', 30);
         }
     }
 
