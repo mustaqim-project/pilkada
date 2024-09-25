@@ -24,7 +24,7 @@
                     </a>
                 </div>
                 <div class="col-4 text-center">
-                    <a href="#">
+                    <a href="{{ route('kanvasing.index') }}">
                         <i class="ml-3 mr-3" data-feather="clipboard" style="color: #FFC733;"></i>
                         <h5 class="color-black font-13 font-500 line-height-s" style="font-size: 0.8125rem;">Manajemen Kanvasing</h5>
                     </a>
