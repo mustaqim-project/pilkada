@@ -120,14 +120,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('role/{id}/edit', [RolePermisionController::class, 'update'])->name('role.update');
     Route::delete('role/{id}/destory', [RolePermisionController::class, 'destroy'])->name('role.destroy');
 
-    /** Admin User Routes */
-    Route::get('role-users', [RoleUserController::class, 'index'])->name('role-users.index');
-    Route::get('role-users/create', [RoleUserController::class, 'create'])->name('role-users.create');
-    Route::post('role-users', [RoleUserController::class, 'store'])->name('role-users.store');
-    Route::get('role-users/{id}/edit', [RoleUserController::class, 'edit'])->name('role-users.edit');
-    Route::put('role-users/{id}', [RoleUserController::class, 'update'])->name('role-users.update');
-    Route::delete('role-users/{id}', [RoleUserController::class, 'destroy'])->name('role-users.destroy');
-
+    Route::middleware('can:cakada create')->group(function () {
+        Route::get('role-users', [RoleUserController::class, 'index'])->name('role-users.index');
+        Route::get('role-users/create', [RoleUserController::class, 'create'])->name('role-users.create');
+        Route::post('role-users', [RoleUserController::class, 'store'])->name('role-users.store');
+        Route::get('role-users/{id}/edit', [RoleUserController::class, 'edit'])->name('role-users.edit'); // Ensure this is a GET request
+        Route::put('role-users/{id}', [RoleUserController::class, 'update'])->name('role-users.update');
+        Route::delete('role-users/{id}', [RoleUserController::class, 'destroy'])->name('role-users.destroy');
+    });
 
     Route::resource('pekerjaan', PekerjaanController::class);
 });
