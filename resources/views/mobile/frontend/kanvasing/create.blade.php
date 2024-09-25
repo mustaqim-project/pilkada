@@ -342,7 +342,7 @@
 
                 <!-- Image Preview -->
                 <div class="mt-4">
-                    <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
+                    <img id="image_preview" src="" alt="Image Preview" style="display:none;" />
                 </div>
 
                 <!-- Pilihan Akses -->
@@ -644,13 +644,8 @@
         }
 
         function getCookie(name) {
-            const value = ;
-            $ {
-                document.cookie
-            };
-            const parts = value.split(; $ {
-                name
-            } = );
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
