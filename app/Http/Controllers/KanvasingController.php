@@ -9,26 +9,48 @@ use App\Models\Pekerjaan;
 use App\Models\TipeCakada;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Auth; // Pastikan import ini ada
+use Illuminate\Support\Facades\Auth;
 
-use Detection\MobileDetect; // Pastikan namespace ini benar
+use Detection\MobileDetect;
 
 class KanvasingController extends Controller
 {
     public function __construct()
     {
-        // Membatasi akses dengan permission
         $this->middleware('can:kanvasing read')->only('index');
-        $this->middleware('can:kanvasing create')->only(['store', 'create']); // Gabungkan pengaturan permission
+        $this->middleware('can:kanvasing create')->only(['store', 'create']);
     }
+
 
     public function index()
     {
         $detect = new MobileDetect;
-
         $kanvasings = Kanvasing::all();
 
-        dd($kanvasings);
+        // Mendapatkan daftar semua provinsi terlebih dahulu
+        $provinsiResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
+        $provinces = $provinsiResponse->json();
+
+        foreach ($kanvasings as $kanvasing) {
+            // Mendapatkan nama provinsi
+            $provinsi = collect($provinces)->firstWhere('id', $kanvasing->provinsi);
+            $kanvasing->provinsi_name = $provinsi ? $provinsi['name'] : 'Tidak Diketahui';
+
+            // Mendapatkan nama kabupaten/kota
+            $kabupatenResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regency/{$kanvasing->kabupaten_kota}.json");
+            $kabupaten = $kabupatenResponse->json();
+            $kanvasing->kabupaten_name = $kabupaten['name'] ?? 'Tidak Diketahui';
+
+            // Mendapatkan nama kecamatan
+            $kecamatanResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/district/{$kanvasing->kecamatan}.json");
+            $kecamatan = $kecamatanResponse->json();
+            $kanvasing->kecamatan_name = $kecamatan['name'] ?? 'Tidak Diketahui';
+
+            // Mendapatkan nama kelurahan
+            $kelurahanResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/village/{$kanvasing->kelurahan}.json");
+            $kelurahan = $kelurahanResponse->json();
+            $kanvasing->kelurahan_name = $kelurahan['name'] ?? 'Tidak Diketahui';
+        }
 
         if ($detect->isMobile() || $detect->isTablet()) {
             return view('mobile.frontend.kanvasing.index', compact('kanvasings'));
@@ -40,6 +62,9 @@ class KanvasingController extends Controller
             }
         }
     }
+
+
+
 
     public function create()
     {
