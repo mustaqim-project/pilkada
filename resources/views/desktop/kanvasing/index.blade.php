@@ -150,11 +150,11 @@
 <script>
     $(document).ready(function() {
         // Extract latitude, longitude, and nama_kk from the kanvasings data
-        var locations = @json($kanvasings - > map(function($kanvasing) {
+        var locations = @json($kanvasings->map(function($kanvasing) {
             return [
-                'lat' => $kanvasing - > lat
-                , 'lng' => $kanvasing - > lang
-                , 'nama_kk' => $kanvasing - > nama_kk
+                'lat' => $kanvasing->lat,
+                'lng' => $kanvasing->lang,
+                'nama_kk' => $kanvasing->nama_kk
             ];
         }));
 
@@ -189,7 +189,6 @@
             console.log("Geolocation is not supported by this browser.");
         }
     });
-
 </script>
 
 
