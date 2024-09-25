@@ -22,10 +22,14 @@ class KanvasingController extends Controller
     }
 
 
+    // app/Http/Controllers/KanvasingController.php
+
     public function index()
     {
         $detect = new MobileDetect;
-        $kanvasings = Kanvasing::all();
+
+        // Mengambil data Kanvasing beserta data relasi
+        $kanvasings = Kanvasing::with(['tipeCakada', 'cakada', 'pekerjaan','user'])->get();
 
         // Mendapatkan daftar semua provinsi terlebih dahulu
         $provinsiResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
@@ -50,9 +54,20 @@ class KanvasingController extends Controller
             $kelurahanResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/village/{$kanvasing->kelurahan}.json");
             $kelurahan = $kelurahanResponse->json();
             $kanvasing->kelurahan_name = $kelurahan['name'] ?? 'Tidak Diketahui';
+
+            // Mendapatkan nama tipe cakada
+            $kanvasing->user_name = $kanvasing->user->name ?? 'Tidak Diketahui';
+
+            $kanvasing->tipe_cakada_name = $kanvasing->tipeCakada->name ?? 'Tidak Diketahui';
+
+            // Mendapatkan nama cakada
+            $kanvasing->cakada_name = $kanvasing->cakada->nama_calon_kepala ?? 'Tidak Diketahui';
+            $kanvasing->cakada_name = $kanvasing->cakada->nama_calon_wakil ?? 'Tidak Diketahui';
+
+            // Mendapatkan nama pekerjaan
+            $kanvasing->pekerjaan_name = $kanvasing->pekerjaan->nama_pekerjaan ?? 'Tidak Diketahui';
         }
 
-        dd($kanvasings);
         if ($detect->isMobile() || $detect->isTablet()) {
             return view('mobile.frontend.kanvasing.index', compact('kanvasings'));
         } else {
@@ -63,6 +78,8 @@ class KanvasingController extends Controller
             }
         }
     }
+
+
 
 
 

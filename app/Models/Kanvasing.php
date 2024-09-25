@@ -44,24 +44,26 @@ class Kanvasing extends Model
     /**
      * Relasi ke model Cakada.
      */
+    public function tipeCakada()
+    {
+        return $this->belongsTo(TipeCakada::class, 'tipe_cakada_id');
+    }
+
+    // Relasi ke Cakada
     public function cakada()
     {
         return $this->belongsTo(Cakada::class, 'cakada_id');
     }
 
-    public function tipe_cakada()
+    // Relasi ke Pekerjaan
+    public function pekerjaan()
     {
-        return $this->belongsTo(TipeCakada::class, 'tipe_cakada_id');
+        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function pekerjaan()
-    {
-        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
     }
 
 }
