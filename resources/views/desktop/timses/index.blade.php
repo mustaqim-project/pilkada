@@ -2,14 +2,6 @@
 
 @section('content')
 <style>
-    body {
-        background-color: #f8f9fa; /* Light background for better contrast */
-    }
-
-    .card {
-        border: 1px solid #e0e0e0; /* Soft border for cards */
-        border-radius: 8px; /* Rounded corners */
-    }
 
     .table {
         background-color: #ffffff; /* White background for tables */
@@ -44,16 +36,7 @@
         margin-top: 10px; /* Space above detail table */
     }
 
-    .breadcrumb {
-        background: none; /* Remove background for breadcrumbs */
-        padding: 0; /* Remove padding */
-        margin: 0; /* Remove margin */
-    }
 
-    .page-heading {
-        font-size: 1.5rem; /* Adjust page heading size */
-        margin-bottom: 1rem; /* Space below heading */
-    }
 </style>
 
 
