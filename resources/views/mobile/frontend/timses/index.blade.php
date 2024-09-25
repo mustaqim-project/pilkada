@@ -107,7 +107,7 @@
                                     @foreach ($dates['dates'] as $date => $data)
                                     <li>
                                         {{ $date }} ({{ $data['total'] }})
-                                        <button class="toggle-detail btn btn-link">Lihat Detail</button>
+                                        <button class="toggle-detail btn btn-full bg-highlight">Lihat Detail</button>
                                         <div class="detail">
                                             <table class="table table-bordered mt-2">
                                                 <thead>
