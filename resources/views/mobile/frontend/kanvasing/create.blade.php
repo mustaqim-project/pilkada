@@ -621,7 +621,7 @@
 
         // If 'camera' is selected, set capture to 'camera' to open the camera
         if (accessChoice === 'camera') {
-            fotoInput.setAttribute('capture', 'environment'); // or 'user'
+            fotoInput.setAttribute('capture', 'camera');
         } else {
             fotoInput.removeAttribute('capture');
         }
@@ -645,6 +645,30 @@
             reader.readAsDataURL(file);
         }
     });
+
+    // Cookie Permission for Camera Access (Optional)
+    function checkCameraPermission() {
+        const permission = getCookie('camera_permission');
+
+        if (permission !== 'granted') {
+            alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
+            setCookie('camera_permission', 'granted', 30);
+        }
+    }
+
+    function getCookie(name) {
+        const value = ; ${document.cookie};
+        const parts = value.split(; ${name}=);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
+
+    // Check camera permission on page load
+    window.onload = checkCameraPermission;
 
 </script>
 @endsection
