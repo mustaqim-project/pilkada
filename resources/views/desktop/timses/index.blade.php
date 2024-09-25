@@ -104,7 +104,7 @@
                             <thead>
                                 <tr>
                                     <th>Nama User</th>
-                                    <th>Total Kanvasing Keseluruhan</th>
+                                    <th>Total</th>
                                     <th>Tanggal</th>
                                     <th>Detail</th>
                                 </tr>
