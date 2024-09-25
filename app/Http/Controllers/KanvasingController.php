@@ -26,17 +26,17 @@ class KanvasingController extends Controller
     {
         $detect = new MobileDetect;
 
-        // Ambil data yang benar, pilih salah satu model yang akan digunakan
-        $kanvasings = Kanvasing::all(); // Gunakan ini jika memang Kanvasing model yang ingin digunakan
+        $kanvasings = Kanvasing::all();
 
-        // Cek jenis perangkat
+        dd($kanvasings);
+
         if ($detect->isMobile() || $detect->isTablet()) {
             return view('mobile.frontend.kanvasing.index', compact('kanvasings'));
         } else {
             if (Auth::check()) {
                 return view('desktop.kanvasing.index', compact('kanvasings'));
             } else {
-                return redirect('/'); // Arahkan ke halaman root jika user tidak login
+                return redirect('/');
             }
         }
     }
