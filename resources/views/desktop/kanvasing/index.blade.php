@@ -19,7 +19,22 @@
         /* Ensure scrolling on smaller screens */
     }
 
+    .map-container {
+        position: relative;
+    }
+
+    .total-count-overlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(255, 255, 255, 0.8); /* Light background for better visibility */
+        padding: 10px; /* Some padding */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Slight shadow for depth */
+        z-index: 1000; /* Ensure it's on top of the map */
+    }
 </style>
+
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
 
@@ -42,6 +57,11 @@
         </div>
     </div>
 
+@php
+    use App\Models\Kanvasing;
+    $totalKanvasings = Kanvasing::count();
+@endphp
+
     <!--begin::Content-->
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
@@ -63,7 +83,14 @@
             @endif
 
 
-            <div id="map" style="display: block; height: 400px;"></div> <!-- Make sure the map is visible -->
+            <div class="map-container" style="position: relative;">
+                <div id="map" style="display: block; height: 400px;"></div> <!-- Map container -->
+
+                <!-- Overlay for total count -->
+                <div class="total-count-overlay" style="position: absolute; top: 10px; right: 10px; background-color: rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);">
+                    Total Kanvasing: <strong>{{ $totalKanvasings }}</strong>
+                </div>
+            </div>
 
             <!-- Tabel Daftar Cakada -->
             <div class="card mb-4">
