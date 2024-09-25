@@ -103,7 +103,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/manajement', [ManajementController::class, 'index'])->middleware('can:manajement read')->name('manajement.read');
 
-    Route::get('/timses', [TimsesController::class, 'index'])->middleware('can:manajement read')->name('timses.read');
+    Route::get('/timses', [TimsesController::class, 'index'])->middleware('can:manajement read')->name('timses.index');
 
 
     Route::put('profile-password-update/{id}', [ProfileController::class, 'passwordUpdate'])->name('profile-password.update');
