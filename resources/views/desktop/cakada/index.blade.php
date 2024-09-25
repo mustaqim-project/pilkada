@@ -3,7 +3,43 @@
 @section('content')
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
+    <style>
 
+        .table {
+            background-color: #ffffff; /* White background for tables */
+            border-radius: 8px; /* Rounded corners for tables */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+
+        .table th {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white; /* White text for table header */
+            text-align: center; /* Center align header text */
+        }
+
+        .table td {
+            vertical-align: middle; /* Vertically align cell content */
+        }
+
+        .btn-link {
+            color: #007bff; /* Bootstrap primary color for buttons */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .btn-link:hover {
+            text-decoration: underline; /* Underline on hover for better UX */
+        }
+
+        .detail {
+            display: none; /* Hide detail section by default */
+        }
+
+        .detail table {
+            margin-top: 10px; /* Space above detail table */
+        }
+
+
+    </style>
     {{-- BREADCRUMBS --}}
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
         <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
