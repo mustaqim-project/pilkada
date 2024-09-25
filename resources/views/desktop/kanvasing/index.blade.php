@@ -123,47 +123,49 @@
 
         </div>
     </div>
-    </div>
+</div>
 
 
-    <script>
-        $(document).ready(function() {
-            // Extract latitude and longitude from the kanvasings data
-            var locations = @json($kanvasings->map(function($kanvasing) {
-                return ['lat' => $kanvasing->lat, 'lng' => $kanvasing->lang];
-            }));
-    
-            // Initialize the map
-            var map = L.map('map').setView([locations[0].lat, locations[0].lng], 13); // Start at the first location
-    
-            // Add a tile layer (OpenStreetMap in this case)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19
-            }).addTo(map);
-    
-            // Loop through the locations and add markers to the map
-            locations.forEach(function(location) {
-                L.marker([location.lat, location.lng]).addTo(map)
-                    .bindPopup('Lat: ' + location.lat + ', Lng: ' + location.lng)
+<script>
+    $(document).ready(function() {
+        // Extract latitude, longitude, and nama_kk from the kanvasings data
+        var locations = @json($kanvasings - > map(function($kanvasing) {
+            return ['lat' => $kanvasing - > lat, 'lng' => $kanvasing - > lang, 'nama_kk' => $kanvasing - > nama_kk];
+        }));
+
+        // Initialize the map
+        var map = L.map('map').setView([locations[0].lat, locations[0].lng], 13); // Start at the first location
+
+        // Add a tile layer (OpenStreetMap in this case)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Loop through the locations and add markers to the map
+        locations.forEach(function(location) {
+            L.marker([location.lat, location.lng]).addTo(map)
+                .bindPopup('Nama KK: ' + location.nama_kk + '<br>Lat: ' + location.lat + ', Lng: ' + location.lng)
+                .openPopup();
+        });
+
+
+        // Optionally, handle user location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var userLat = position.coords.latitude;
+                var userLng = position.coords.longitude;
+
+                // Center the map on user location
+                map.setView([userLat, userLng], 13);
+                L.marker([userLat, userLng]).addTo(map)
+                    .bindPopup('Your Location')
                     .openPopup();
             });
-    
-            // Optionally, handle user location
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var userLat = position.coords.latitude;
-                    var userLng = position.coords.longitude;
-    
-                    // Center the map on user location
-                    map.setView([userLat, userLng], 13);
-                    L.marker([userLat, userLng]).addTo(map)
-                        .bindPopup('Your Location')
-                        .openPopup();
-                });
-            } else {
-                console.log("Geolocation is not supported by this browser.");
-            }
-        });
-    </script>
-    
-    @endsection
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    });
+
+</script>
+
+@endsection
