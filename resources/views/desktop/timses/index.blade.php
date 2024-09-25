@@ -1,6 +1,62 @@
 @extends('desktop.layouts.master')
 
 @section('content')
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background for better contrast */
+    }
+
+    .card {
+        border: 1px solid #e0e0e0; /* Soft border for cards */
+        border-radius: 8px; /* Rounded corners */
+    }
+
+    .table {
+        background-color: #ffffff; /* White background for tables */
+        border-radius: 8px; /* Rounded corners for tables */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    .table th {
+        background-color: #007bff; /* Bootstrap primary color */
+        color: white; /* White text for table header */
+        text-align: center; /* Center align header text */
+    }
+
+    .table td {
+        vertical-align: middle; /* Vertically align cell content */
+    }
+
+    .btn-link {
+        color: #007bff; /* Bootstrap primary color for buttons */
+        text-decoration: none; /* Remove underline */
+    }
+
+    .btn-link:hover {
+        text-decoration: underline; /* Underline on hover for better UX */
+    }
+
+    .detail {
+        display: none; /* Hide detail section by default */
+    }
+
+    .detail table {
+        margin-top: 10px; /* Space above detail table */
+    }
+
+    .breadcrumb {
+        background: none; /* Remove background for breadcrumbs */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margin */
+    }
+
+    .page-heading {
+        font-size: 1.5rem; /* Adjust page heading size */
+        margin-bottom: 1rem; /* Space below heading */
+    }
+</style>
+
+
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
 
@@ -31,24 +87,20 @@
             @if(session('success'))
             <script>
                 Swal.fire({
-                    icon: 'success'
-                    , title: 'Success'
-                    , text: '{{ session('
-                    success ') }}'
-                    , timer: 2000
-                    , showConfirmButton: false
+                    icon: 'success',
+                    title: 'Success',
+                    text: '{{ session('success') }}',
+                    timer: 2000,
+                    showConfirmButton: false
                 });
-
             </script>
             @endif
-
-
 
             <!-- Tabel Daftar Cakada -->
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Nama User</th>
@@ -67,24 +119,40 @@
                                                 @foreach ($dates['dates'] as $date => $data)
                                                     <li>
                                                         {{ $date }} ({{ $data['total'] }})
-                                                        <button class="toggle-detail">Lihat Detail</button>
-                                                        <div class="detail" style="display: none;">
-                                                            <ul>
-                                                                @foreach ($data['kanvasings'] as $kanvasing)
-                                                                    <li>
-                                                                        Provinsi: {{ $kanvasing->provinsi_name }},
-                                                                        Kabupaten/Kota: {{ $kanvasing->kabupaten_name }},
-                                                                        Kecamatan: {{ $kanvasing->kecamatan_name }},
-                                                                        Kelurahan: {{ $kanvasing->kelurahan_name }},
-                                                                        Nama KK: {{ $kanvasing->nama_kk ?? 'Tidak Diketahui' }},
-                                                                        Nomor HP: {{ $kanvasing->nomor_hp ?? 'Tidak Diketahui' }},
-                                                                        Alamat: {{ $kanvasing->alamat ?? 'Tidak Diketahui' }},
-                                                                        Elektabilitas: {{ $kanvasing->elektabilitas ?? 'Tidak Diketahui' }},
-                                                                        Popularitas: {{ $kanvasing->popularitas ?? 'Tidak Diketahui' }},
-                                                                        Jenis Kelamin: {{ $kanvasing->jenis_kelamin ?? 'Tidak Diketahui' }}
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
+                                                        <button class="toggle-detail btn btn-link">Lihat Detail</button>
+                                                        <div class="detail">
+                                                            <table class="table table-bordered mt-2">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Provinsi</th>
+                                                                        <th>Kabupaten/Kota</th>
+                                                                        <th>Kecamatan</th>
+                                                                        <th>Kelurahan</th>
+                                                                        <th>Nama KK</th>
+                                                                        <th>Nomor HP</th>
+                                                                        <th>Alamat</th>
+                                                                        <th>Elektabilitas</th>
+                                                                        <th>Popularitas</th>
+                                                                        <th>Jenis Kelamin</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($data['kanvasings'] as $kanvasing)
+                                                                        <tr>
+                                                                            <td>{{ $kanvasing->provinsi_name }}</td>
+                                                                            <td>{{ $kanvasing->kabupaten_name }}</td>
+                                                                            <td>{{ $kanvasing->kecamatan_name }}</td>
+                                                                            <td>{{ $kanvasing->kelurahan_name }}</td>
+                                                                            <td>{{ $kanvasing->nama_kk ?? 'Tidak Diketahui' }}</td>
+                                                                            <td>{{ $kanvasing->nomor_hp ?? 'Tidak Diketahui' }}</td>
+                                                                            <td>{{ $kanvasing->alamat ?? 'Tidak Diketahui' }}</td>
+                                                                            <td>{{ $kanvasing->elektabilitas ?? 'Tidak Diketahui' }}</td>
+                                                                            <td>{{ $kanvasing->popularitas ?? 'Tidak Diketahui' }}</td>
+                                                                            <td>{{ $kanvasing->jenis_kelamin ?? 'Tidak Diketahui' }}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </li>
                                                 @endforeach
@@ -94,16 +162,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-
-
-
-
-
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -116,6 +177,5 @@
         });
     });
 </script>
-
 
 @endsection
