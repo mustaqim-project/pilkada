@@ -36,7 +36,6 @@
                             @foreach ($admins as $admin)
                             <tr>
                                 <td>{{ $admin->id }}</td>
-
                                 <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->email }}</td>
                                 <td><span class="badge bg-primary text-light">{{ $admin->getRoleNames()->first() }}</span></td>
