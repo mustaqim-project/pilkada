@@ -61,8 +61,8 @@ class KanvasingController extends Controller
             $kanvasing->tipe_cakada_name = $kanvasing->tipeCakada->name ?? 'Tidak Diketahui';
 
             // Mendapatkan nama cakada
-            $kanvasing->cakada_name = $kanvasing->cakada->nama_calon_kepala ?? 'Tidak Diketahui';
-            $kanvasing->cakada_name = $kanvasing->cakada->nama_calon_wakil ?? 'Tidak Diketahui';
+            $kanvasing->cakada_kelapa = $kanvasing->cakada->nama_calon_kepala ?? 'Tidak Diketahui';
+            $kanvasing->cakada_wakil = $kanvasing->cakada->nama_calon_wakil ?? 'Tidak Diketahui';
 
             // Mendapatkan nama pekerjaan
             $kanvasing->pekerjaan_name = $kanvasing->pekerjaan->nama_pekerjaan ?? 'Tidak Diketahui';
