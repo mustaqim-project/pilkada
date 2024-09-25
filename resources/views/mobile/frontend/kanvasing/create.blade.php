@@ -9,8 +9,10 @@
         height: auto;
         display: block;
         margin-top: 10px;
-        border-radius: 0.375rem; /* Menambahkan radius sudut untuk pratinjau gambar */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan pada gambar */
+        border-radius: 0.375rem;
+        /* Menambahkan radius sudut untuk pratinjau gambar */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Menambahkan bayangan pada gambar */
     }
 
     /* Styling umum untuk kontainer */
@@ -97,6 +99,7 @@
         border-color: #007bff;
         box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
     }
+
 </style>
 <div class="page-content">
     <div class="page-title page-title-small">
@@ -334,10 +337,11 @@
                 </div>
 
 
-
                 <!-- Upload Foto -->
                 <label class="mt-5">Upload Foto Kegiatan</label>
                 <em>(*Wajib Diisi)</em>
+
+                <!-- Image Preview -->
                 <div class="mt-4">
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
@@ -346,18 +350,13 @@
                 <div class="mt-4">
                     <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
                         <option value="">Pilih Upload Dari Kamera / Galeri</option>
-                        <option value="gallery">Dari Kamera</option>
-                        <option value="camera">Dari Galeri</option>
+                        <option value="camera">Dari Kamera</option>
+                        <option value="gallery">Dari Galeri</option>
                     </select>
                 </div>
 
-                <div class="file-data" hidden>
-                    <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture>
-                    <p class="upload-file-text color-white">Upload Foto Kegiatan</p>
-                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
-                </div>
-
-
+                <!-- Hidden Input for File Upload -->
+                <input type="file" id="foto" accept="image/*" style="display:none;">
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
                 <div class="input-style has-icon input-style-1 input-required mt-4">
@@ -526,9 +525,9 @@
 
 
         $.ajax({
-            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
-            method: 'GET',
-            success: function(data) {
+            url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
+            , method: 'GET'
+            , success: function(data) {
                 let provinsiDropdown = $('#provinsi');
                 data.forEach(function(provinsi) {
                     provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
@@ -542,9 +541,9 @@
             $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
             if (provinsiId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`,
-                    method: 'GET',
-                    success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
+                    , method: 'GET'
+                    , success: function(data) {
                         data.forEach(function(kabupaten) {
                             $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
                         });
@@ -559,9 +558,9 @@
             $('#kecamatan').html('<option value="">Pilih Kecamatan</option>');
             if (kabupatenId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`,
-                    method: 'GET',
-                    success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`
+                    , method: 'GET'
+                    , success: function(data) {
                         data.forEach(function(kecamatan) {
                             $('#kecamatan').append('<option value="' + kecamatan.id + '">' + kecamatan.name + '</option>');
                         });
@@ -576,9 +575,9 @@
             $('#kelurahan').html('<option value="">Pilih Kelurahan</option>');
             if (kecamatanId) {
                 $.ajax({
-                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`,
-                    method: 'GET',
-                    success: function(data) {
+                    url: `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`
+                    , method: 'GET'
+                    , success: function(data) {
                         data.forEach(function(kelurahan) {
                             $('#kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.name + '</option>');
                         });
@@ -593,14 +592,14 @@
             let tipeCakada = $('#tipe_cakada_id').val();
 
             $.ajax({
-                url: "{{ route('getCakadaByFilters') }}",
-                method: 'GET',
-                data: {
-                    provinsi: provinsi,
-                    kabupaten_kota: kabupatenKota,
-                    tipe_cakada_id: tipeCakada
-                },
-                success: function(response) {
+                url: "{{ route('getCakadaByFilters') }}"
+                , method: 'GET'
+                , data: {
+                    provinsi: provinsi
+                    , kabupaten_kota: kabupatenKota
+                    , tipe_cakada_id: tipeCakada
+                }
+                , success: function(response) {
                     let options = '<option value="">Pilih Nama Kandidat</option>';
                     $.each(response, function(index, cakada) {
                         options += `<option value="${cakada.id}">${cakada.nama_calon_kepala}-${cakada.nama_calon_wakil}</option>`;
@@ -612,26 +611,25 @@
 
     });
 
-
     function handleAccessChoice() {
         const accessChoice = document.getElementById('accessChoice').value;
         const fotoInput = document.getElementById('foto');
 
-        // Show the file input
-        // const fileData = document.querySelector('.file-data');
-        // fileData.hidden = false;
+        // Set the input to accept images and open the file input dialog
+        fotoInput.setAttribute('accept', 'image/*');
 
-        // Open the file input dialog
-        fotoInput.click();
-
-        // If the accessChoice is 'camera', ensure that we set the capture attribute
+        // If 'camera' is selected, set capture to 'camera' to open the camera
         if (accessChoice === 'camera') {
             fotoInput.setAttribute('capture', 'camera');
         } else {
             fotoInput.removeAttribute('capture');
         }
+
+        // Trigger the file input dialog
+        fotoInput.click();
     }
 
+    // Preview selected image
     document.getElementById('foto').addEventListener('change', function(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -647,7 +645,7 @@
         }
     });
 
-    // Cookie Permission untuk Kamera
+    // Cookie Permission for Camera Access (Optional)
     function checkCameraPermission() {
         const permission = getCookie('camera_permission');
 
@@ -668,7 +666,8 @@
         document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
     }
 
-    // Cek izin kamera saat halaman dimuat
+    // Check camera permission on page load
     window.onload = checkCameraPermission;
+
 </script>
 @endsection
