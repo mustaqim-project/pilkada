@@ -90,8 +90,8 @@ class TimsesController extends Controller
         $provinsiResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
         $provinces = $provinsiResponse->json();
 
-        // Menyiapkan array untuk mengelompokkan data kanvasing berdasarkan user
-        $userKanvasingCounts = [];
+        // Menyiapkan array untuk mengelompokkan data kanvasing berdasarkan tanggal
+        $kanvasingCountsByDate = [];
 
         foreach ($kanvasings as $kanvasing) {
             // Mendapatkan nama provinsi
@@ -126,27 +126,26 @@ class TimsesController extends Controller
             // Mendapatkan nama pekerjaan
             $kanvasing->pekerjaan_name = $kanvasing->pekerjaan->nama_pekerjaan ?? 'Tidak Diketahui';
 
-            // Mengelompokkan data berdasarkan user
-            $userId = $kanvasing->user_id;
-            if (!isset($userKanvasingCounts[$userId])) {
-                $userKanvasingCounts[$userId] = [
-                    'name' => $kanvasing->user_name,
+            // Mengelompokkan data berdasarkan tanggal
+            $date = $kanvasing->created_at->format('Y-m-d'); // Ganti sesuai field tanggal yang sesuai
+            if (!isset($kanvasingCountsByDate[$date])) {
+                $kanvasingCountsByDate[$date] = [
                     'total' => 0,
                     'kanvasings' => [],
                 ];
             }
 
-            $userKanvasingCounts[$userId]['total']++;
-            $userKanvasingCounts[$userId]['kanvasings'][] = $kanvasing;
+            $kanvasingCountsByDate[$date]['total']++;
+            $kanvasingCountsByDate[$date]['kanvasings'][] = $kanvasing;
         }
 
         // Jika perangkat mobile atau tablet, tampilkan view mobile
         if ($detect->isMobile() || $detect->isTablet()) {
-            return view('mobile.frontend.timses.index', compact('userKanvasingCounts'));
+            return view('mobile.frontend.timses.index', compact('kanvasingCountsByDate'));
         } else {
             // Jika user terautentikasi, tampilkan view desktop
             if (Auth::check()) {
-                return view('desktop.timses.index', compact('userKanvasingCounts'));
+                return view('desktop.timses.index', compact('kanvasingCountsByDate'));
             } else {
                 return redirect('/');
             }

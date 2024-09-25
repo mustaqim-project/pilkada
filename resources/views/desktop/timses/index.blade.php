@@ -51,33 +51,35 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Nama User</th>
+                                    <th>Tanggal</th>
                                     <th>Total Kanvasing</th>
-                                    <th>Detail Kanvasing</th>
+                                    <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($userKanvasingCounts as $userId => $userData)
+                                @foreach ($kanvasingCountsByDate as $date => $data)
                                 <tr>
-                                    <td>{{ $userData['name'] }}</td>
-                                    <td>{{ $userData['total'] }}</td>
+                                    <td>{{ $date }}</td>
+                                    <td>{{ $data['total'] }}</td>
                                     <td>
-                                        <ul>
-                                            @foreach ($userData['kanvasings'] as $kanvasing)
-                                            <li>
-                                                {{ $kanvasing->provinsi_name }},
-                                                {{ $kanvasing->kabupaten_name }},
-                                                {{ $kanvasing->kecamatan_name }},
-                                                {{ $kanvasing->kelurahan_name }} -
-                                                Cakada: {{ $kanvasing->cakada_kelapa }} ({{ $kanvasing->cakada_wakil }})
-                                            </li>
-                                            @endforeach
-                                        </ul>
+                                        <button class="toggle-detail">Lihat Detail</button>
+                                        <div class="detail" style="display: none;">
+                                            <ul>
+                                                @foreach ($data['kanvasings'] as $kanvasing)
+                                                <li>
+                                                    {{ $kanvasing->user_name }} - {{ $kanvasing->tipe_cakada_name }} - {{ $kanvasing->cakada_kelapa }} - {{ $kanvasing->cakada_wakil }}
+                                                    <!-- Tambahkan informasi lain yang relevan di sini -->
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
+
                     </div>
                 </div>
             </div>
@@ -87,6 +89,15 @@
     </div>
 </div>
 
+<script>
+    document.querySelectorAll('.toggle-detail').forEach(button => {
+        button.addEventListener('click', () => {
+            const detailDiv = button.nextElementSibling;
+            detailDiv.style.display = detailDiv.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+
+</script>
 
 
 @endsection
