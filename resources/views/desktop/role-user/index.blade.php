@@ -42,7 +42,7 @@
                                 <td><span class="badge bg-primary text-light">{{ $admin->getRoleNames()->first() }}</span></td>
 
                                 <td>
-                                    @if ($admin->getRoleNames()->first() != 'Super Admin')
+                                    @if ($admin->getRoleNames()->first() != 'Admin')
 
                                     <a href="{{ route('role-users.edit', $admin->id) }}"
                                         class="btn btn-primary"><i class="fas fa-edit"></i></a>

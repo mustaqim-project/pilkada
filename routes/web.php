@@ -121,7 +121,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('role/{id}/destory', [RolePermisionController::class, 'destroy'])->name('role.destroy');
 
     /** Admin User Routes */
-    Route::resource('role-users', RoleUserController::class)->middleware('can:cakada create');
+    Route::get('role-users', [RoleUserController::class, 'index'])->name('role-users.index');
+    Route::get('role-users/create', [RoleUserController::class, 'create'])->name('role-users.create');
+    Route::post('role-users', [RoleUserController::class, 'store'])->name('role-users.store');
+    Route::get('role-users/{id}/edit', [RoleUserController::class, 'edit'])->name('role-users.edit');
+    Route::put('role-users/{id}', [RoleUserController::class, 'update'])->name('role-users.update');
+    Route::delete('role-users/{id}', [RoleUserController::class, 'destroy'])->name('role-users.destroy');
+
 
     Route::resource('pekerjaan', PekerjaanController::class);
 });
