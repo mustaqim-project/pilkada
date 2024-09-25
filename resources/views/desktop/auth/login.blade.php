@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Sikadsis - Finance Mobile Application-UX/UI Design Screen One</title>
+    <title>Sikadsis - Sistem Informasi Kampanye dan Analisis Pilkada Sistematis</title>
+    <link rel="shortcut icon" href="{{ asset('mobile/images/logo.png') }}" />
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
@@ -215,7 +216,7 @@
                 <label for="password">Password</label>
                 <div class="sec-2">
                     <ion-icon name="lock-closed-outline"></ion-icon>
-                    <input class="pas" type="password" name="password" placeholder="············" />
+                    <input class="pas" type="password" name="password" placeholder="************************" />
                 </div>
             </div>
             <button type="submit" class="login">Login</button>

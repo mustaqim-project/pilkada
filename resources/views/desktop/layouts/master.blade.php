@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <base href="" />
-    <title>SIKADSIS - </title>
+    <title>SIKADSIS - Dashboard</title>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="{{ asset('admin/desktop/assets/media/logos/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('mobile/images/logo.png') }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="{{ asset('admin/desktop/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/desktop/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
