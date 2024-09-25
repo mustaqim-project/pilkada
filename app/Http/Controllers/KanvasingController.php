@@ -9,41 +9,70 @@ use App\Models\Pekerjaan;
 use App\Models\TipeCakada;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth; // Pastikan import ini ada
+
+use Detection\MobileDetect; // Pastikan namespace ini benar
 
 class KanvasingController extends Controller
 {
-
     public function __construct()
     {
         // Membatasi akses dengan permission
         $this->middleware('can:kanvasing read')->only('index');
-        $this->middleware('can:kanvasing create')->only(['store']);
-        $this->middleware('can:kanvasing create')->only(['create']);
+        $this->middleware('can:kanvasing create')->only(['store', 'create']); // Gabungkan pengaturan permission
     }
 
     public function index()
     {
-        $kanvasings = Cakada::all();
-        $kanvasings = Kanvasing::all();
-        return view('kanvasing.index', compact('kanvasings'));
+        $detect = new MobileDetect;
+
+        // Ambil data yang benar, pilih salah satu model yang akan digunakan
+        $kanvasings = Kanvasing::all(); // Gunakan ini jika memang Kanvasing model yang ingin digunakan
+
+        // Cek jenis perangkat
+        if ($detect->isMobile() || $detect->isTablet()) {
+            return view('mobile.frontend.kanvasing.index', compact('kanvasings'));
+        } else {
+            if (Auth::check()) {
+                return view('desktop.kanvasing.index', compact('kanvasings'));
+            } else {
+                return redirect('/'); // Arahkan ke halaman root jika user tidak login
+            }
+        }
     }
 
     public function create()
     {
-        // Fetch the data from the API
+        // Fetch data from API
         $provinsi = Http::get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')->json();
         $tipe_cakada = TipeCakada::all();
         $cakada = Cakada::all();
         $pekerjaan = Pekerjaan::all();
+        $detect = new MobileDetect;
 
-        // Pass the data to the view
-        return view('mobile.frontend.kanvasing.create', [
-            'provinsi' => $provinsi,
-            'tipe_cakada' => $tipe_cakada,
-            'cakada' => $cakada,
-            'pekerjaan' => $pekerjaan
-        ]);
+        // Cek jenis perangkat
+        if ($detect->isMobile() || $detect->isTablet()) {
+            return view('mobile.frontend.kanvasing.create', [
+                'provinsi' => $provinsi,
+                'tipe_cakada' => $tipe_cakada,
+                'cakada' => $cakada,
+                'pekerjaan' => $pekerjaan
+            ]);
+        } else {
+            if (Auth::check()) {
+                return view('desktop.kanvasing.create', [
+                    'provinsi' => $provinsi,
+                    'tipe_cakada' => $tipe_cakada,
+                    'cakada' => $cakada,
+                    'pekerjaan' => $pekerjaan
+                ]);
+            } else {
+                return redirect('/'); // Arahkan ke halaman root jika user tidak login
+            }
+        }
     }
+
+
 
     public function getCakadaByFilters(Request $request)
     {
