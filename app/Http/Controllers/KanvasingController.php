@@ -22,14 +22,13 @@ class KanvasingController extends Controller
     }
 
 
-    // app/Http/Controllers/KanvasingController.php
 
     public function index()
     {
         $detect = new MobileDetect;
 
         // Mengambil data Kanvasing beserta data relasi
-        $kanvasings = Kanvasing::with(['tipeCakada', 'cakada', 'pekerjaan','user'])->get();
+        $kanvasings = Kanvasing::with(['tipeCakada', 'cakada', 'pekerjaan', 'user'])->get();
 
         // Mendapatkan daftar semua provinsi terlebih dahulu
         $provinsiResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
@@ -115,8 +114,6 @@ class KanvasingController extends Controller
         }
     }
 
-
-
     public function getCakadaByFilters(Request $request)
     {
         $provinsiId = $request->input('provinsi');
@@ -130,6 +127,8 @@ class KanvasingController extends Controller
 
         return response()->json($cakada);
     }
+
+
 
     public function store(Request $request)
     {
@@ -186,5 +185,113 @@ class KanvasingController extends Controller
 
         // Redirect ke dashboard dengan pesan sukses
         return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Disimpan.');
+    }
+
+
+    public function edit($id)
+    {
+        // Mengambil data Kanvasing beserta data relasi berdasarkan ID
+        $kanvasing = Kanvasing::with(['tipeCakada', 'cakada', 'pekerjaan', 'user'])->findOrFail($id);
+
+        // Mendapatkan daftar semua provinsi terlebih dahulu
+        $provinsiResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
+        $provinces = $provinsiResponse->json();
+
+        // Mendapatkan nama provinsi
+        $provinsi = collect($provinces)->firstWhere('id', $kanvasing->provinsi);
+        $kanvasing->provinsi_name = $provinsi ? $provinsi['name'] : 'Tidak Diketahui';
+
+        // Mendapatkan nama kabupaten/kota
+        $kabupatenResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regency/{$kanvasing->kabupaten_kota}.json");
+        $kabupaten = $kabupatenResponse->json();
+        $kanvasing->kabupaten_name = $kabupaten['name'] ?? 'Tidak Diketahui';
+
+        // Mendapatkan nama kecamatan
+        $kecamatanResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/district/{$kanvasing->kecamatan}.json");
+        $kecamatan = $kecamatanResponse->json();
+        $kanvasing->kecamatan_name = $kecamatan['name'] ?? 'Tidak Diketahui';
+
+        // Mendapatkan nama kelurahan
+        $kelurahanResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/village/{$kanvasing->kelurahan}.json");
+        $kelurahan = $kelurahanResponse->json();
+        $kanvasing->kelurahan_name = $kelurahan['name'] ?? 'Tidak Diketahui';
+
+        // Mendapatkan data tambahan untuk pilihan dropdown jika diperlukan
+        $tipeCakadas = TipeCakada::all();
+        $pekerjaans = Pekerjaan::all();
+        $cakadas = Cakada::all();
+        $users = User::all();
+
+        $detect = new MobileDetect;
+
+        if ($detect->isMobile() || $detect->isTablet()) {
+            return view('mobile.frontend.kanvasing.index', compact('kanvasings'));
+        } else {
+            if (Auth::check()) {
+                return view('desktop.kanvasing.edit', compact('kanvasing', 'provinces', 'tipeCakadas', 'pekerjaans', 'cakadas', 'users'));
+            } else {
+                return redirect('/');
+            }
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi request
+        $request->validate([
+            'user_id' => 'required|integer',
+            'provinsi' => 'required|string|max:255',
+            'kabupaten_kota' => 'required|string|max:255',
+            'kecamatan' => 'required|string|max:255',
+            'kelurahan' => 'required|string|max:255',
+            'rw' => 'required|string|max:10',
+            'rt' => 'required|string|max:10',
+            'tipe_cakada_id' => 'required|integer',
+            'cakada_id' => 'required|integer',
+            'nama_kk' => 'required|string|max:255',
+            'nomor_hp' => 'required|string|max:20',
+            'usia' => 'required|integer',
+            'pekerjaan_id' => 'required|integer',
+            'jum_pemilih' => 'required|integer',
+            'elektabilitas' => 'required|in:1,2,3',
+            'popularitas' => 'required|in:1,2',
+            'stiker' => 'required|in:1,2',
+            'jenis_kelamin' => 'required|in:1,2',
+            'alasan' => 'nullable|string',
+            'pesan' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:9000', // Foto bersifat opsional
+            'alamat' => 'required|string|max:255',
+            'lat' => 'nullable|string',
+            'lang' => 'nullable|string',
+        ]);
+
+        // Temukan instance Kanvasing yang akan diupdate
+        $kanvasing = Kanvasing::findOrFail($id);
+
+        // Upload foto jika ada
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($kanvasing->foto) {
+                File::delete(public_path($kanvasing->foto));
+            }
+
+            $file = $request->file('foto');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $fileName;
+            $file->move(public_path('uploads'), $fileName);
+
+            // Simpan URL path foto
+            $kanvasing->foto = $filePath;
+        }
+
+        // Simpan data form lainnya
+        $kanvasing->fill($request->except('foto'));
+
+        // Simpan data ke database
+        $kanvasing->save();
+
+        // Redirect ke dashboard dengan pesan sukses
+        return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Diperbarui.');
     }
 }

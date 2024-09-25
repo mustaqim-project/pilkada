@@ -82,7 +82,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kanvasing', [KanvasingController::class, 'store'])->middleware('can:kanvasing create')->name('kanvasing.store');
     Route::get('/kanvasing', [KanvasingController::class, 'index'])->middleware('can:kanvasing read')->name('kanvasing.index');
     Route::get('/get-cakada', [KanvasingController::class, 'getCakadaByFilters'])->name('getCakadaByFilters');
-
+    Route::get('/kanvasing/{id}/edit', [KanvasingController::class, 'edit'])
+        ->middleware('can:kanvasing read')
+        ->name('kanvasing.edit');
+    Route::put('/kanvasing/{id}', [KanvasingController::class, 'update'])
+        ->middleware('can:kanvasing read')
+        ->name('kanvasing.update');
 
 
     Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis read')->name('analisis.read');
