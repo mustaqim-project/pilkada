@@ -294,4 +294,21 @@ class KanvasingController extends Controller
         // Redirect ke dashboard dengan pesan sukses
         return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Diperbarui.');
     }
+
+    public function destroy($id)
+    {
+        // Temukan instance Kanvasing yang akan dihapus
+        $kanvasing = Kanvasing::findOrFail($id);
+
+        // Hapus foto jika ada
+        if ($kanvasing->foto) {
+            File::delete(public_path($kanvasing->foto));
+        }
+
+        // Hapus data dari database
+        $kanvasing->delete();
+
+        // Redirect ke dashboard dengan pesan sukses
+        return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Dihapus.');
+    }
 }

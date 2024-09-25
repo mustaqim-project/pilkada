@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/kanvasing/{id}', [KanvasingController::class, 'update'])
         ->middleware('can:kanvasing read')
         ->name('kanvasing.update');
+        Route::delete('/kanvasing/{id}', [KanvasingController::class, 'destroy'])->middleware('can:kanvasing read')->name('kanvasing.destroy');
 
 
     Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis read')->name('analisis.read');
