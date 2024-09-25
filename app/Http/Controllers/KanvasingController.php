@@ -301,8 +301,8 @@ class KanvasingController extends Controller
         // Temukan instance Kanvasing yang akan dihapus
         $kanvasing = Kanvasing::findOrFail($id);
 
-        // Hapus foto jika ada
-        if ($kanvasing->foto) {
+        // Cek apakah file foto ada dan hapus jika ada
+        if ($kanvasing->foto && File::exists(public_path($kanvasing->foto))) {
             File::delete(public_path($kanvasing->foto));
         }
 
