@@ -337,27 +337,6 @@
                 </div>
 
 
-                {{-- <label class="mt-5">Upload Foto Kegiatan</label>
-                <em>(*Wajib Diisi)</em>
-
-                <!-- Image Preview -->
-                <div class="mt-4">
-                    <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
-                </div>
-
-                <!-- Pilihan Akses -->
-                <div class="mt-4">
-                    <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
-                        <option value="">Pilih Upload Dari Kamera / Galeri</option>
-                        <option value="camera">Dari Kamera</option>
-                        <option value="gallery">Dari Galeri</option>
-                    </select>
-                </div>
-
-                <!-- Hidden Input for File Upload -->
-                <input type="file" id="foto" accept="image/*" style="display:none;"> --}}
-
-                <!-- Upload Foto -->
                 <label class="mt-5">Upload Foto Kegiatan</label>
                 <em>(*Wajib Diisi)</em>
 
@@ -377,6 +356,7 @@
 
                 <!-- Hidden Input for File Upload -->
                 <input type="file" id="foto" accept="image/*" style="display:none;">
+
 
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
@@ -630,70 +610,40 @@
             });
         });
 
+    });
 
-        function handleAccessChoice() {
-            const accessChoice = document.getElementById('accessChoice').value;
-            const fotoInput = document.getElementById('foto');
+    function handleAccessChoice() {
+        const accessChoice = document.getElementById('accessChoice').value;
+        const fotoInput = document.getElementById('foto');
 
-            // Set the input to accept images and open the file input dialog
-            fotoInput.setAttribute('accept', 'image/*');
+        // Set the input to accept images and open the file input dialog
+        fotoInput.setAttribute('accept', 'image/*');
 
-            // If 'camera' is selected, set capture to 'camera' to open the camera
-            if (accessChoice === 'camera') {
-                fotoInput.setAttribute('capture', 'camera');
-            } else {
-                fotoInput.removeAttribute('capture');
-            }
-
-            // Trigger the file input dialog
-            fotoInput.click();
+        // If 'camera' is selected, set capture to 'camera' to open the camera
+        if (accessChoice === 'camera') {
+            fotoInput.setAttribute('capture', 'environment'); // or 'user'
+        } else {
+            fotoInput.removeAttribute('capture');
         }
 
-        // Preview selected image
-        document.getElementById('foto').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
+        // Trigger the file input dialog
+        fotoInput.click();
+    }
 
-            reader.onload = function(e) {
-                const imagePreview = document.getElementById('image_preview');
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-            };
+    // Preview selected image
+    document.getElementById('foto').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
 
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        });
+        reader.onload = function(e) {
+            const imagePreview = document.getElementById('image_preview');
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = 'block';
+        };
 
-        // Cookie Permission for Camera Access (Optional)
-        function checkCameraPermission() {
-            const permission = getCookie('camera_permission');
-
-            if (permission !== 'granted') {
-                alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
-                setCookie('camera_permission', 'granted', 30);
-            }
+        if (file) {
+            reader.readAsDataURL(file);
         }
-
-        function getCookie(name) {
-            const value = ;
-            $ {
-                document.cookie
-            };
-            const parts = value.split(; $ {
-                name
-            } = );
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-        function setCookie(name, value, days) {
-            const expires = new Date(Date.now() + days * 864e5).toUTCString();
-            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-        }
-
-        // Check camera permission on page load
-        window.onload = checkCameraPermission;
-
     });
 
 </script>
