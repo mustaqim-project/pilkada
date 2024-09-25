@@ -68,7 +68,6 @@ class KanvasingController extends Controller
             $kanvasing->pekerjaan_name = $kanvasing->pekerjaan->nama_pekerjaan ?? 'Tidak Diketahui';
         }
 
-        dd($kanvasings);
         if ($detect->isMobile() || $detect->isTablet()) {
             return view('mobile.frontend.kanvasing.index', compact('kanvasings'));
         } else {
