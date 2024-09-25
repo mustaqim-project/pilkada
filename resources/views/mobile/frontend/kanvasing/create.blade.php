@@ -341,16 +341,16 @@
                 <div class="mt-4">
                     <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
                 </div>
-                
+
                 <!-- Pilihan Akses -->
                 <div class="mt-4">
                     <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
                         <option value="">Pilih Upload Dari Kamera / Galeri</option>
-                        <option value="gallery">Dari Galeri</option>
-                        <option value="camera">Dari Kamera</option>
+                        <option value="gallery">Dari Kamera</option>
+                        <option value="camera">Dari Galeri</option>
                     </select>
                 </div>
-                
+
                 <div class="file-data" hidden>
                     <input type="file" id="foto" name="foto" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*" capture>
                     <p class="upload-file-text color-white">Upload Foto Kegiatan</p>
@@ -618,8 +618,8 @@
         const fotoInput = document.getElementById('foto');
 
         // Show the file input
-        const fileData = document.querySelector('.file-data');
-        fileData.hidden = false;
+        // const fileData = document.querySelector('.file-data');
+        // fileData.hidden = false;
 
         // Open the file input dialog
         fotoInput.click();
