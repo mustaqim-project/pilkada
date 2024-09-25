@@ -10,7 +10,6 @@ class TipeCakadaController extends Controller
 {
     public function __construct()
     {
-        // Membatasi akses dengan permission
         $this->middleware('can:tipe_cakada read')->only('index');
         $this->middleware('can:tipe_cakada create')->only(['create', 'store']);
         $this->middleware('can:tipe_cakada update')->only(['edit', 'update']);

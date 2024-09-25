@@ -31,8 +31,6 @@ Route::get('/', function () {
     }
 });
 
-
-
 Route::get('/dashboard', function () {
     $detect = new MobileDetect;
     if ($detect->isMobile()) {
@@ -44,94 +42,127 @@ Route::get('/dashboard', function () {
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
-
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
 require __DIR__ . '/auth.php';
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/role-permission', [RolePermissionController::class, 'index'])
-        ->middleware('can:role_permission read')->name('role_permission.index');
+        ->middleware('can:role_permission read')
+        ->name('role_permission.index');
     Route::post('/roles/store', [RolePermissionController::class, 'storeRole'])
-        ->middleware('can:role_permission create')->name('roles.store');
+        ->middleware('can:role_permission create')
+        ->name('roles.store');
     Route::post('/permissions/store', [RolePermissionController::class, 'storePermission'])
-        ->middleware('can:role_permission create')->name('permissions.store');
+        ->middleware('can:role_permission create')
+        ->name('permissions.store');
     Route::post('/roles/assign-permissions', [RolePermissionController::class, 'assignPermissionToRole'])
-        ->middleware('can:role_permission update')->name('roles.assign-permissions');
-
-    Route::get('/tipe-cakada', [TipeCakadaController::class, 'index'])->name('tipe_cakada.index');
-    Route::post('/tipe-cakada', [TipeCakadaController::class, 'store'])->name('tipe_cakada.store');
-    Route::put('/tipe-cakada/{id}', [TipeCakadaController::class, 'update'])->name('tipe_cakada.update');
-    Route::delete('/tipe-cakada/{id}', [TipeCakadaController::class, 'destroy'])->name('tipe_cakada.destroy');
-
-    Route::get('/cakada', [CakadaController::class, 'index'])->middleware('can:cakada read')->name('cakada.index');
-    Route::get('/create', [CakadaController::class, 'create'])->middleware('can:cakada create')->name('cakada.create');
-    Route::post('/', [CakadaController::class, 'store'])->middleware('can:cakada create')->name('cakada.store');
-    Route::get('/{cakada}/edit', [CakadaController::class, 'edit'])->middleware('can:cakada update')->name('cakada.edit');
-    Route::put('/{cakada}', [CakadaController::class, 'update'])->middleware('can:cakada update')->name('cakada.update');
-    Route::delete('/{cakada}', [CakadaController::class, 'destroy'])->middleware('can:cakada delete')->name('cakada.destroy');
-
-
-    Route::get('/kanvasing/create', [KanvasingController::class, 'create'])->middleware('can:kanvasing create')->name('kanvasing.create');
-    Route::post('/kanvasing', [KanvasingController::class, 'store'])->middleware('can:kanvasing create')->name('kanvasing.store');
-    Route::get('/kanvasing', [KanvasingController::class, 'index'])->middleware('can:kanvasing read')->name('kanvasing.index');
-    Route::get('/get-cakada', [KanvasingController::class, 'getCakadaByFilters'])->name('getCakadaByFilters');
+        ->middleware('can:role_permission update')
+        ->name('roles.assign-permissions');
+    Route::get('/tipe-cakada', [TipeCakadaController::class, 'index'])
+        ->name('tipe_cakada.index');
+    Route::post('/tipe-cakada', [TipeCakadaController::class, 'store'])
+        ->name('tipe_cakada.store');
+    Route::put('/tipe-cakada/{id}', [TipeCakadaController::class, 'update'])
+        ->name('tipe_cakada.update');
+    Route::delete('/tipe-cakada/{id}', [TipeCakadaController::class, 'destroy'])
+        ->name('tipe_cakada.destroy');
+    Route::get('/cakada', [CakadaController::class, 'index'])
+        ->middleware('can:cakada read')
+        ->name('cakada.index');
+    Route::get('/create', [CakadaController::class, 'create'])
+        ->middleware('can:cakada create')
+        ->name('cakada.create');
+    Route::post('/', [CakadaController::class, 'store'])
+        ->middleware('can:cakada create')
+        ->name('cakada.store');
+    Route::get('/{cakada}/edit', [CakadaController::class, 'edit'])
+        ->middleware('can:cakada update')
+        ->name('cakada.edit');
+    Route::put('/{cakada}', [CakadaController::class, 'update'])
+        ->middleware('can:cakada update')
+        ->name('cakada.update');
+    Route::delete('/{cakada}', [CakadaController::class, 'destroy'])
+        ->middleware('can:cakada delete')
+        ->name('cakada.destroy');
+    Route::get('/kanvasing/create', [KanvasingController::class, 'create'])
+        ->middleware('can:kanvasing create')
+        ->name('kanvasing.create');
+    Route::post('/kanvasing', [KanvasingController::class, 'store'])
+        ->middleware('can:kanvasing create')
+        ->name('kanvasing.store');
+    Route::get('/kanvasing', [KanvasingController::class, 'index'])
+        ->middleware('can:kanvasing read')
+        ->name('kanvasing.index');
+    Route::get('/get-cakada', [KanvasingController::class, 'getCakadaByFilters'])
+        ->name('getCakadaByFilters');
     Route::get('/kanvasing/{id}/edit', [KanvasingController::class, 'edit'])
         ->middleware('can:kanvasing read')
         ->name('kanvasing.edit');
     Route::put('/kanvasing/{id}', [KanvasingController::class, 'update'])
         ->middleware('can:kanvasing read')
         ->name('kanvasing.update');
-        Route::delete('/kanvasing/{id}', [KanvasingController::class, 'destroy'])->middleware('can:kanvasing read')->name('kanvasing.destroy');
-
-
-    Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis read')->name('analisis.read');
-    Route::get('/grafik-suara', [AnalisisController::class, 'grafik_suara'])->middleware('can:analisis read')->name('analisis.grafik-suara');
-    Route::get('/get-grafik-suara', [AnalisisController::class, 'get_grafik_suara'])->name('getGrafikSuara');
-    Route::get('/strength', [AnalisisController::class, 'strength'])->middleware('can:analisis read')->name('analisis.strength');
-    Route::get('/get-strength', [AnalisisController::class, 'get_strength'])->name('get-strength');
-    Route::get('/weakness', [AnalisisController::class, 'weakness'])->middleware('can:analisis read')->name('analisis.weakness');
-    Route::get('/get-weakness', [AnalisisController::class, 'get_weakness'])->name('get-weakness');
-
-    Route::get('/manajement', [ManajementController::class, 'index'])->middleware('can:manajement read')->name('manajement.read');
-
-    Route::get('/timses', [TimsesController::class, 'index'])->middleware('can:manajement read')->name('timses.index');
-
-
-    Route::put('profile-password-update/{id}', [ProfileController::class, 'passwordUpdate'])->name('profile-password.update');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-    /** Role and Permissions Routes */
-    Route::get('role', [RolePermisionController::class, 'index'])->name('role.index');
-    Route::get('role/create', [RolePermisionController::class, 'create'])->name('role.create');
-    Route::post('role/create', [RolePermisionController::class, 'store'])->name('role.store');
-    Route::get('role/{id}/edit', [RolePermisionController::class, 'edit'])->name('role.edit');
-    Route::put('role/{id}/edit', [RolePermisionController::class, 'update'])->name('role.update');
-    Route::delete('role/{id}/destory', [RolePermisionController::class, 'destroy'])->name('role.destroy');
-
+    Route::delete('/kanvasing/{id}', [KanvasingController::class, 'destroy'])
+        ->middleware('can:kanvasing read')
+        ->name('kanvasing.destroy');
+    Route::get('/analisis', [AnalisisController::class, 'index'])
+        ->middleware('can:analisis read')
+        ->name('analisis.read');
+    Route::get('/grafik-suara', [AnalisisController::class, 'grafik_suara'])
+        ->middleware('can:analisis read')
+        ->name('analisis.grafik-suara');
+    Route::get('/get-grafik-suara', [AnalisisController::class, 'get_grafik_suara'])
+        ->name('getGrafikSuara');
+    Route::get('/strength', [AnalisisController::class, 'strength'])
+        ->middleware('can:analisis read')
+        ->name('analisis.strength');
+    Route::get('/get-strength', [AnalisisController::class, 'get_strength'])
+        ->name('get-strength');
+    Route::get('/weakness', [AnalisisController::class, 'weakness'])
+        ->middleware('can:analisis read')
+        ->name('analisis.weakness');
+    Route::get('/get-weakness', [AnalisisController::class, 'get_weakness'])
+        ->name('get-weakness');
+    Route::get('/manajement', [ManajementController::class, 'index'])
+        ->middleware('can:manajement read')
+        ->name('manajement.read');
+    Route::get('/timses', [TimsesController::class, 'index'])
+        ->middleware('can:manajement read')
+        ->name('timses.index');
+    Route::put('profile-password-update/{id}', [ProfileController::class, 'passwordUpdate'])
+        ->name('profile-password.update');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+    Route::get('role', [RolePermisionController::class, 'index'])
+        ->name('role.index');
+    Route::get('role/create', [RolePermisionController::class, 'create'])
+        ->name('role.create');
+    Route::post('role/create', [RolePermisionController::class, 'store'])
+        ->name('role.store');
+    Route::get('role/{id}/edit', [RolePermisionController::class, 'edit'])
+        ->name('role.edit');
+    Route::put('role/{id}/edit', [RolePermisionController::class, 'update'])
+        ->name('role.update');
+    Route::delete('role/{id}/destory', [RolePermisionController::class, 'destroy'])
+        ->name('role.destroy');
     Route::middleware('can:cakada create')->group(function () {
-        Route::get('role-users', [RoleUserController::class, 'index'])->name('role-users.index');
-        Route::get('role-users/create', [RoleUserController::class, 'create'])->name('role-users.create');
-        Route::post('role-users', [RoleUserController::class, 'store'])->name('role-users.store');
-        Route::get('role-users/{id}/edit', [RoleUserController::class, 'edit'])->name('role-users.edit'); // Ensure this is a GET request
-        Route::put('role-users/{id}', [RoleUserController::class, 'update'])->name('role-users.update');
-        Route::delete('role-users/{id}', [RoleUserController::class, 'destroy'])->name('role-users.destroy');
+        Route::get('role-users', [RoleUserController::class, 'index'])
+            ->name('role-users.index');
+        Route::get('role-users/create', [RoleUserController::class, 'create'])
+            ->name('role-users.create');
+        Route::post('role-users', [RoleUserController::class, 'store'])
+            ->name('role-users.store');
+        Route::get('role-users/{id}/edit', [RoleUserController::class, 'edit'])
+            ->name('role-users.edit');
+        Route::put('role-users/{id}', [RoleUserController::class, 'update'])
+            ->name('role-users.update');
+        Route::delete('role-users/{id}', [RoleUserController::class, 'destroy'])
+            ->name('role-users.destroy');
     });
-
     Route::resource('pekerjaan', PekerjaanController::class);
 });
-
 
 
 Route::get('/provinces', [LocationController::class, 'getProvinces']);
