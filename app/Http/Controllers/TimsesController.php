@@ -90,8 +90,8 @@ class TimsesController extends Controller
         $provinsiResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
         $provinces = $provinsiResponse->json();
 
-        // Menyiapkan array untuk mengelompokkan data kanvasing berdasarkan tanggal
-        $kanvasingCountsByDate = [];
+        // Menyiapkan array untuk mengelompokkan data kanvasing berdasarkan user dan tanggal
+        $userKanvasingCounts = [];
 
         foreach ($kanvasings as $kanvasing) {
             // Mendapatkan nama provinsi
@@ -114,43 +114,54 @@ class TimsesController extends Controller
             $kanvasing->kelurahan_name = $kelurahan['name'] ?? 'Tidak Diketahui';
 
             // Mendapatkan nama user
-            $kanvasing->user_name = $kanvasing->user->name ?? 'Tidak Diketahui';
+            $userName = $kanvasing->user->name ?? 'Tidak Diketahui';
 
-            // Mendapatkan nama tipe cakada
-            $kanvasing->tipe_cakada_name = $kanvasing->tipeCakada->name ?? 'Tidak Diketahui';
+            // Format tanggal
+            $date = $kanvasing->created_at->format('Y-m-d');
 
-            // Mendapatkan nama cakada
-            $kanvasing->cakada_kelapa = $kanvasing->cakada->nama_calon_kepala ?? 'Tidak Diketahui';
-            $kanvasing->cakada_wakil = $kanvasing->cakada->nama_calon_wakil ?? 'Tidak Diketahui';
+            // Mengelompokkan data berdasarkan user dan tanggal
+            if (!isset($userKanvasingCounts[$userName])) {
+                $userKanvasingCounts[$userName] = [];
+            }
 
-            // Mendapatkan nama pekerjaan
-            $kanvasing->pekerjaan_name = $kanvasing->pekerjaan->nama_pekerjaan ?? 'Tidak Diketahui';
-
-            // Mengelompokkan data berdasarkan tanggal
-            $date = $kanvasing->created_at->format('Y-m-d'); // Ganti sesuai field tanggal yang sesuai
-            if (!isset($kanvasingCountsByDate[$date])) {
-                $kanvasingCountsByDate[$date] = [
+            if (!isset($userKanvasingCounts[$userName][$date])) {
+                $userKanvasingCounts[$userName][$date] = [
                     'total' => 0,
                     'kanvasings' => [],
                 ];
             }
 
-            $kanvasingCountsByDate[$date]['total']++;
-            $kanvasingCountsByDate[$date]['kanvasings'][] = $kanvasing;
+            $userKanvasingCounts[$userName][$date]['total']++;
+            $userKanvasingCounts[$userName][$date]['kanvasings'][] = $kanvasing;
+        }
+
+        // Siapkan data untuk tampilan
+        $dataForView = [];
+        foreach ($userKanvasingCounts as $user => $dates) {
+            $totalKanvasPerUser = 0;
+            foreach ($dates as $date => $data) {
+                $totalKanvasPerUser += $data['total'];
+            }
+
+            $dataForView[$user] = [
+                'dates' => $dates,
+                'total' => $totalKanvasPerUser,
+            ];
         }
 
         // Jika perangkat mobile atau tablet, tampilkan view mobile
         if ($detect->isMobile() || $detect->isTablet()) {
-            return view('mobile.frontend.timses.index', compact('kanvasingCountsByDate'));
+            return view('mobile.frontend.timses.index', compact('dataForView'));
         } else {
             // Jika user terautentikasi, tampilkan view desktop
             if (Auth::check()) {
-                return view('desktop.timses.index', compact('kanvasingCountsByDate'));
+                return view('desktop.timses.index', compact('dataForView'));
             } else {
                 return redirect('/');
             }
         }
     }
+
 
 
 

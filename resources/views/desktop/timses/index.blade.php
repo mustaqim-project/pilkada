@@ -51,33 +51,52 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Nama User</th>
+                                    <th>Total Kanvasing Keseluruhan</th>
                                     <th>Tanggal</th>
-                                    <th>Total Kanvasing</th>
                                     <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kanvasingCountsByDate as $date => $data)
-                                <tr>
-                                    <td>{{ $date }}</td>
-                                    <td>{{ $data['total'] }}</td>
-                                    <td>
-                                        <button class="toggle-detail">Lihat Detail</button>
-                                        <div class="detail" style="display: none;">
+                                @foreach ($dataForView as $userName => $dates)
+                                    <tr>
+                                        <td>{{ $userName }}</td>
+                                        <td>{{ $dates['total'] }}</td>
+                                        <td>
                                             <ul>
-                                                @foreach ($data['kanvasings'] as $kanvasing)
-                                                <li>
-                                                    {{ $kanvasing->user_name }} - {{ $kanvasing->tipe_cakada_name }} - {{ $kanvasing->cakada_kelapa }} - {{ $kanvasing->cakada_wakil }}
-                                                    <!-- Tambahkan informasi lain yang relevan di sini -->
-                                                </li>
+                                                @foreach ($dates['dates'] as $date => $data)
+                                                    <li>
+                                                        {{ $date }} ({{ $data['total'] }})
+                                                        <button class="toggle-detail">Lihat Detail</button>
+                                                        <div class="detail" style="display: none;">
+                                                            <ul>
+                                                                @foreach ($data['kanvasings'] as $kanvasing)
+                                                                    <li>
+                                                                        Provinsi: {{ $kanvasing->provinsi_name }},
+                                                                        Kabupaten/Kota: {{ $kanvasing->kabupaten_name }},
+                                                                        Kecamatan: {{ $kanvasing->kecamatan_name }},
+                                                                        Kelurahan: {{ $kanvasing->kelurahan_name }},
+                                                                        Nama KK: {{ $kanvasing->nama_kk ?? 'Tidak Diketahui' }},
+                                                                        Nomor HP: {{ $kanvasing->nomor_hp ?? 'Tidak Diketahui' }},
+                                                                        Alamat: {{ $kanvasing->alamat ?? 'Tidak Diketahui' }},
+                                                                        Elektabilitas: {{ $kanvasing->elektabilitas ?? 'Tidak Diketahui' }},
+                                                                        Popularitas: {{ $kanvasing->popularitas ?? 'Tidak Diketahui' }},
+                                                                        Jenis Kelamin: {{ $kanvasing->jenis_kelamin ?? 'Tidak Diketahui' }}
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    </li>
                                                 @endforeach
                                             </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
+
+
 
 
                     </div>
@@ -96,7 +115,6 @@
             detailDiv.style.display = detailDiv.style.display === 'none' ? 'block' : 'none';
         });
     });
-
 </script>
 
 
