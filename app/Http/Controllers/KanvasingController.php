@@ -317,7 +317,7 @@ class KanvasingController extends Controller
     public function destroy(string $id)
     {
         $kanvasing = Kanvasing::findOrFail($id);
-        $this->deleteFile($news->foto);
+        $this->deleteFile($kanvasing->foto);
         $kanvasing->delete();
 
         return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Dihapus.');
