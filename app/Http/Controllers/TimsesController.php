@@ -24,60 +24,6 @@ class TimsesController extends Controller
 
 
 
-    // public function index()
-    // {
-    //     $detect = new MobileDetect;
-
-    //     // Mengambil data Kanvasing beserta data relasi
-    //     $kanvasings = Kanvasing::with(['tipeCakada', 'cakada', 'pekerjaan', 'user'])->get();
-
-    //     // Mendapatkan daftar semua provinsi terlebih dahulu
-    //     $provinsiResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
-    //     $provinces = $provinsiResponse->json();
-
-    //     foreach ($kanvasings as $kanvasing) {
-    //         // Mendapatkan nama provinsi
-    //         $provinsi = collect($provinces)->firstWhere('id', $kanvasing->provinsi);
-    //         $kanvasing->provinsi_name = $provinsi ? $provinsi['name'] : 'Tidak Diketahui';
-
-    //         // Mendapatkan nama kabupaten/kota
-    //         $kabupatenResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/regency/{$kanvasing->kabupaten_kota}.json");
-    //         $kabupaten = $kabupatenResponse->json();
-    //         $kanvasing->kabupaten_name = $kabupaten['name'] ?? 'Tidak Diketahui';
-
-    //         // Mendapatkan nama kecamatan
-    //         $kecamatanResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/district/{$kanvasing->kecamatan}.json");
-    //         $kecamatan = $kecamatanResponse->json();
-    //         $kanvasing->kecamatan_name = $kecamatan['name'] ?? 'Tidak Diketahui';
-
-    //         // Mendapatkan nama kelurahan
-    //         $kelurahanResponse = Http::get("https://www.emsifa.com/api-wilayah-indonesia/api/village/{$kanvasing->kelurahan}.json");
-    //         $kelurahan = $kelurahanResponse->json();
-    //         $kanvasing->kelurahan_name = $kelurahan['name'] ?? 'Tidak Diketahui';
-
-    //         // Mendapatkan nama tipe cakada
-    //         $kanvasing->user_name = $kanvasing->user->name ?? 'Tidak Diketahui';
-
-    //         $kanvasing->tipe_cakada_name = $kanvasing->tipeCakada->name ?? 'Tidak Diketahui';
-
-    //         // Mendapatkan nama cakada
-    //         $kanvasing->cakada_kelapa = $kanvasing->cakada->nama_calon_kepala ?? 'Tidak Diketahui';
-    //         $kanvasing->cakada_wakil = $kanvasing->cakada->nama_calon_wakil ?? 'Tidak Diketahui';
-
-    //         // Mendapatkan nama pekerjaan
-    //         $kanvasing->pekerjaan_name = $kanvasing->pekerjaan->nama_pekerjaan ?? 'Tidak Diketahui';
-    //     }
-
-    //     if ($detect->isMobile() || $detect->isTablet()) {
-    //         return view('mobile.frontend.timses.index', compact('kanvasings'));
-    //     } else {
-    //         if (Auth::check()) {
-    //             return view('desktop.timses.index', compact('kanvasings'));
-    //         } else {
-    //             return redirect('/');
-    //         }
-    //     }
-    // }
 
     public function index()
     {

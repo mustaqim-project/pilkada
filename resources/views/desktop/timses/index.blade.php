@@ -86,6 +86,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Nama User</th>
                                     <th>Total</th>
                                     <th>Tanggal</th>
@@ -94,6 +95,7 @@
                             <tbody>
                                 @foreach ($dataForView as $userName => $dates)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $userName }}</td>
                                         <td style="text-align: center">{{ $dates['total'] }}</td>
                                         <td>
