@@ -51,117 +51,54 @@
                                 <th>#</th>
                                 <th>Provinsi</th>
                                 <th>Kabupaten/Kota</th>
-                                <th>Nama Calon Kepala</th>
-                                <th>Nama Calon Wakil</th>
+                                <th>Kecamatan</th>
+                                <th>Kelurahan</th>
+                                <th>Nama KK</th>
+                                <th>Nomor HP</th>
+                                <th>Alamat</th>
+                                <th>Elektabilitas</th>
+                                <th>Popularitas</th>
+                                <th>Alasan</th>
+                                <th>Pesan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                            $provinsiMap = [];
-                            foreach ($provinsi as $prov) {
-                            $provinsiMap[$prov['id']] = $prov['name'];
-                            }
-                            @endphp
-
-                            @forelse ($cakadas as $cakada)
-                            @php
-                            $provinsiName = $provinsiMap[$cakada->provinsi] ?? 'Unknown';
-
-                            // Ambil kabupaten/kota
-                            $regencies = app('App\Http\Controllers\CakadaController')->getRegencies($cakada->provinsi);
-                            $regenciesMap = [];
-                            foreach ($regencies as $regency) {
-                            $regenciesMap[$regency['id']] = $regency['name'];
-                            }
-                            $kabupatenKotaName = $regenciesMap[$cakada->kabupaten_kota] ?? 'Unknown';
-                            @endphp
-                            <tr>
-                                <td>{{ $cakada->id }}</td>
-                                <td>{{ $provinsiName }}</td>
-                                <td>{{ $kabupatenKotaName }}</td>
-                                <td>{{ $cakada->nama_calon_kepala }}</td>
-                                <td>{{ $cakada->nama_calon_wakil }}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $cakada->id }}">Edit</button>
-                                    <form action="{{ route('cakada.destroy', $cakada->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            @forelse ($kanvasings as $kanvasing)
+                                <tr>
+                                    <td>{{ $kanvasing->id }}</td>
+                                    <td>{{ $kanvasing->provinsi_name }}</td>
+                                    <td>{{ $kanvasing->kabupaten_name }}</td>
+                                    <td>{{ $kanvasing->kecamatan_name }}</td>
+                                    <td>{{ $kanvasing->kelurahan_name }}</td>
+                                    <td>{{ $kanvasing->nama_kk }}</td>
+                                    <td>{{ $kanvasing->nomor_hp }}</td>
+                                    <td>{{ $kanvasing->alamat }}</td>
+                                    <td>{{ $kanvasing->elektabilitas }}</td>
+                                    <td>{{ $kanvasing->popularitas }}</td>
+                                    <td>{{ $kanvasing->alasan }}</td>
+                                    <td>{{ $kanvasing->pesan }}</td>
+                                    <td>
+                                        <a href="{{ route('kanvasing.edit', $kanvasing->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <form action="{{ route('kanvasing.destroy', $kanvasing->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @empty
-                            <tr>
-                                <td colspan="6" class="text-center">Tidak ada data.</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="13" class="text-center">Tidak ada data.</td>
+                                </tr>
                             @endforelse
-
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <script>
-                $(document).ready(function() {
-                    // Load data untuk provinsi
-                    $.ajax({
-                        url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
-                        , method: 'GET'
-                        , success: function(data) {
-                            let provinsiDropdown = $('#provinsi');
-                            data.forEach(function(provinsi) {
-                                provinsiDropdown.append('<option value="' + provinsi.id + '">' + provinsi.name + '</option>');
-                            });
-                        }
-                    });
 
-                    // Load kabupaten/kota berdasarkan provinsi yang dipilih
-                    $('#provinsi').change(function() {
-                        let provinsiId = $(this).val();
-                        $('#kabupaten_kota').html('<option value="">Pilih Kabupaten/Kota</option>');
-                        if (provinsiId) {
-                            $.ajax({
-                                url: `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
-                                , method: 'GET'
-                                , success: function(data) {
-                                    data.forEach(function(kabupaten) {
-                                        $('#kabupaten_kota').append('<option value="' + kabupaten.id + '">' + kabupaten.name + '</option>');
-                                    });
-                                }
-                            });
-                        }
-                    });
 
-                    // Edit button clicked
-                    $('.btn-edit').click(function() {
-                        let id = $(this).data('id');
-                        $.ajax({
-                            url: `/cakada/${id}/edit`
-                            , method: 'GET'
-                            , success: function(data) {
-                                $('#modalCakada').modal('show');
-                                $('#cakada_id').val(data.id);
-                                $('#provinsi').val(data.provinsi);
-                                $('#tipe_cakada_id').val(data.tipe_cakada_id);
-                                $('#nama_calon_kepala').val(data.nama_calon_kepala);
-                                $('#nama_calon_wakil').val(data.nama_calon_wakil);
-                                $('#formCakada').attr('action', `/cakada/${id}`);
-                                $('#formCakada').append('<input type="hidden" name="_method" value="PUT">');
-
-                                // Trigger change event for the 'provinsi' dropdown
-                                $('#provinsi').trigger('change');
-
-                                // Set timeout to ensure the regencies are populated before setting kabupaten_kota value
-                                setTimeout(function() {
-                                    $('#kabupaten_kota').val(data.kabupaten_kota);
-                                }, 500); // Adjust timeout as needed
-                            }
-                        });
-                    });
-                });
-
-            </script>
 
         </div>
     </div>
