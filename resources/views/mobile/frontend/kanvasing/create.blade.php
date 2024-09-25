@@ -355,7 +355,7 @@
                 </div>
 
                 <!-- Hidden Input for File Upload -->
-                <input type="file" id="foto" accept="image/*" style="display:none;">
+                <input type="file" id="foto" name="foto" accept="image/*" style="display:none;">
 
 
 
