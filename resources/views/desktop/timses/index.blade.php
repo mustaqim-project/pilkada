@@ -106,7 +106,6 @@
                                     <th>Nama User</th>
                                     <th>Total</th>
                                     <th>Tanggal</th>
-                                    <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
