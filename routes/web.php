@@ -118,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('role/create', [RolePermisionController::class, 'store'])->name('role.store');
     Route::get('role/{id}/edit', [RolePermisionController::class, 'edit'])->name('role.edit');
     Route::put('role/{id}/edit', [RolePermisionController::class, 'update'])->name('role.update');
-    Route::delete('role/{id}/destory', [RolePermisionController::class, 'destory'])->name('role.destory');
+    Route::delete('role/{id}/destory', [RolePermisionController::class, 'destroy'])->name('role.destroy');
 
     /** Admin User Routes */
     Route::resource('role-users', RoleUserController::class)->middleware('can:cakada create');
