@@ -630,65 +630,71 @@
             });
         });
 
+
+        function handleAccessChoice() {
+            const accessChoice = document.getElementById('accessChoice').value;
+            const fotoInput = document.getElementById('foto');
+
+            // Set the input to accept images and open the file input dialog
+            fotoInput.setAttribute('accept', 'image/*');
+
+            // If 'camera' is selected, set capture to 'camera' to open the camera
+            if (accessChoice === 'camera') {
+                fotoInput.setAttribute('capture', 'camera');
+            } else {
+                fotoInput.removeAttribute('capture');
+            }
+
+            // Trigger the file input dialog
+            fotoInput.click();
+        }
+
+        // Preview selected image
+        document.getElementById('foto').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const imagePreview = document.getElementById('image_preview');
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Cookie Permission for Camera Access (Optional)
+        function checkCameraPermission() {
+            const permission = getCookie('camera_permission');
+
+            if (permission !== 'granted') {
+                alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
+                setCookie('camera_permission', 'granted', 30);
+            }
+        }
+
+        function getCookie(name) {
+            const value = ;
+            $ {
+                document.cookie
+            };
+            const parts = value.split(; $ {
+                name
+            } = );
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function setCookie(name, value, days) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+        }
+
+        // Check camera permission on page load
+        window.onload = checkCameraPermission;
+
     });
-
-    function handleAccessChoice() {
-        const accessChoice = document.getElementById('accessChoice').value;
-        const fotoInput = document.getElementById('foto');
-
-        // Set the input to accept images and open the file input dialog
-        fotoInput.setAttribute('accept', 'image/*');
-
-        // If 'camera' is selected, set capture to 'camera' to open the camera
-        if (accessChoice === 'camera') {
-            fotoInput.setAttribute('capture', 'camera');
-        } else {
-            fotoInput.removeAttribute('capture');
-        }
-
-        // Trigger the file input dialog
-        fotoInput.click();
-    }
-
-    // Preview selected image
-    document.getElementById('foto').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            const imagePreview = document.getElementById('image_preview');
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = 'block';
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Cookie Permission for Camera Access (Optional)
-    function checkCameraPermission() {
-        const permission = getCookie('camera_permission');
-
-        if (permission !== 'granted') {
-            alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
-            setCookie('camera_permission', 'granted', 30);
-        }
-    }
-
-    function getCookie(name) {
-        const value = ; ${document.cookie};
-        const parts = value.split(; ${name}=);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-
-    function setCookie(name, value, days) {
-        const expires = new Date(Date.now() + days * 864e5).toUTCString();
-        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-    }
-
-    // Check camera permission on page load
-    window.onload = checkCameraPermission;
 
 </script>
 @endsection
