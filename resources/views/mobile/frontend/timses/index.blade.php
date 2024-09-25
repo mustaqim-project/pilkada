@@ -4,51 +4,61 @@
 <style>
     .table {
         background-color: #ffffff;
-        /* White background for tables */
         border-radius: 8px;
-        /* Rounded corners for tables */
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        /* Subtle shadow for depth */
     }
 
     .table th {
         background-color: #03836d;
-        /* Bootstrap primary color */
         color: white;
-        /* White text for table header */
         text-align: center;
-        /* Center align header text */
     }
 
     .table td {
         vertical-align: middle;
-        /* Vertically align cell content */
     }
 
     .btn-link {
         color: #007bff;
-        /* Bootstrap primary color for buttons */
         text-decoration: none;
-        /* Remove underline */
     }
 
     .btn-link:hover {
         text-decoration: underline;
-        /* Underline on hover for better UX */
     }
 
     .detail {
         display: none;
-        /* Hide detail section by default */
     }
 
     .detail table {
         margin-top: 10px;
-        /* Space above detail table */
+    }
+
+    /* For small screens */
+    @media (max-width: 768px) {
+        .table th,
+        .table td {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .table th {
+            text-align: center;
+        }
+
+        .table td ul {
+            padding-left: 15px;
+        }
+
+        .detail table th,
+        .detail table td {
+            font-size: 11px;
+            padding: 5px;
+        }
     }
 
 </style>
-
 
 <div class="page-content">
     <div class="page-title page-title-small">
@@ -64,14 +74,12 @@
     @if(session('success'))
     <script>
         Swal.fire({
-            icon: 'success'
-            , title: 'Success'
-            , text: '{{ session('
-            success ') }}'
-            , timer: 2000
-            , showConfirmButton: false
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            timer: 2000,
+            showConfirmButton: false
         });
-
     </script>
     @endif
 
@@ -104,6 +112,7 @@
                                             <table class="table table-bordered mt-2">
                                                 <thead>
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Provinsi</th>
                                                         <th>Kabupaten/Kota</th>
                                                         <th>Kecamatan</th>
@@ -119,6 +128,7 @@
                                                 <tbody>
                                                     @foreach ($data['kanvasings'] as $kanvasing)
                                                     <tr>
+                                                        <td style="text-align: center">{{ $loop->iteration }}</td>
                                                         <td>{{ $kanvasing->provinsi_name }}</td>
                                                         <td>{{ $kanvasing->kabupaten_name }}</td>
                                                         <td>{{ $kanvasing->kecamatan_name }}</td>
@@ -154,7 +164,6 @@
             detailDiv.style.display = detailDiv.style.display === 'none' ? 'block' : 'none';
         });
     });
-
 </script>
 
 @endsection

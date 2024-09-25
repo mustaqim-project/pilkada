@@ -296,20 +296,31 @@ class KanvasingController extends Controller
         return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Diperbarui.');
     }
 
-    public function destroy($id)
+    // public function destroy($id)
+    // {
+    //     // Temukan instance Kanvasing yang akan dihapus
+    //     $kanvasing = Kanvasing::findOrFail($id);
+
+    //     // Cek apakah file foto ada dan hapus jika ada
+    //     if ($kanvasing->foto && File::exists(public_path($kanvasing->foto))) {
+    //         File::delete(public_path($kanvasing->foto));
+    //     }
+
+    //     // Hapus data dari database
+    //     $kanvasing->delete();
+
+    //     // Redirect ke dashboard dengan pesan sukses
+    //     return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Dihapus.');
+    // }
+
+
+    public function destroy(string $id)
     {
-        // Temukan instance Kanvasing yang akan dihapus
         $kanvasing = Kanvasing::findOrFail($id);
-
-        // Cek apakah file foto ada dan hapus jika ada
-        if ($kanvasing->foto && File::exists(public_path($kanvasing->foto))) {
-            File::delete(public_path($kanvasing->foto));
-        }
-
-        // Hapus data dari database
+        $this->deleteFile($news->foto);
         $kanvasing->delete();
 
-        // Redirect ke dashboard dengan pesan sukses
         return redirect()->route('dashboard')->with('success', 'Kanvasing Berhasil Dihapus.');
     }
+
 }
