@@ -79,12 +79,14 @@
                                     <td>{{ $kanvasing->alasan }}</td>
                                     <td>{{ $kanvasing->pesan }}</td>
                                     <td>
-                                        <a href="{{ route('kanvasing.edit', $kanvasing->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('kanvasing.destroy', $kanvasing->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="{{ route('kanvasing.edit', $kanvasing->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="{{ route('kanvasing.destroy', $kanvasing->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
@@ -96,10 +98,6 @@
                     </table>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
 </div>
