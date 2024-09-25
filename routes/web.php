@@ -92,19 +92,16 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/analisis', [AnalisisController::class, 'index'])->middleware('can:analisis read')->name('analisis.read');
-
     Route::get('/grafik-suara', [AnalisisController::class, 'grafik_suara'])->middleware('can:analisis read')->name('analisis.grafik-suara');
     Route::get('/get-grafik-suara', [AnalisisController::class, 'get_grafik_suara'])->name('getGrafikSuara');
-
     Route::get('/strength', [AnalisisController::class, 'strength'])->middleware('can:analisis read')->name('analisis.strength');
-
     Route::get('/get-strength', [AnalisisController::class, 'get_strength'])->name('get-strength');
-
     Route::get('/weakness', [AnalisisController::class, 'weakness'])->middleware('can:analisis read')->name('analisis.weakness');
     Route::get('/get-weakness', [AnalisisController::class, 'get_weakness'])->name('get-weakness');
 
     Route::get('/manajement', [ManajementController::class, 'index'])->middleware('can:manajement read')->name('manajement.read');
 
+    Route::get('/timses', [TimsesController::class, 'index'])->middleware('can:manajement read')->name('timses.read');
 
 
     Route::put('profile-password-update/{id}', [ProfileController::class, 'passwordUpdate'])->name('profile-password.update');

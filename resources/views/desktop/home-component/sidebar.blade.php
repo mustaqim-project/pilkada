@@ -57,14 +57,14 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Kanvasing</span>
+                                <span class="menu-title">Management Kanvasing</span>
                             </a>
                         </div>
                         <!--end:Menu item-->
 
                         <!--begin:Menu item-->
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link" href="{{ route('timses.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
