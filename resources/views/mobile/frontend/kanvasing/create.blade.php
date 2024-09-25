@@ -337,6 +337,27 @@
                 </div>
 
 
+                {{-- <label class="mt-5">Upload Foto Kegiatan</label>
+                <em>(*Wajib Diisi)</em>
+
+                <!-- Image Preview -->
+                <div class="mt-4">
+                    <img id="image_preview" src="#" alt="Image Preview" style="display:none;" />
+                </div>
+
+                <!-- Pilihan Akses -->
+                <div class="mt-4">
+                    <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
+                        <option value="">Pilih Upload Dari Kamera / Galeri</option>
+                        <option value="camera">Dari Kamera</option>
+                        <option value="gallery">Dari Galeri</option>
+                    </select>
+                </div>
+
+                <!-- Hidden Input for File Upload -->
+                <input type="file" id="foto" accept="image/*" style="display:none;"> --}}
+
+                <!-- Upload Foto -->
                 <label class="mt-5">Upload Foto Kegiatan</label>
                 <em>(*Wajib Diisi)</em>
 
@@ -356,7 +377,6 @@
 
                 <!-- Hidden Input for File Upload -->
                 <input type="file" id="foto" accept="image/*" style="display:none;">
-
 
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
@@ -621,7 +641,7 @@
 
         // If 'camera' is selected, set capture to 'camera' to open the camera
         if (accessChoice === 'camera') {
-            fotoInput.setAttribute('capture', 'environment'); // or 'user'
+            fotoInput.setAttribute('capture', 'camera');
         } else {
             fotoInput.removeAttribute('capture');
         }
@@ -645,6 +665,30 @@
             reader.readAsDataURL(file);
         }
     });
+
+    // Cookie Permission for Camera Access (Optional)
+    function checkCameraPermission() {
+        const permission = getCookie('camera_permission');
+
+        if (permission !== 'granted') {
+            alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
+            setCookie('camera_permission', 'granted', 30);
+        }
+    }
+
+    function getCookie(name) {
+        const value = ; ${document.cookie};
+        const parts = value.split(; ${name}=);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
+
+    // Check camera permission on page load
+    window.onload = checkCameraPermission;
 
 </script>
 @endsection
