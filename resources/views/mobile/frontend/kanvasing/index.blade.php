@@ -5,17 +5,14 @@
     .table th,
     .table td {
         vertical-align: middle;
-        /* Center align cell contents */
     }
 
     .table img {
         border-radius: 5px;
-        /* Optional: Round image corners */
     }
 
     .table-responsive {
         overflow-x: auto;
-        /* Ensure scrolling on smaller screens */
     }
 
     .map-container {
@@ -27,17 +24,11 @@
         top: 10px;
         right: 10px;
         background-color: rgba(255, 255, 255, 0.8);
-        /* Light background for better visibility */
         padding: 10px;
-        /* Some padding */
         border-radius: 5px;
-        /* Rounded corners */
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        /* Slight shadow for depth */
         z-index: 1000;
-        /* Ensure it's on top of the map */
     }
-
 </style>
 
 <div class="page-content">
@@ -59,23 +50,18 @@
     @if(session('success'))
     <script>
         Swal.fire({
-            icon: 'success'
-            , title: 'Success'
-            , text: '{{ session('
-            success ') }}'
-            , timer: 2000
-            , showConfirmButton: false
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            timer: 2000,
+            showConfirmButton: false
         });
-
     </script>
     @endif
 
-
-    <div class="map-container" style="position: relative;">
+    <div class="map-container">
         <div id="map" style="display: block; height: 400px;"></div> <!-- Map container -->
-
-        <!-- Overlay for total count -->
-        <div class="total-count-overlay" style="position: absolute; top: 10px; right: 10px; background-color: rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);">
+        <div class="total-count-overlay">
             Total Kanvasing: <strong>{{ $totalKanvasings }}</strong>
         </div>
     </div>
@@ -129,7 +115,8 @@
                             <td>{{ $kanvasing->pesan }}</td>
                             <td>{{ $kanvasing->deskripsi }}</td>
                             <td>
-                                <img src="{{ asset($kanvasing->foto) }}" alt="Foto" style="width: 50px; height: auto;">
+                                <img src="{{ asset($kanvasing->foto) }}" alt="Foto" style="width: 50px; height: auto; cursor: pointer;"
+                                     data-toggle="modal" data-target="#imageModal" onclick="showImageModal('{{ asset($kanvasing->foto) }}')">
                             </td>
                             <td>{{ $kanvasing->lang }}</td>
                             <td>{{ $kanvasing->lat }}</td>
@@ -155,15 +142,31 @@
         </div>
     </div>
 
-
-
+    <!-- Modal for Image Preview -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Preview Foto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" alt="Preview Foto" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
-
 <script>
+    function showImageModal(imageUrl) {
+        document.getElementById('modalImage').src = imageUrl;
+    }
+
     $(document).ready(function() {
-        // Extract latitude, longitude, and nama_kk from the kanvasings data
         var locations = @json($kanvasings->map(function($kanvasing) {
             return [
                 'lat' => $kanvasing->lat,
@@ -172,28 +175,23 @@
             ];
         }));
 
-        // Initialize the map
-        var map = L.map('map').setView([locations[0].lat, locations[0].lng], 13); // Start at the first location
+        var map = L.map('map').setView([locations[0].lat, locations[0].lng], 13);
 
-        // Add a tile layer (OpenStreetMap in this case)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19
         }).addTo(map);
 
-        // Loop through the locations and add markers to the map
         locations.forEach(function(location) {
             L.marker([location.lat, location.lng]).addTo(map)
                 .bindPopup('Nama KK: ' + location.nama_kk + '<br>Lat: ' + location.lat + ', Lng: ' + location.lng)
                 .openPopup();
         });
 
-        // Optionally, handle user location
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var userLat = position.coords.latitude;
                 var userLng = position.coords.longitude;
 
-                // Center the map on user location
                 map.setView([userLat, userLng], 13);
                 L.marker([userLat, userLng]).addTo(map)
                     .bindPopup('Your Location')
@@ -204,6 +202,5 @@
         }
     });
 </script>
-
 
 @endsection
