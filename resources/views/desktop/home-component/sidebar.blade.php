@@ -53,17 +53,6 @@
 
                         <!--begin:Menu item-->
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('kanvasing.index') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Management Kanvasing</span>
-                            </a>
-                        </div>
-                        <!--end:Menu item-->
-
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
                             <a class="menu-link" href="{{ route('timses.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -198,12 +187,25 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('kanvasing.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Kanvasing / Kunjungan Warga</span>
+                            </a>
+                        </div>
+                        <!--end:Menu item-->
+
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Survei Opini Publik</span>
                             </a>
                         </div>
+
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
