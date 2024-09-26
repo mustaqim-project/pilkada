@@ -16,6 +16,8 @@
                 </div>
             </div>
 
+
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped" id="table">
@@ -28,11 +30,9 @@
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Role') }}</th>
                                 <th>{{ __('Action') }}</th>
-
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach ($admins as $admin)
                             <tr>
                                 <td>{{ $admin->id }}</td>
@@ -54,28 +54,26 @@
                                 </td>
                             </tr>
                             @endforeach
-
-
-
                         </tbody>
                     </table>
                 </div>
             </div>
 
 
+
         </div>
     </section>
+
+
 @endsection
 
 @push('scripts')
     <script>
-
         $("#table").dataTable({
             "columnDefs": [{
                 "sortable": false,
                 "targets": [2, 3]
             }]
         });
-
     </script>
 @endpush
