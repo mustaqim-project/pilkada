@@ -282,6 +282,92 @@
                 </div>
                 <!--end:Menu item-->
 
+                <!-- Laporan Keuangan -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 4H15V6H9V4ZM21 4H17V6H21V4ZM21 10H17V12H21V10ZM15 10H9V12H15V10ZM15 16H9V18H15V16ZM21 16H17V18H21V16Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Laporan Keuangan</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Pemasukan Kampanye</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Pengeluaran Kampanye</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manajemen Saksi dan Tim Pemantau -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 4H15V6H9V4ZM21 4H17V6H21V4ZM21 10H17V12H21V10ZM15 10H9V12H15V10ZM15 16H9V18H15V16ZM21 16H17V18H21V16Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Manajemen Saksi dan Tim Pemantau</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Registrasi Saksi</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Laporan Pemantauan TPS</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sistem Hasil Pilkada -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 4H15V6H9V4ZM21 4H17V6H21V4ZM21 10H17V12H21V10ZM15 10H9V12H15V10ZM15 16H9V18H15V16ZM21 16H17V18H21V16Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Sistem Hasil Pilkada</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Hasil Quick Count</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Hasil Resmi KPU</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
