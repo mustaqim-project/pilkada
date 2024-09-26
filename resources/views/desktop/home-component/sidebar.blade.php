@@ -68,18 +68,22 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Profil Kandidat</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Rekam Jejak Kandidat</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
                     </div>
                 </div>
                 <!--end:Menu item-->
@@ -98,30 +102,38 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Jadwal Kampanye</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Peta Wilayah Kampanye</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Manajemen Relawan</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Laporan Aktivitas Kampanye</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
                     </div>
                 </div>
                 <!--end:Menu item-->
@@ -140,147 +152,35 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Data Pemilih</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Analisis Suara</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Analisis SWOT</span>
                             </a>
                         </div>
-                    </div>
-                </div>
-                <!--end:Menu item-->
-
-                <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 4H15V6H9V4ZM21 4H17V6H21V4ZM21 10H17V12H21V10ZM15 10H9V12H15V10ZM15 16H9V18H15V16ZM21 16H17V18H21V16Z" fill="currentColor" />
-                                </svg>
-                            </span>
-                        </span>
-                        <span class="menu-title">Sistem Survei dan Polling</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('kanvasing.index') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Kanvasing / Kunjungan Warga</span>
-                            </a>
-                        </div>
                         <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('timses.index') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Laporan Kinerja Timses</span>
-                            </a>
-                        </div>
-                        <!--end:Menu item-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Survei Opini Publik</span>
-                            </a>
-                        </div>
-
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Hasil Real-Time</span>
-                            </a>
-                        </div>
                     </div>
                 </div>
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 4H15V6H9V4ZM21 4H17V6H21V4ZM21 10H17V12H21V10ZM15 10H9V12H15V10ZM15 16H9V18H15V16ZM21 16H17V18H21V16Z" fill="currentColor" />
-                                </svg>
-                            </span>
-                        </span>
-                        <span class="menu-title">Monitoring Media dan Sentimen Publik</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Pemantauan Media Sosial</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Sentiment Analysis</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!--end:Menu item-->
-
-                <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 4H15V6H9V4ZM21 4H17V6H21V4ZM21 10H17V12H21V10ZM15 10H9V12H15V10ZM15 16H9V18H15V16ZM21 16H17V18H21V16Z" fill="currentColor" />
-                                </svg>
-                            </span>
-                        </span>
-                        <span class="menu-title">Laporan Kinerja Pilkada</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Laporan Harian</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Laporan Mingguan</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Evaluasi Kinerja</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!--end:Menu item-->
-
-                <!-- Laporan Keuangan -->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -294,20 +194,26 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Pemasukan Kampanye</span>
+                                <span class="menu-title">Laporan Donasi</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Pengeluaran Kampanye</span>
                             </a>
                         </div>
+                        <!--end:Menu item-->
                     </div>
                 </div>
+                <!--end:Menu item-->
+
 
                 <!-- Manajemen Saksi dan Tim Pemantau -->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -407,6 +313,8 @@
                     </div>
                 </div>
                 <!--end:Menu item-->
+
+
             </div>
             <!--end::Menu-->
         </div>
