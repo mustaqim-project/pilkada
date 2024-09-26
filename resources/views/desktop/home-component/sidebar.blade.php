@@ -50,17 +50,6 @@
                             </a>
                         </div>
                         <!--end:Menu item-->
-
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('timses.index') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Manajemen Timses</span>
-                            </a>
-                        </div>
-                        <!--end:Menu item-->
                     </div>
                 </div>
                 <!--end:Menu item-->
@@ -198,7 +187,16 @@
                             </a>
                         </div>
                         <!--end:Menu item-->
-
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('timses.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Laporan Kinerja Timses</span>
+                            </a>
+                        </div>
+                        <!--end:Menu item-->
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
