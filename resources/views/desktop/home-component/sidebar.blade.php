@@ -261,13 +261,13 @@
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Laporan Bulanan</span>
+                                <span class="menu-title">Laporan Harian</span>
                             </a>
                         </div>
                         <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Laporan Tahunan</span>
+                                <span class="menu-title">Laporan Mingguan</span>
                             </a>
                         </div>
                         <div class="menu-item">
