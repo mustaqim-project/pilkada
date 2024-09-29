@@ -601,50 +601,26 @@
 
     });
 
-    // Fungsi untuk menangani pemilihan akses (kamera atau galeri)
     function handleAccessChoice() {
         const accessChoice = document.getElementById('accessChoice').value;
-        const cameraInput = document.getElementById('cameraInput');
-        const galleryInput = document.getElementById('galleryInput');
+        const fotoInput = document.getElementById('foto');
 
-        // Mengecek izin cookie untuk kamera
-        if (accessChoice === 'camera' && !checkPermissionCookie('camera_permission')) {
-            alert('Silakan izinkan akses kamera.');
-            setPermissionCookie('camera_permission', 'granted', 30);
-        }
+        // Set the input to accept images and open the file input dialog
+        fotoInput.setAttribute('accept', 'image/*');
 
-        // Mengecek izin cookie untuk galeri
-        if (accessChoice === 'gallery' && !checkPermissionCookie('gallery_permission')) {
-            alert('Silakan izinkan akses galeri.');
-            setPermissionCookie('gallery_permission', 'granted', 30);
-        }
-
-        // Reset semua input
-        cameraInput.style.display = 'none';
-        galleryInput.style.display = 'none';
-
-        // Jika 'camera' dipilih, tampilkan input kamera
+        // If 'camera' is selected, set capture to 'camera' to open the camera
         if (accessChoice === 'camera') {
-            cameraInput.style.display = 'block';
-            cameraInput.click();
+            fotoInput.setAttribute('capture', 'camera');
+        } else {
+            fotoInput.removeAttribute('capture');
         }
-        // Jika 'gallery' dipilih, tampilkan input galeri
-        else if (accessChoice === 'gallery') {
-            galleryInput.style.display = 'block';
-            galleryInput.click();
-        }
+
+        // Trigger the file input dialog
+        fotoInput.click();
     }
 
-    // Preview gambar yang dipilih
-    document.getElementById('cameraInput').addEventListener('change', function(event) {
-        previewImage(event);
-    });
-
-    document.getElementById('galleryInput').addEventListener('change', function(event) {
-        previewImage(event);
-    });
-
-    function previewImage(event) {
+    // Preview selected image
+    document.getElementById('foto').addEventListener('change', function(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
 
@@ -657,28 +633,31 @@
         if (file) {
             reader.readAsDataURL(file);
         }
-    }
+    });
 
-    // Fungsi untuk mengecek cookie izin
-    function checkPermissionCookie(permissionName) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${permissionName}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift() === 'granted';
-        return false;
-    }
+    // Cookie Permission for Camera Access (Optional)
+    function checkCameraPermission() {
+        const permission = getCookie('camera_permission');
 
-    // Fungsi untuk menyimpan cookie izin
-    function setPermissionCookie(name, value, days) {
-        const expires = new Date(Date.now() + days * 864e5).toUTCString();
-        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
-    }
-
-    // Mengecek dan meminta izin kamera pada saat halaman di-load (optional)
-    window.onload = function() {
-        if (!checkPermissionCookie('camera_permission')) {
+        if (permission !== 'granted') {
             alert('Silakan izinkan akses kamera untuk menggunakan fitur ini.');
+            setCookie('camera_permission', 'granted', 30);
         }
-    };
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
+
+    // Check camera permission on page load
+    window.onload = checkCameraPermission;
 
 </script>
 @endsection
