@@ -10,7 +10,9 @@
         display: block;
         margin-top: 10px;
         border-radius: 0.375rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+        /* Menambahkan radius sudut untuk pratinjau gambar */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Menambahkan bayangan pada gambar */
     }
 
     /* Styling umum untuk kontainer */
@@ -84,7 +86,7 @@
         border: 1px solid #ced4da;
         border-radius: 0.375rem;
         background-color: #f8f9fa;
-        color: #000;
+        color: #ffff;
         font-size: 1rem;
         font-weight: 400;
         cursor: pointer;
@@ -360,17 +362,13 @@
                 <em>(*Wajib Diisi)</em>
 
                 <!-- Image Preview -->
-                <label class="mt-5">Upload Foto Kegiatan</label>
-                <em>(*Wajib Diisi)</em>
-
-                <!-- Image Preview -->
                 <div class="mt-4">
                     <img id="image_preview" class="img-fluid" src="" alt="Image Preview" style="display:none;" />
                 </div>
 
                 <!-- Pilihan Akses -->
                 <div class="mt-4">
-                    <select id="accessChoice" class="form-control" onchange="handleAccessChoice()">
+                    <select id="accessChoice" class="bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
                         <option value="">Pilih Upload Dari Kamera / Galeri</option>
                         <option value="camera">Dari Kamera</option>
                         <option value="gallery">Dari Galeri</option>
@@ -378,10 +376,10 @@
                 </div>
 
                 <!-- Input untuk Kamera (dengan capture untuk kamera) -->
-                <input class="upload-file mt-3" type="file" id="cameraInput" name="foto" accept="image/*" capture="camera" style="display:none;" />
+                <input class="upload-file mt-3 bg-highlight shadow-s rounded-s" type="file" id="cameraInput" name="foto" accept="image/*" capture="camera" style="display:none;" />
 
                 <!-- Input untuk Galeri -->
-                <input class="upload-file mt-3" type="file" id="galleryInput" name="foto" accept="image/*" style="display:none;" />
+                <input class="upload-file mt-3 bg-highlight shadow-s rounded-s" type="file" id="galleryInput" name="foto" accept="image/*" style="display:none;" />
 
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
