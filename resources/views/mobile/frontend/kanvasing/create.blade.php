@@ -336,7 +336,7 @@
                     <x-input-error :messages="$errors->get('stiker')" class="mt-2" />
                 </div>
 
-
+{{--
                 <label class="mt-5">Upload Foto Kegiatan</label>
                 <em>(*Wajib Diisi)</em>
 
@@ -357,7 +357,31 @@
                 <!-- Hidden Input for File Upload -->
                 <input type="file" id="foto" name="foto" accept="image/*" style="display:none;">
 
+ --}}
+ <div class="container">
+    <label class="mt-5">Upload Foto Kegiatan</label>
+    <em>(*Wajib Diisi)</em>
 
+    <!-- Image Preview -->
+    <div class="mt-4">
+        <img id="image_preview" class="img-fluid" src="" alt="Image Preview" style="display:none; max-width: 100%; height: auto;" />
+    </div>
+
+    <!-- Pilihan Akses -->
+    <div class="mt-4">
+        <select id="accessChoice" class="form-control bg-highlight shadow-s rounded-s" onchange="handleAccessChoice()">
+            <option value="">Pilih Upload Dari Kamera / Galeri</option>
+            <option value="camera">Dari Kamera</option>
+            <option value="gallery">Dari Galeri</option>
+        </select>
+    </div>
+
+    <!-- Input untuk Kamera (dengan capture untuk kamera) -->
+    <input type="file" id="cameraInput" name="foto" accept="image/*" capture="camera" style="display:none;" />
+
+    <!-- Input untuk Galeri -->
+    <input type="file" id="galleryInput" name="foto" accept="image/*" style="display:none;" />
+</div>
 
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
