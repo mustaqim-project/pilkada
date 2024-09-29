@@ -358,7 +358,6 @@
                 <input type="file" id="foto" name="foto" accept="image/*" style="display:none;">
 
  --}}
-            <div class="container">
                 <label class="mt-5">Upload Foto Kegiatan</label>
                 <em>(*Wajib Diisi)</em>
 
@@ -381,7 +380,6 @@
 
                 <!-- Input untuk Galeri -->
                 <input class="upload-file" type="file" id="galleryInput" name="foto" accept="image/*" style="display:none;" />
-            </div>
 
                 <!-- deskripsi -->
                 <label class="mt-5">Kendala dilapangan jika ada!</label>
