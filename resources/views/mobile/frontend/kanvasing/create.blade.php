@@ -647,12 +647,12 @@
 
         // Jika 'camera' dipilih, tampilkan input kamera
         if (accessChoice === 'camera') {
-            cameraInput.style.display = 'block';
+            cameraInput.style.display = 'none';
             cameraInput.click();
         }
         // Jika 'gallery' dipilih, tampilkan input galeri
         else if (accessChoice === 'gallery') {
-            galleryInput.style.display = 'block';
+            galleryInput.style.display = 'none';
             galleryInput.click();
         }
     }
